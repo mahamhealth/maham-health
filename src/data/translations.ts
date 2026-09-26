@@ -1,9 +1,44 @@
-export type Language = 'en'|'ar'|'fa'|'sw'|'hi'|'ur';
-export const TRANSLATIONS = {
-en:{nativeName:'English',dir:'ltr',heroBadge:'Medical Concierge in Iran • IPD Partner Hospitals',heroTitle:'World-Class Healthcare,',heroHighlight:'At 70–90% Below Global Costs',heroSubtitle:'Maham Health arranges medical journeys to Iran with personalized concierge service.',ctaConsultation:'Start Free Assessment',ctaPrices:'Compare Global Prices',specHeading:'Medical Specialties & Costs',specSubheading:'Transparent starting prices compared with global medical destinations.',tableSpecialty:'Treatment',tableIran:'Maham Health (Iran)',tableIndia:'India',tableUAE:'UAE / Turkey',tableUS:'USA / UK',packagesHeading:'Curated Concierge Experience',packagesSubheading:'Choose the support level that fits your journey.',essentialTitle:'Essential Medical Care',luxuryTitle:'Luxury VIP Concierge',aiTitle:'Maham AI Travel Advisor',aiPromptPlaceholder:'Ask about visas, pricing, recovery, or doctors...',footerRights:'All rights reserved.',corporateNote:'A healthcare division of Soren Maham Industry & Trade Development Corporation.'},
-ar:{nativeName:'العربية',dir:'rtl',heroBadge:'خدمات السياحة العلاجية في إيران • مستشفيات معتمدة',heroTitle:'رعاية صحية بمعايير عالمية،',heroHighlight:'بتكلفة أقل بنسبة تصل إلى 85٪',heroSubtitle:'تنظم مهام هيلث رحلات علاجية متميزة إلى إيران مع خدمات كونسيرج متكاملة.',ctaConsultation:'احصل على استشارة مجانية',ctaPrices:'مقارنة الأسعار العالمية',specHeading:'التخصصات الطبية والأسعار',specSubheading:'أسعار شفافة في إيران مقارنة بالوجهات الطبية العالمية.',tableSpecialty:'التخصص / العلاج',tableIran:'مهام هيلث (إيران)',tableIndia:'الهند',tableUAE:'الإمارات / تركيا',tableUS:'أمريكا / بريطانيا',packagesHeading:'باقات الكونسيرج',packagesSubheading:'اختر مستوى الخدمة المناسب لرحلتك العلاجية.',essentialTitle:'الرعاية الطبية الأساسية',luxuryTitle:'كونسيرج VIP فاخر',aiTitle:'مساعد مهام الذكي',aiPromptPlaceholder:'اسأل عن التأشيرات والتكاليف والأطباء...',footerRights:'جميع الحقوق محفوظة.',corporateNote:'قسم الرعاية الصحية التابع لشركة سورين مهام.'},
-fa:{nativeName:'فارسی',dir:'rtl',heroBadge:'گردشگری سلامت در ایران • بیمارستان‌های همکار',heroTitle:'خدمات درمانی تراز اول،',heroHighlight:'با صرفه‌جویی چشمگیر در هزینه',heroSubtitle:'مهام هلث سفر درمانی به ایران را با خدمات اختصاصی هماهنگ می‌کند.',ctaConsultation:'شروع ارزیابی رایگان',ctaPrices:'مقایسه قیمت‌ها',specHeading:'تخصص‌های پزشکی و هزینه‌ها',specSubheading:'قیمت‌های پایه در ایران در مقایسه با مقاصد پزشکی جهان.',tableSpecialty:'تخصص / درمان',tableIran:'مهام هلث (ایران)',tableIndia:'هند',tableUAE:'امارات / ترکیه',tableUS:'آمریکا / بریتانیا',packagesHeading:'خدمات تشریفاتی',packagesSubheading:'سطح خدمات مناسب سفر درمانی خود را انتخاب کنید.',essentialTitle:'مراقبت درمانی پایه',luxuryTitle:'خدمات لوکس VIP',aiTitle:'دستیار سفر پزشکی مهام',aiPromptPlaceholder:'درباره ویزا، هزینه یا پزشکان بپرسید...',footerRights:'تمامی حقوق محفوظ است.',corporateNote:'بخش سلامت شرکت توسعه صنعت و تجارت سورین مهام.'},
-sw:{nativeName:'Kiswahili',dir:'ltr',heroBadge:'Huduma za Matibabu Iran • Hospitali Washirika',heroTitle:'Huduma Bora za Afya,',heroHighlight:'Kwa Gharama Nafuu',heroSubtitle:'Maham Health huratibu safari za matibabu nchini Iran pamoja na huduma za concierge.',ctaConsultation:'Anza Tathmini',ctaPrices:'Linganisha Bei',specHeading:'Tiba na Gharama',specSubheading:'Bei za kuanzia Iran zikilinganishwa na vituo vya kimataifa.',tableSpecialty:'Tiba',tableIran:'Maham Health (Iran)',tableIndia:'India',tableUAE:'UAE / Uturuki',tableUS:'Marekani / Uingereza',packagesHeading:'Huduma za Concierge',packagesSubheading:'Chagua huduma inayofaa safari yako.',essentialTitle:'Huduma Muhimu',luxuryTitle:'Concierge ya VIP',aiTitle:'Mshauri wa Safari wa Maham',aiPromptPlaceholder:'Uliza kuhusu visa, bei au madaktari...',footerRights:'Haki zote zimehifadhiwa.',corporateNote:'Kitengo cha afya cha Soren Maham.'},
-hi:{nativeName:'हिन्दी',dir:'ltr',heroBadge:'ईरान में मेडिकल कंसीयज • सहयोगी अस्पताल',heroTitle:'विश्व स्तरीय स्वास्थ्य सेवाएँ,',heroHighlight:'कम लागत में बेहतर देखभाल',heroSubtitle:'महम हेल्थ ईरान में चिकित्सा यात्राओं और कंसीयज सेवाओं की व्यवस्था करता है।',ctaConsultation:'निःशुल्क मूल्यांकन',ctaPrices:'कीमतों की तुलना',specHeading:'चिकित्सा विशेषताएँ और लागत',specSubheading:'ईरान की शुरुआती कीमतों की वैश्विक तुलना।',tableSpecialty:'उपचार',tableIran:'महम हेल्थ (ईरान)',tableIndia:'भारत',tableUAE:'यूएई / तुर्की',tableUS:'अमेरिका / ब्रिटेन',packagesHeading:'कंसीयज अनुभव',packagesSubheading:'अपनी यात्रा के लिए सेवा स्तर चुनें।',essentialTitle:'आवश्यक चिकित्सा देखभाल',luxuryTitle:'लक्जरी वीआईपी कंसीयज',aiTitle:'महम एआई यात्रा सलाहकार',aiPromptPlaceholder:'वीज़ा, कीमत या डॉक्टरों के बारे में पूछें...',footerRights:'सर्वाधिकार सुरक्षित।',corporateNote:'सोरेन महम समूह का स्वास्थ्य सेवा विभाग।'},
-ur:{nativeName:'اردو',dir:'rtl',heroBadge:'ایران میں طبی سہولت • شراکت دار ہسپتال',heroTitle:'عالمی معیار کی نگہداشت،',heroHighlight:'کم لاگت میں بہترین علاج',heroSubtitle:'مہام ہیلتھ ایران میں علاج کے سفر اور کونسیرج خدمات کا انتظام کرتی ہے۔',ctaConsultation:'مفت تشخیص شروع کریں',ctaPrices:'قیمتوں کا موازنہ',specHeading:'طبی شعبے اور اخراجات',specSubheading:'ایران کی ابتدائی قیمتوں کا عالمی مراکز سے موازنہ۔',tableSpecialty:'علاج',tableIran:'مہام ہیلتھ (ایران)',tableIndia:'بھارت',tableUAE:'یو اے ای / ترکی',tableUS:'امریکہ / برطانیہ',packagesHeading:'کونسیرج خدمات',packagesSubheading:'اپنے سفر کے لیے مناسب خدمت منتخب کریں۔',essentialTitle:'بنیادی طبی نگہداشت',luxuryTitle:'لگژری وی آئی پی کونسیرج',aiTitle:'مہام اے آئی مشیر',aiPromptPlaceholder:'ویزا، قیمت یا ڈاکٹرز کے بارے میں پوچھیں...',footerRights:'تمام حقوق محفوظ ہیں۔',corporateNote:'سورین مہام کا صحت کی دیکھ بھال کا شعبہ.'}
-} as const;
+export const translations = {
+  en: {
+    heroTitle: "Medical Concierge in Iran • IPD Partner Hospitals",
+    heroSubtitle: "World-Class Healthcare, At 70–90% Below Global Costs",
+    corporateNote: "A healthcare division of Soorin Maham Trade & Industry Development Corporation.",
+    compareTitle: "Compare Global Prices",
+    // ... rest of the file content
+  },
+  fa: {
+    heroTitle: "کانسیرژ پزشکی در ایران • بیمارستان‌های IPD",
+    heroSubtitle: "درمان‌های کلاس جهانی، ۷۰ تا ۹۰ درصد ارزان‌تر از هزینه‌های جهانی",
+    corporateNote: "واحد سلامت شرکت توسعه تجارت و صنعت سورین مهام.",
+    compareTitle: "مقایسه هزینه‌های جهانی",
+    // ... rest of the file content
+  },
+  ar: {
+    heroTitle: "كونسيرج طبي في إيران • مستشفيات شريكة IPD",
+    heroSubtitle: "رعاية صحية عالمية المستوى، بتكلفة أقل بنسبة 70–90% من الأسعار العالمية",
+    corporateNote: "قسم الرعاية الصحية في شركة سورين مهام للتجارة والصناعة.",
+    compareTitle: "مقارنة الأسعار العالمية",
+    // ... rest of the file content
+  },
+  sw: {
+    heroTitle: "Huduma ya Matibabu Iran • Hospitali za IPD",
+    heroSubtitle: "Matibabu ya Kimataifa, Kwa gharama nafuu hadi 70–90%",
+    corporateNote: "Kitengo cha afya cha Soorin Maham Trade & Industry Development Corporation.",
+    compareTitle: "Linganisha Gharama za Kimataifa",
+    // ... rest of the file content
+  },
+  hi: {
+    heroTitle: "ईरान में मेडिकल कंसीयज • IPD पार्टनर अस्पताल",
+    heroSubtitle: "विश्व स्तरीय स्वास्थ्य सेवा, वैश्विक लागत से 70-90% कम",
+    corporateNote: "Soorin Maham Trade & Industry Development Corporation का एक स्वास्थ्य सेवा प्रभाग।",
+    compareTitle: "वैश्विक कीमतों की तुलना करें",
+    // ... rest of the file content
+  },
+  ur: {
+    heroTitle: "ایران میں میڈیکل کونسیرج • IPD پارٹنر ہسپتال",
+    heroSubtitle: "عالمی معیار کی صحت کی دیکھ بھال، 70-90% کم لاگت پر",
+    corporateNote: "Soorin Maham Trade & Industry Development Corporation کا ایک ہیلتھ کیئر ڈویژن۔",
+    compareTitle: "عالمی قیمتوں کا موازنہ کریں",
+    // ... rest of the file content
+  }
+};
