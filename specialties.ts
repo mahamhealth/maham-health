@@ -1,0 +1,11 @@
+export interface Specialty {id:string;name:string;category:string;iranPrice:number;indiaRange:string;uaeRange:string;usRange:string;savings:string;stayDays:string;}
+export const SPECIALTIES_DATA: Specialty[] = [
+{id:'rhinoplasty',name:'Rhinoplasty (Nose Surgery)',category:'Cosmetic & Plastic Surgery',iranPrice:1650,indiaRange:'$2,800 – $3,500',uaeRange:'$4,500 – $6,500',usRange:'$8,500 – $12,000',savings:'Up to 85%',stayDays:'7 - 10 Days'},
+{id:'dental-implants',name:'Dental Implants (Per Unit)',category:'Dentistry & Oral Surgery',iranPrice:550,indiaRange:'$800 – $1,100',uaeRange:'$1,500 – $2,200',usRange:'$2,800 – $4,500',savings:'Up to 80%',stayDays:'5 - 7 Days'},
+{id:'lasik',name:'LASIK & Femto-SMILE (Both Eyes)',category:'Ophthalmology & Eye Care',iranPrice:1100,indiaRange:'$1,400 – $2,000',uaeRange:'$2,800 – $3,800',usRange:'$4,200 – $5,500',savings:'Up to 75%',stayDays:'4 - 5 Days'},
+{id:'hair-transplant',name:'Hair Transplant (High-Density FUE)',category:'Aesthetics & Trichology',iranPrice:1250,indiaRange:'$2,000 – $2,800',uaeRange:'$2,600 – $3,800',usRange:'$6,000 – $9,000',savings:'Up to 80%',stayDays:'3 - 4 Days'},
+{id:'ivf-fertility',name:'IVF / ICSI Full Cycle Package',category:'Reproductive Medicine',iranPrice:3200,indiaRange:'$4,500 – $6,000',uaeRange:'$7,500 – $10,000',usRange:'$15,000 – $22,000',savings:'Up to 82%',stayDays:'14 - 18 Days'},
+{id:'orthopedics',name:'Knee / Hip Joint Replacement',category:'Orthopedic Surgery',iranPrice:4200,indiaRange:'$7,500 – $9,500',uaeRange:'$11,000 – $15,000',usRange:'$22,000 – $35,000',savings:'Up to 85%',stayDays:'10 - 14 Days'},
+{id:'cardiology',name:'Coronary Angioplasty / Stent',category:'Cardiovascular Care',iranPrice:3800,indiaRange:'$6,500 – $8,500',uaeRange:'$9,500 – $14,000',usRange:'$20,000 – $30,000',savings:'Up to 80%',stayDays:'5 - 7 Days'},
+{id:'oncology',name:'Cancer / Oncology Initial Surgical Tx',category:'Specialized Oncology',iranPrice:4500,indiaRange:'$8,000 – $12,000',uaeRange:'$12,000 – $18,000',usRange:'$25,000 – $45,000',savings:'Up to 85%',stayDays:'12 - 20 Days'},
+{id:'bariatric',name:'Gastric Sleeve / Bypass Surgery',category:'Metabolic & Weight Loss',iranPrice:2850,indiaRange:'$4,800 – $6,500',uaeRange:'$6,500 – $8,500',usRange:'$12,000 – $18,000',savings:'Up to 78%',stayDays:'5 - 7 Days'}];
