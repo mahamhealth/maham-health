@@ -2,13 +2,15 @@
 const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig = {
+  reactStrictMode: true,
   output: 'export',
-  basePath: '/maham-health',
-  assetPrefix: '/maham-health/',
+  // Sets the base path for GitHub Pages repository deployments
+  basePath: isProd ? '/maham-health' : '',
+  assetPrefix: isProd ? '/maham-health/' : '',
   images: {
     unoptimized: true,
   },
-  reactStrictMode: true,
+  trailingSlash: true,
 };
 
 export default nextConfig;
