@@ -16,7 +16,7 @@ import {
   X,
   FileText
 } from 'lucide-react';
-import { TRANSLATIONS, type Language } from '@/data/translations';
+import type { Language } from '@/data/translations';
 import { SPECIALTIES_DATA } from '@/data/specialties';
 
 const FORM_ENDPOINT = "https://formspree.io/f/mjykapno";
@@ -55,8 +55,8 @@ export default function HomePage() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<ConsultationForm>(initialForm);
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success'>('idle');
+  const [files, setFiles] = useState<File[]>([]);
 
-  const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
   const isRTL = lang === 'fa' || lang === 'ar' || lang === 'ur';
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -72,14 +72,16 @@ export default function HomePage() {
     e.preventDefault();
     setStatus('submitting');
     try {
+      const payload = new FormData();
+      Object.entries(form).forEach(([key, value]) => payload.append(key, value));
+      payload.append('submissionDate', new Date().toISOString());
+      payload.append('source', 'Maham Health Web Portal');
+      files.forEach((file) => payload.append('attachments', file, file.name));
+
       const response = await fetch(FORM_ENDPOINT, {
         method: 'POST',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...form,
-          submissionDate: new Date().toISOString(),
-          source: 'Maham Health Web Portal'
-        }),
+        headers: { 'Accept': 'application/json' },
+        body: payload,
       });
 
       if (response.ok) {
@@ -98,6 +100,7 @@ export default function HomePage() {
     setStep(1);
     setStatus('idle');
     setForm(initialForm);
+    setFiles([]);
   };
 
   return (
@@ -555,3 +558,103 @@ export default function HomePage() {
                         <label className="block text-xs font-medium text-slate-300 mb-1.5">Email Address</label>
                         <input
                           type="email"
+                          name="email"
+                          placeholder="you@example.com"
+                          value={form.email}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full bg-slate-900 border border-white/10 rounded-lg px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-medium text-slate-300 mb-1.5">Medical Records / Photos (optional)</label>
+                      <div className="flex items-center gap-3 rounded-lg border border-white/10 bg-slate-900 px-4 py-3">
+                        <FileText className="h-5 w-5 flex-shrink-0 text-amber-400" />
+                        <input
+                          type="file"
+                          name="attachments"
+                          accept=".pdf,.jpg,.jpeg,.png,.webp,.doc,.docx"
+                          multiple
+                          onChange={(event) => setFiles(Array.from(event.target.files ?? []))}
+                          aria-label="Upload medical records or photos"
+                          className="min-w-0 w-full text-xs text-slate-300 file:mr-3 file:rounded-md file:border-0 file:bg-amber-500/15 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-amber-300 hover:file:bg-amber-500/25"
+                        />
+                      </div>
+                      <p className="mt-1.5 text-xs text-slate-500">Attach relevant reports or photos to help our medical team review your case.</p>
+                    </div>
+
+                    <div>
+                      <p className="mb-2 text-xs font-medium text-slate-300">Choose your concierge package</p>
+                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                        <button
+                          type="button"
+                          onClick={() => handlePackageSelect('essential')}
+                          aria-pressed={form.package === 'essential'}
+                          className={`rounded-xl border p-4 text-left transition-colors ${form.package === 'essential' ? 'border-amber-400 bg-amber-500/10' : 'border-white/10 bg-slate-900 hover:border-white/30'}`}
+                        >
+                          <span className="flex items-center justify-between gap-2 font-semibold text-white">
+                            <span>Essential Care</span>
+                            {form.package === 'essential' && <Check className="h-4 w-4 text-amber-400" />}
+                          </span>
+                          <span className="mt-1 block text-xs text-slate-400">Clinical coordination and essential travel support</span>
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => handlePackageSelect('luxury')}
+                          aria-pressed={form.package === 'luxury'}
+                          className={`rounded-xl border p-4 text-left transition-colors ${form.package === 'luxury' ? 'border-amber-400 bg-amber-500/10' : 'border-white/10 bg-slate-900 hover:border-white/30'}`}
+                        >
+                          <span className="flex items-center justify-between gap-2 font-semibold text-white">
+                            <span>Luxury VIP</span>
+                            {form.package === 'luxury' && <Check className="h-4 w-4 text-amber-400" />}
+                          </span>
+                          <span className="mt-1 block text-xs text-slate-400">Premium accommodation and end-to-end concierge care</span>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 flex justify-between">
+                      <button
+                        type="button"
+                        onClick={() => setStep(2)}
+                        className="px-5 py-2.5 rounded-lg border border-white/20 text-slate-300 text-sm hover:border-white/40"
+                      >
+                        Back
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={status === 'submitting'}
+                        className="px-6 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-60 text-slate-950 font-bold text-sm flex items-center gap-2"
+                      >
+                        <Send className="w-4 h-4" />
+                        <span>{status === 'submitting' ? 'Submitting...' : 'Submit Request'}</span>
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
+      <footer className="border-t border-white/10 bg-slate-950/60 px-4 py-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
+          <div className="flex items-center gap-3">
+            <Stethoscope className="h-6 w-6 text-amber-400" />
+            <div>
+              <p className="font-semibold text-white">Maham Health</p>
+              <p className="text-xs text-slate-400">Exclusive Medical Concierge in Iran</p>
+            </div>
+          </div>
+          <a href="mailto:health@maham-group.com" className="text-sm text-slate-300 hover:text-amber-400">
+            health@maham-group.com
+          </a>
+          <p className="text-xs text-slate-500">© {new Date().getFullYear()} Maham Health. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
