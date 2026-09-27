@@ -171,7 +171,7 @@ export default function HomePage() {
             <ChevronRight className="w-5 h-5" />
           </button>
           <a
-            href="https://wa.me/255744956506"
+            href="https://wa.me/255744956506?text=Hello%20Maham%20Health%2C%20I%20would%20like%20to%20inquire%20about%20treatment"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-900/90 border border-white/10 hover:border-emerald-500/40 text-slate-200 font-semibold text-base transition-all flex items-center justify-center gap-2"
