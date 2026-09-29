@@ -534,4 +534,151 @@ export default function Page() {
                           placeholder="Briefly describe symptoms, previous diagnoses, or specific surgeon requests..."
                           value={form.medicalNotes}
                           onChange={handleInputChange}
-                          className="w-full rounded-lg border border-slate-700 bg-slate-900 p
+                          className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3.5 py-2.5 text-sm text-white focus:border-amber-400 focus:outline-none"
+                        />
+                      </div>
+
+                      <div className="pt-4 flex justify-between">
+                        <button
+                          type="button"
+                          onClick={() => setStep(1)}
+                          className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-white"
+                        >
+                          <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
+                          Back
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setStep(3)}
+                          className="flex items-center gap-1.5 rounded-lg bg-amber-400 px-5 py-2.5 text-xs font-bold text-slate-950 hover:bg-amber-300"
+                        >
+                          Next Step
+                          <ChevronRight className="h-4 w-4 rtl:rotate-180" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* STEP 3 */}
+                  {step === 3 && (
+                    <div className="space-y-4">
+                      {/* Package Tier Selection within Form */}
+                      <div>
+                        <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+                          Selected Concierge Tier
+                        </label>
+                        <div className="grid grid-cols-3 gap-2">
+                          {(['essential', 'premium', 'royal'] as PackageTier[]).map((tier) => (
+                            <button
+                              key={tier}
+                              type="button"
+                              onClick={() => setForm(prev => ({ ...prev, packageTier: tier }))}
+                              className={`rounded-lg border p-2 text-center text-xs font-semibold capitalize transition ${
+                                form.packageTier === tier 
+                                  ? 'border-amber-400 bg-amber-400/10 text-amber-300' 
+                                  : 'border-slate-700 bg-slate-900 text-slate-400 hover:border-slate-600'
+                              }`}
+                            >
+                              {tier === 'essential' && 'Essential'}
+                              {tier === 'premium' && 'Premium ★'}
+                              {tier === 'royal' && 'Royal VIP'}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-semibold text-slate-300 mb-1.5">Full Name *</label>
+                          <input
+                            type="text"
+                            name="name"
+                            required
+                            placeholder="John Doe"
+                            value={form.name}
+                            onChange={handleInputChange}
+                            className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3.5 py-2 text-sm text-white focus:border-amber-400 focus:outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-slate-300 mb-1.5">Country *</label>
+                          <input
+                            type="text"
+                            name="country"
+                            required
+                            placeholder="e.g. Tanzania, UAE, UK"
+                            value={form.country}
+                            onChange={handleInputChange}
+                            className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3.5 py-2 text-sm text-white focus:border-amber-400 focus:outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-xs font-semibold text-slate-300 mb-1.5">WhatsApp / Phone *</label>
+                          <input
+                            type="tel"
+                            name="whatsapp"
+                            required
+                            placeholder="+255..."
+                            value={form.whatsapp}
+                            onChange={handleInputChange}
+                            className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3.5 py-2 text-sm text-white focus:border-amber-400 focus:outline-none"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-semibold text-slate-300 mb-1.5">Email Address</label>
+                          <input
+                            type="email"
+                            name="email"
+                            placeholder="patient@example.com"
+                            value={form.email}
+                            onChange={handleInputChange}
+                            className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3.5 py-2 text-sm text-white focus:border-amber-400 focus:outline-none"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="pt-4 flex justify-between items-center">
+                        <button
+                          type="button"
+                          onClick={() => setStep(2)}
+                          className="flex items-center gap-1 text-xs font-semibold text-slate-400 hover:text-white"
+                        >
+                          <ChevronLeft className="h-4 w-4 rtl:rotate-180" />
+                          Back
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="flex items-center gap-2 rounded-lg bg-amber-400 px-6 py-2.5 text-xs font-bold text-slate-950 hover:bg-amber-300 transition disabled:opacity-50"
+                        >
+                          {isSubmitting ? 'Submitting...' : 'Submit Medical Inquiry'}
+                          <Send className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </form>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Footer */}
+      <footer className="border-t border-slate-800 bg-[#060c14] py-12 text-slate-400 text-xs">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <span className="font-bold text-white tracking-wider">MAHAM HEALTH</span> — Soorin Maham Trade & Industry Development Corp.
+          </div>
+          <div className="flex items-center space-x-6 rtl:space-x-reverse">
+            <a href="mailto:health@maham-group.com" className="hover:text-amber-400">health@maham-group.com</a>
+            <a href="https://wa.me/255744956506" className="hover:text-amber-400">WhatsApp: +255 744 956 506</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
