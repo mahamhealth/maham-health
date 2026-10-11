@@ -1208,6 +1208,20 @@ export default function HomePage() {
                 >
                   Close Window
                 </button>
+                {/* Floating WhatsApp Button (Bottom-Right) */}
+<a
+  href="https://wa.me/989055240772?text=Hello%20Maham%20Health%2C%20I%20would%20like%20to%20inquire%20about%20medical%20treatment%20in%20Iran."
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Chat on WhatsApp"
+  className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 group"
+>
+  <MessageCircle className="w-6 h-6 animate-pulse" />
+  <span className="hidden sm:inline font-medium text-sm">
+    Chat with Medical Team
+  </span>
+</a>
+
               </div>
             )}
           </div>
