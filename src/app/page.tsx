@@ -279,7 +279,7 @@ const I18N: Record<Language, {
     brand: 'माहाम हेल्थ',
     badge: 'प्रीमियर मेडिकल कंसीयज • आधिकारिक IPD अस्पताल',
     heroTitle: 'विश्व स्तरीय स्वास्थ्य सेवा, वैश्विक लागत से 70-90% कम',
-    heroSub: 'ईरान के शीर्ष मान्यता प्राप्त अस्पतालों में विशेषज्ञ डॉक्टरों के साथ व्यक्तिगत चिकित्सा यात्रा का समन्वय।',
+    heroSub: 'ईरान के शीर्ष मान्यता प्राप्त अस्पतालों में विशेषज्ञ डॉक्टरों के साथ निजी चिकित्सा यात्रा का प्रबंधन।',
     startAssessment: 'निःशुल्क परामर्श शुरू करें',
     whatsappDirect: 'व्हाट्सएप पर चैट करें',
     statPartners: '40+ IPD साझेदार केंद्र',
@@ -373,7 +373,6 @@ export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
 
-  // Form Fields
   const [specialty, setSpecialty] = useState(SPECIALTIES[0].id);
   const [timeframe, setTimeframe] = useState('Within 30 days');
   const [age, setAge] = useState('');
@@ -385,11 +384,9 @@ export default function HomePage() {
   const [email, setEmail] = useState('');
   const [tier, setTier] = useState<'Essential Care' | 'Luxury VIP Concierge'>('Luxury VIP Concierge');
 
-  // Submission Status
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
-  // Interactive Calculator State
   const [calcSpecialtyId, setCalcSpecialtyId] = useState(SPECIALTIES[0].id);
   const [calcBenchmark, setCalcBenchmark] = useState<'us' | 'uae' | 'india'>('us');
   const [calcPackage, setCalcPackage] = useState<'essential' | 'vip'>('vip');
@@ -414,7 +411,6 @@ export default function HomePage() {
   const t = I18N[lang] || I18N.en;
   const isRTL = lang === 'fa' || lang === 'ar' || lang === 'ur';
 
-  // Accessibility IDs for form inputs
   const calcSpecialtySelectId = useId();
   const calcBenchmarkSelectId = useId();
   const calcPackageSelectId = useId();
@@ -458,7 +454,6 @@ export default function HomePage() {
       });
       setSubmitted(true);
     } catch {
-      // Allow user to proceed to WhatsApp even if network issue occurs
       setSubmitted(true);
     } finally {
       setSubmitting(false);
@@ -467,31 +462,23 @@ export default function HomePage() {
 
   const selectedSpecialtyObj = SPECIALTIES.find((s) => s.id === specialty) || SPECIALTIES[0];
   const encodedWhatsappMsg = encodeURIComponent(
-    `Hello Maham Health Concierge Desk,\n\nI have requested a medical assessment:\n- Name: ${name || 'Prospective Patient'}\n- Procedure: ${selectedSpecialtyObj.name}\n- Preferred Timeframe: ${timeframe}\n- Country: ${country || 'International'}\n- Concierge Tier: ${tier}\n\nPlease advise on specialist availability and next steps.`
+    `Hello Maham Health Concierge Desk,\n\nI have requested a medical assessment:\n- Name: ${name || 'Prospective Patient'}\n- Procedure: ${selectedSpecialtyObj.name}\n- Preferred Timeframe: ${timeframe}\n- Country: ${country || 'Not provided'}\n\nPlease contact me.`
   );
   const whatsappUrl = `https://wa.me/989055240772?text=${encodedWhatsappMsg}`;
 
   return (
     <div className="min-h-screen bg-[#08111d] text-slate-100 font-sans" dir={isRTL ? 'rtl' : 'ltr'}>
-      {/* Top Header */}
       <header className="border-b border-slate-800/80 bg-[#08111d]/90 backdrop-blur sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-bold text-xl shadow-lg shadow-amber-500/20">
-              M
-            </div>
-            <div>
-              <span className="text-xl font-bold tracking-tight text-white block">
-                {t.brand}
-              </span>
-              <span className="text-xs text-amber-400/90 font-medium tracking-wide">
-                Medical Concierge
-              </span>
-            </div>
+          <div className="flex items-center">
+            <img
+              src="/logo.svg"
+              alt="Maham Health logo"
+              className="h-12 sm:h-14 w-auto object-contain"
+            />
           </div>
 
           <div className="flex items-center space-x-4 rtl:space-x-reverse">
-            {/* Language Switcher */}
             <div className="flex items-center space-x-1.5 rtl:space-x-reverse bg-slate-900/90 p-1 rounded-lg border border-slate-800">
               <Globe2 className="w-4 h-4 text-slate-400 mx-1" />
               {(['en', 'fa', 'ar', 'sw', 'hi', 'ur'] as Language[]).map((locale) => (
@@ -515,7 +502,7 @@ export default function HomePage() {
                 setStep(1);
                 setIsModalOpen(true);
               }}
-              className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 hover:brightness-110 shadow-lg shadow-amber-500/20 transition"
+              className="hidden sm:inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 hover:brightness-110 shadow-lg shadow-amber-500/30 transition"
             >
               {t.startAssessment}
             </button>
@@ -523,7 +510,6 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="relative pt-16 pb-20 overflow-hidden border-b border-slate-800/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-300 text-xs sm:text-sm font-medium mb-6">
@@ -563,7 +549,6 @@ export default function HomePage() {
             </a>
           </div>
 
-          {/* Key Metrics Grid */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto">
             <div className="p-5 rounded-2xl bg-slate-900/60 border border-slate-800 text-center">
               <Building2 className="w-6 h-6 text-amber-400 mx-auto mb-2" />
@@ -589,7 +574,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Interactive Savings Calculator */}
       <section className="py-20 bg-slate-900/40 border-b border-slate-800/80">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
@@ -607,7 +591,6 @@ export default function HomePage() {
 
           <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-              {/* Controls */}
               <div className="lg:col-span-2 space-y-6">
                 <div>
                   <label htmlFor={calcSpecialtySelectId} className="block text-xs font-semibold uppercase text-slate-400 mb-2">
@@ -669,7 +652,6 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Output Display Card */}
               <div className="bg-gradient-to-br from-slate-800/90 to-slate-900 border border-amber-500/30 rounded-2xl p-6 text-center shadow-lg relative overflow-hidden">
                 <div className="text-xs uppercase font-semibold text-slate-400 tracking-wider">
                   {t.estimatedSavings}
@@ -707,7 +689,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Patient Journey Timeline */}
       <section className="py-20 border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -755,7 +736,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Benchmark Pricing Table */}
       <section className="py-20 bg-slate-900/30 border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
@@ -813,7 +793,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Concierge Packages */}
       <section className="py-20 border-b border-slate-800/80">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -826,7 +805,6 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Essential Care */}
             <div className="bg-slate-900/70 border border-slate-800 rounded-3xl p-8 flex flex-col justify-between">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Clinical Focus</span>
@@ -866,7 +844,6 @@ export default function HomePage() {
               </button>
             </div>
 
-            {/* Luxury VIP */}
             <div className="bg-gradient-to-b from-slate-900 to-slate-950 border-2 border-amber-500/40 rounded-3xl p-8 flex flex-col justify-between shadow-2xl relative">
               <div className="absolute -top-3.5 right-8 bg-amber-400 text-slate-950 text-xs font-extrabold uppercase px-3 py-1 rounded-full">
                 Signature Concierge
@@ -916,7 +893,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="py-12 border-t border-slate-800 text-xs text-slate-400">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
@@ -929,7 +905,6 @@ export default function HomePage() {
         </div>
       </footer>
 
-      {/* 3-Step Consultation Wizard Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
           <div className="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-xl p-6 sm:p-8 shadow-2xl relative max-h-[90vh] overflow-y-auto">
@@ -942,7 +917,6 @@ export default function HomePage() {
 
             {!submitted ? (
               <form onSubmit={handleFormSubmit} className="space-y-6">
-                {/* Stepper Progress */}
                 <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                   {[1, 2, 3].map((s) => (
                     <div key={s} className="flex items-center gap-2">
@@ -964,7 +938,6 @@ export default function HomePage() {
                   ))}
                 </div>
 
-                {/* Step 1 */}
                 {step === 1 && (
                   <div className="space-y-4">
                     <h3 className="text-lg font-bold text-white">{t.step1}</h3>
@@ -1017,7 +990,6 @@ export default function HomePage() {
                   </div>
                 )}
 
-                {/* Step 2 */}
                 {step === 2 && (
                   <div className="space-y-4">
                     <h3 className="text-lg font-bold text-white">{t.step2}</h3>
@@ -1087,7 +1059,6 @@ export default function HomePage() {
                   </div>
                 )}
 
-                {/* Step 3 */}
                 {step === 3 && (
                   <div className="space-y-4">
                     <h3 className="text-lg font-bold text-white">{t.step3}</h3>
@@ -1169,7 +1140,7 @@ export default function HomePage() {
                       <button
                         type="submit"
                         disabled={submitting}
-                        className="px-7 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-bold text-sm hover:brightness-110 flex items-center gap-2 shadow-lg shadow-amber-500/20 disabled:opacity-50"
+                        className="px-7 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-bold text-sm hover:brightness-110 flex items-center gap-2 shadow-lg shadow-amber-500/20 transition"
                       >
                         {submitting ? 'Submitting...' : t.submit}
                         <Send className="w-4 h-4" />
@@ -1179,7 +1150,6 @@ export default function HomePage() {
                 )}
               </form>
             ) : (
-              /* Success & WhatsApp Direct Handoff */
               <div className="text-center py-6 space-y-5">
                 <div className="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto border border-emerald-500/30">
                   <CheckCircle2 className="w-8 h-8" />
@@ -1194,7 +1164,7 @@ export default function HomePage() {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition shadow-lg shadow-emerald-500/20"
+                    className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-6 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition shadow-[0_10px_25px_rgba(16,185,129,0.3)]"
                   >
                     <MessageCircle className="w-5 h-5" />
                     Instant Priority Review via WhatsApp
@@ -1208,20 +1178,18 @@ export default function HomePage() {
                 >
                   Close Window
                 </button>
-                {/* Floating WhatsApp Button (Bottom-Right) */}
-<a
-  href="https://wa.me/989055240772?text=Hello%20Maham%20Health%2C%20I%20would%20like%20to%20inquire%20about%20medical%20treatment%20in%20Iran."
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Chat on WhatsApp"
-  className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 group"
->
-  <MessageCircle className="w-6 h-6 animate-pulse" />
-  <span className="hidden sm:inline font-medium text-sm">
-    Chat with Medical Team
-  </span>
-</a>
-
+                <a
+                  href="https://wa.me/989055240772?text=Hello%20Maham%20Health%2C%20I%20would%20like%20to%20inquire%20about%20medical%20treatment%20in%20Iran."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Chat on WhatsApp"
+                  className="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 group"
+                >
+                  <MessageCircle className="w-6 h-6 animate-pulse" />
+                  <span className="hidden sm:inline font-medium text-sm">
+                    Chat with Medical Team
+                  </span>
+                </a>
               </div>
             )}
           </div>
