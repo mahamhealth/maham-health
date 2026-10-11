@@ -1,4 +1,122 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root{--background:#0A192F;--foreground:#fff}body{color:var(--foreground);background:var(--background);font-family:Arial,system-ui,sans-serif;overflow-x:hidden}::-webkit-scrollbar{width:8px}::-webkit-scrollbar-track{background:#0A192F}::-webkit-scrollbar-thumb{background:#1E3E6D;border-radius:4px}[dir="rtl"]{text-align:right}
+
+:root {
+  /* White & Blue Medical Luxury Theme */
+  --background: #ffffff;
+  --foreground: #0f172a; /* Slate 900 */
+
+  /* Primary Brand Palette (Derived from Maham Health Logo) */
+  --primary-blue: #0062e6; /* Vivid Azure */
+  --primary-sapphire: #0b3c95; /* Deep Clinical Sapphire */
+  --primary-sky: #38bdf8; /* Fresh Sky Accent */
+
+  /* Neutral Surfaces */
+  --surface-ground: #ffffff;
+  --surface-card: #f8fafc; /* Slate 50 */
+  --surface-card-subtle: #f1f5f9; /* Slate 100 */
+  --surface-border: #e2e8f0; /* Slate 200 */
+  --surface-border-strong: #cbd5e1; /* Slate 300 */
+
+  /* Typography Colors */
+  --text-main: #0f172a; /* Slate 900 */
+  --text-muted: #475569; /* Slate 600 */
+  --text-light: #64748b; /* Slate 500 */
+
+  /* Medical Accents */
+  --medical-emerald: #10b981;
+  --medical-emerald-hover: #059669;
+}
+
+/* Base Body & Layout */
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: var(--text-main);
+  background: var(--surface-ground);
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* RTL Layout Enhancements for Persian, Arabic, and Urdu */
+[dir="rtl"] {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Vazirmatn", "Noto Sans Arabic", Tahoma, sans-serif;
+  text-align: right;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right !important;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Subtle Gradient Glow for Cards & Hero */
+.blue-glow {
+  box-shadow: 0 10px 30px -10px rgba(0, 98, 230, 0.12);
+}
+
+.blue-glow-hover {
+  transition: all 0.25s ease-in-out;
+}
+
+.blue-glow-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px -10px rgba(0, 98, 230, 0.2);
+}
+
+/* Smooth Accordion Animations for FAQ */
+details summary::-webkit-details-marker {
+  display: none;
+}
+
+details[open] summary {
+  color: var(--primary-sapphire);
+}
+
+details summary {
+  list-style: none;
+  transition: color 0.2s ease;
+}
+
+/* Table Hover & Striping Consistency */
+table tbody tr {
+  transition: background-color 0.15s ease-in-out;
+}
+
+table tbody tr:hover {
+  background-color: #f1f5f9;
+}
+
+/* Form & Input Focus Rings */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 3px rgba(0, 98, 230, 0.15);
+}
