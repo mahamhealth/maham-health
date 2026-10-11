@@ -1,0 +1,41 @@
+<svg width="960" height="620" viewBox="0 0 960 620" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoBlue" x1="220" y1="70" x2="710" y2="390" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3DB9FF"/>
+      <stop offset="0.4" stop-color="#1D95E6"/>
+      <stop offset="1" stop-color="#0B6DCC"/>
+    </linearGradient>
+    <linearGradient id="logoBlue2" x1="240" y1="120" x2="610" y2="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#52C9FF"/>
+      <stop offset="0.5" stop-color="#1A98EA"/>
+      <stop offset="1" stop-color="#0E78D8"/>
+    </linearGradient>
+    <linearGradient id="logoBlue3" x1="500" y1="200" x2="760" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#47C7FF"/>
+      <stop offset="1" stop-color="#0D7AE0"/>
+    </linearGradient>
+  </defs>
+
+  <g>
+    <path d="M118 300C118 204 176 124 265 124H320C365 124 394 144 420 190L498 305C507 319 521 335 540 349L597 392C630 416 675 417 710 391L745 364C771 343 801 341 826 356C848 370 862 394 860 420C857 474 812 507 758 502L648 494C603 490 563 470 528 438L463 380C443 362 418 356 392 361L332 372C291 380 259 362 238 326L179 222C161 192 136 174 103 174H88C57 174 29 198 29 230V300C29 354 74 393 128 393H188C226 393 241 370 241 336V287C241 260 262 249 281 262L337 301C360 316 390 318 415 306L469 281C492 270 515 273 532 288L596 348C619 367 652 375 682 366L724 354C761 345 787 324 792 285C797 247 776 216 740 194L662 145C611 112 553 96 493 96H380C307 96 249 117 198 174L161 216C145 234 127 265 118 300Z" fill="url(#logoBlue)"/>
+
+    <path d="M260 343L321 248C339 219 364 196 394 180L431 162C457 149 484 145 511 149C538 153 560 167 578 187L640 255C669 287 641 337 600 337H557C534 337 514 324 503 303L490 278C482 263 466 253 449 253H430C412 253 394 261 381 275L334 324C313 346 286 350 260 343Z" fill="url(#logoBlue2)" opacity="0.9"/>
+
+    <path d="M412 95C457 95 492 124 492 170C492 221 452 254 398 254H347C329 254 315 241 315 224V192C315 170 329 154 347 154H382C396 154 408 145 408 132C408 117 396 104 382 104H324C291 104 264 130 264 164V338C264 405 311 457 378 457H444C489 457 538 430 563 389L605 319C621 293 654 283 682 296L720 314C750 330 762 361 749 388L705 478C692 508 662 530 629 535L554 547C487 558 421 535 382 487L336 432C303 395 302 341 331 303L373 246C387 227 407 214 430 214H470C500 214 520 193 520 164C520 134 496 114 472 114H412V95Z" fill="url(#logoBlue3)"/>
+
+    <path d="M270 284C235 284 219 260 219 228V175C219 142 248 118 282 118H329C364 118 394 145 394 180V242C394 278 364 306 328 306H270V284Z" fill="white" opacity="0.9"/>
+
+    <path d="M456 162H515C534 162 550 177 550 196V228C550 247 534 262 515 262H456C437 262 421 247 421 228V196C421 177 437 162 456 162Z" fill="white" opacity="0.92"/>
+    <path d="M431 118H540V177H431V118Z" fill="white" opacity="0.88"/>
+  </g>
+
+  <g transform="translate(250 360)">
+    <rect x="0" y="0" width="44" height="120" rx="12" fill="white"/>
+    <rect x="-38" y="38" width="120" height="44" rx="12" fill="white"/>
+  </g>
+
+  <g>
+    <text x="480" y="520" text-anchor="middle" font-size="126" font-weight="700" fill="#0E7BD8" font-family="Arial, Helvetica, sans-serif" letter-spacing="2">MAHAM</text>
+    <text x="480" y="582" text-anchor="middle" font-size="58" font-weight="500" fill="#0B6DCC" font-family="Arial, Helvetica, sans-serif" letter-spacing="11">HEALTH</text>
+  </g>
+</svg>
