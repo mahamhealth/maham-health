@@ -1,1200 +1,1196 @@
 'use client';
 
-import React, { useState, useId, useEffect } from 'react';
-import {
-  ShieldCheck,
-  Award,
-  Globe2,
-  Clock,
-  Sparkles,
-  CheckCircle2,
-  Calendar,
-  User,
-  Phone,
-  Mail,
-  Send,
-  Plane,
+import React, { useState, useEffect, useTransition } from 'react';
+import Link from 'next/link';
+import { 
+  Building2, 
+  Award, 
+  ShieldCheck, 
+  Clock, 
+  ChevronRight, 
+  Phone, 
+  MessageSquare, 
+  Globe2, 
+  Menu, 
+  X, 
+  CheckCircle2, 
+  AlertCircle,
   FileText,
-  HeartHandshake,
+  Calendar,
+  Sparkles,
+  Plane,
+  HeartPulse,
   Stethoscope,
-  ChevronRight,
-  Calculator,
-  MessageCircle,
-  Building2,
+  Eye,
+  Activity,
+  Smile,
+  Scissors,
+  Users,
+  Compass,
   ArrowRight,
-  Upload,
-  X
+  Send,
+  HelpCircle
 } from 'lucide-react';
+import { SPECIALTIES_DATA } from '@/data/specialties';
+import { TRANSLATIONS, SupportedLocale, LocaleConfig } from '@/data/translations';
 
-type Language = 'en' | 'fa' | 'ar' | 'sw' | 'hi' | 'ur';
-
-interface Specialty {
-  id: string;
-  name: string;
-  category: string;
-  recoveryDays: string;
-  iranPrice: number;
-  indiaPrice: number;
-  uaeTurkeyPrice: number;
-  usUkPrice: number;
-}
-
-const SPECIALTIES: Specialty[] = [
-  {
-    id: 'rhinoplasty',
-    name: 'Rhinoplasty (Nose Reshaping)',
-    category: 'Cosmetic & Plastic Surgery',
-    recoveryDays: '7–10 days',
-    iranPrice: 1650,
-    indiaPrice: 2800,
-    uaeTurkeyPrice: 4500,
-    usUkPrice: 8500,
-  },
-  {
-    id: 'dental-implants',
-    name: 'Dental Implants (Full Arch / Single)',
-    category: 'Advanced Dentistry',
-    recoveryDays: '5–7 days',
-    iranPrice: 550,
-    indiaPrice: 800,
-    uaeTurkeyPrice: 1500,
-    usUkPrice: 2800,
-  },
-  {
-    id: 'lasik',
-    name: 'LASIK / Femto-LASIK (Both Eyes)',
-    category: 'Ophthalmology',
-    recoveryDays: '2–3 days',
-    iranPrice: 1100,
-    indiaPrice: 1400,
-    uaeTurkeyPrice: 2800,
-    usUkPrice: 4200,
-  },
-  {
-    id: 'hair-transplant',
-    name: 'Hair Transplant (FUE / Micro-FUE)',
-    category: 'Aesthetic Restoration',
-    recoveryDays: '3–4 days',
-    iranPrice: 1250,
-    indiaPrice: 2000,
-    uaeTurkeyPrice: 2600,
-    usUkPrice: 6000,
-  },
-  {
-    id: 'ivf',
-    name: 'IVF (In Vitro Fertilization Complete Cycle)',
-    category: 'Fertility & Reproductive Health',
-    recoveryDays: '12–15 days',
-    iranPrice: 3200,
-    indiaPrice: 4500,
-    uaeTurkeyPrice: 7500,
-    usUkPrice: 15000,
-  },
-  {
-    id: 'orthopedic-knee',
-    name: 'Total Knee Replacement (Bilateral Available)',
-    category: 'Orthopedic Surgery',
-    recoveryDays: '14–21 days',
-    iranPrice: 4200,
-    indiaPrice: 7500,
-    uaeTurkeyPrice: 1100,
-    usUkPrice: 22000,
-  },
-  {
-    id: 'cardiology',
-    name: 'Cardiology (Angioplasty & Stent Placement)',
-    category: 'Cardiovascular Care',
-    recoveryDays: '7–10 days',
-    iranPrice: 3800,
-    indiaPrice: 6500,
-    uaeTurkeyPrice: 9500,
-    usUkPrice: 20000,
-  },
-  {
-    id: 'oncology',
-    name: 'Oncology (Initial Clinical Protocol & Surgery)',
-    category: 'Advanced Oncology',
-    recoveryDays: '14–28 days',
-    iranPrice: 4500,
-    indiaPrice: 8000,
-    uaeTurkeyPrice: 12000,
-    usUkPrice: 25000,
-  },
-  {
-    id: 'bariatric',
-    name: 'Bariatric Sleeve Surgery (Laparoscopic)',
-    category: 'Metabolic & Weight Loss Surgery',
-    recoveryDays: '7–10 days',
-    iranPrice: 2850,
-    indiaPrice: 4800,
-    uaeTurkeyPrice: 6500,
-    usUkPrice: 12000,
-  },
-];
-
-const I18N: Record<Language, any> = {
-  en: {
-    brand: 'MAHAM HEALTH',
-    badge: 'PREMIUM MEDICAL CONCIERGE • IRAN DESTINATION',
-    heroTitle: 'World-Class Healthcare, Coordinated Around You',
-    heroSub: 'Connecting international patients with board-certified professors and accredited surgical centers in Iran with white-glove VIP assistance.',
-    startAssessment: 'Start Assessment',
-    whatsappDirect: 'Chat on WhatsApp',
-    statPartners: '40+ IPD Partner Centers',
-    statSpecialists: '180+ Board-Certified Specialists',
-    statSavings: '70–90% Cost Advantage',
-    statWait: 'Under 3 Days to Coordinate',
-    calculatorTitle: 'Treatment Price & Savings Benchmark',
-    calculatorSub: 'Transparent estimates comparing Iran with international clinical destinations.',
-    selectProcedure: 'Select Clinical Specialty',
-    compareAgainst: 'Compare Benchmark Against',
-    packageTier: 'Concierge Tier',
-    estimatedTotal: 'Estimated Iran Total',
-    estimatedSavings: 'Estimated Patient Savings',
-    timelineTitle: 'Your Patient Journey',
-    timelineSub: 'A seamless 5-stage medical travel experience managed by personal coordinators.',
-    packagesTitle: 'Concierge Care Packages',
-    packagesSub: 'Choose the level of clinical support and VIP facilitation required for your visit.',
-    step1: 'Step 1: Clinical Focus',
-    step2: 'Step 2: Medical Profile',
-    step3: 'Step 3: Verification & Contact',
-    submit: 'Submit Confidential Request',
-    male: 'Male',
-    female: 'Female',
-    uploadLabel: 'Upload Medical Records / Photos (PDF, JPG, PNG up to 10MB)',
-    essential: 'Essential Medical Care',
-    luxury: 'Luxury VIP Concierge',
-    disclaimer: 'Benchmarked estimates are for reference only. Final clinical quotes require formal physician review.'
-  },
-  fa: {
-    brand: 'ماهان هلث',
-    badge: 'خدمات ویژه درمان و گردشگری سلامت • مقصد ایران',
-    heroTitle: 'خدمات درمانی در کلاس جهانی، با برنامه‌ریزی اختصاصی',
-    heroSub: 'ارتباط مستقیم بیماران بین‌المللی با جراحان برجسته و مراکز فوق‌تخصصی دارای مجوز IPD در ایران به همراه همراهی VIP.',
-    startAssessment: 'درخواست مشاوره تخصصی',
-    whatsappDirect: 'گفتگو در واتس‌اپ',
-    statPartners: '+۴۰ مرکز درمانی معتبر IPD',
-    statSpecialists: '+۱۸۰ پزشک فوق‌تخصص و استاد دانشگاه',
-    statSavings: '۷۰٪ تا ۹۰٪ صرفه‌جویی هزینه‌ای',
-    statWait: 'هماهنگی پرونده کمتر از ۳ روز',
-    calculatorTitle: 'محاسبه‌گر و مقایسه هزینه درمان',
-    calculatorSub: 'برآورد شفاف قیمت‌ها در مقایسه با سایر قطب‌های پزشکی منطقه و جهان.',
-    selectProcedure: 'انتخاب تخصص بالینی',
-    compareAgainst: 'مقایسه با مقصد',
-    packageTier: 'نوع بسته خدمات',
-    estimatedTotal: 'برآورد هزینه در ایران',
-    estimatedSavings: 'میزان صرفه‌جویی تخمینی',
-    timelineTitle: 'مسیر همراهی با بیمار',
-    timelineSub: 'تجربه‌ای ۵ مرحله‌ای، امن و مطمئن از مشاوره اولیه تا ترخیص و پیگیری.',
-    packagesTitle: 'بسته‌های خدمات تشریفات و مراقبت',
-    packagesSub: 'سطح پشتیبانی بالینی، اقامت و همراهی اختصاصی مورد نظر خود را انتخاب کنید.',
-    step1: 'مرحله ۱: نوع درمان',
-    step2: 'مرحله ۲: مشخصات پزشکی',
-    step3: 'مرحله ۳: اطلاعات تماس و تایید',
-    submit: 'ثبت محرمانه درخواست',
-    male: 'مرد',
-    female: 'زن',
-    uploadLabel: 'آپلود مدارک یا تصاویر پزشکی (PDF، JPG تا ۱۰ مگابایت)',
-    essential: 'بسته استاندارد درمانی',
-    luxury: 'بسته تشریفات اختصاصی VIP',
-    disclaimer: 'قیمت‌ها برآورد اولیه هستند؛ هزینه قطعی پس از بررسی پرونده توسط پزشک تعیین می‌شود.'
-  },
-  ar: {
-    brand: 'مهام هيلث',
-    badge: 'خدمات الكونسيرج الطبي الفاخر • وجهة إيران',
-    heroTitle: 'رعاية صحية عالمية المستوى، منسقة خصيصاً لك',
-    heroSub: 'ربط المرضى الدوليين بنخبة من الجراحين ومراكز الاعتماد الدولي IPD في إيران مع رعاية VIP متكاملة.',
-    startAssessment: 'ابدأ الاستشارة الطبية',
-    whatsappDirect: 'محادثة عبر واتساب',
-    statPartners: '+٤٠ مركزاً طبياً معتمداً IPD',
-    statSpecialists: '+١٨٠ طبيباً استشارياً',
-    statSavings: 'توفير بين ٧٠٪ إلى ٩٠٪',
-    statWait: 'أقل من ٣ أيام للتنسيق',
-    calculatorTitle: 'حاسبة ومقارنة تكلفة العلاج',
-    calculatorSub: 'تقديرات دقيقة وشفافة تقارن التكاليف في إيران بالوجهات الدولية.',
-    selectProcedure: 'اختر التخصص الطبي',
-    compareAgainst: 'المقارنة مع دولة',
-    packageTier: 'باقة الكونسيرج',
-    estimatedTotal: 'التكلفة التقديرية في إيران',
-    estimatedSavings: 'نسبة التوفير المتوقعة',
-    timelineTitle: 'رحلة علاجك خطوة بخطوة',
-    timelineSub: 'مسار رعاية متكامل من ٥ مراحل يضمن الراحة والخصوصية والأمان.',
-    packagesTitle: 'باقات الرعاية والضيافة',
-    packagesSub: 'اختر باقة التنسيق والإقامة التي تلبي احتياجاتك العلاجية.',
-    step1: 'المرحلة ١: التخصص المطلوب',
-    step2: 'المرحلة ٢: الملف الصحي',
-    step3: 'المرحلة ٣: التأكيد وبيانات الاتصال',
-    submit: 'إرسال الطلب بسرية',
-    male: 'ذكر',
-    female: 'أنثى',
-    uploadLabel: 'تحميل التقارير أو الصور الطبية (PDF، JPG حتى ١٠ ميغابايت)',
-    essential: 'الرعاية الطبية الأساسية',
-    luxury: 'كونسيرج كبار الشخصيات VIP',
-    disclaimer: 'الأسعار المعروضة استرشادية؛ السعر النهائي يعتمد على التقييم السريري للطبيب.'
-  },
-  sw: {
-    brand: 'MAHAM HEALTH',
-    badge: 'HUDUMA BORA ZA MATIBABU YA KIMATAIFA • IRAN',
-    heroTitle: 'Huduma za Afya za Kiwango cha Juu, Zilizoratibiwa Kwako',
-    heroSub: 'Kuunganisha wagonjwa wa kimataifa na madaktari bingwa walioidhinishwa na hospitali za IPD nchini Iran.',
-    startAssessment: 'Anza Tathmini ya Matibabu',
-    whatsappDirect: 'Zungumza kwenye WhatsApp',
-    statPartners: 'Vituo 40+ vya IPD',
-    statSpecialists: 'Madaktari Bingwa 180+',
-    statSavings: '70–90% ya Unaafuu wa Gharama',
-    statWait: 'Chini ya Siku 3 Kuratibu',
-    calculatorTitle: 'Kikokotoo cha Gharama za Matibabu',
-    calculatorSub: 'Ulinganisho wa wazi wa bei nchini Iran dhidi ya nchi nyingine duniani.',
-    selectProcedure: 'Chagua Aina ya Matibabu',
-    compareAgainst: 'Linganisha Na',
-    packageTier: 'Kiwango cha Huduma',
-    estimatedTotal: 'Makadirio ya Iran',
-    estimatedSavings: 'Makadirio ya Kuokoa',
-    timelineTitle: 'Safari ya Mgonjwa',
-    timelineSub: 'Hatua 5 wazi na salama kuanzia mazungumzo ya kwanza hadi kupona kabisa.',
-    packagesTitle: 'Vifurushi vya Huduma',
-    packagesSub: 'Chagua kiwango cha huduma na usafiri kinacholingana na mahitaji yako.',
-    step1: 'Hatua 1: Matibabu',
-    step2: 'Hatua 2: Maelezo ya Afya',
-    step3: 'Hatua 3: Maelezo ya Mawasiliano',
-    submit: 'Wasilisha Ombi lako Salama',
-    male: 'Mwanaume',
-    female: 'Mwanamke',
-    uploadLabel: 'Pakia ripoti za matibabu au picha (PDF, JPG hadi 10MB)',
-    essential: 'Huduma Muhimu za Matibabu',
-    luxury: 'Huduma ya Kifahari ya VIP',
-    disclaimer: 'Makadirio haya ni kwa ajili ya mwongozo tu; gharama halisi itathibitishwa na daktari.'
-  },
-  hi: {
-    brand: 'MAHAM HEALTH',
-    badge: 'प्रीमियम मेडिकल कंसीयज • ईरान गंतव्य',
-    heroTitle: 'विश्व स्तरीय स्वास्थ्य सेवा, आपके लिए समन्वित',
-    heroSub: 'ईरान के शीर्ष बोर्ड-प्रमाणित सर्जनों और आधुनिक अस्पतालों के साथ अंतरराष्ट्रीय मरीजों का समन्वय।',
-    startAssessment: 'परामर्श शुरू करें',
-    whatsappDirect: 'व्हाट्सएप पर बात करें',
-    statPartners: '40+ आईपीडी अधिकृत केंद्र',
-    statSpecialists: '180+ विशेषज्ञ चिकित्सक',
-    statSavings: '70–90% तक की बचत',
-    statWait: '3 दिनों से कम में समन्वय',
-    calculatorTitle: 'उपचार मूल्य और बचत तुलना',
-    calculatorSub: 'ईरान और अन्य देशों के बीच पारदर्शी चिकित्सा लागत तुलना।',
-    selectProcedure: 'उपचार चुनें',
-    compareAgainst: 'तुलना करें',
-    packageTier: 'कंसीयज पैकेज',
-    estimatedTotal: 'ईरान में अनुमानित लागत',
-    estimatedSavings: 'अनुमानित बचत',
-    timelineTitle: 'आपकी स्वास्थ्य यात्रा',
-    timelineSub: 'परामर्श से लेकर स्वस्थ होने तक 5 चरणों की सुरक्षित और स्पष्ट यात्रा।',
-    packagesTitle: 'कंसीयज पैकेज',
-    packagesSub: 'अपनी आवश्यकताओं के अनुसार व्यक्तिगत सहायता और वीआईपी सेवाएं चुनें।',
-    step1: 'चरण 1: उपचार का चयन',
-    step2: 'चरण 2: स्वास्थ्य विवरण',
-    step3: 'चरण 3: संपर्क और पुष्टि',
-    submit: 'गोपनीय अनुरोध भेजें',
-    male: 'पुरुष',
-    female: 'महिला',
-    uploadLabel: 'मेडिकल रिपोर्ट या फोटो अपलोड करें (PDF, JPG अधिकतम 10MB)',
-    essential: 'आवश्यक चिकित्सा देखभाल',
-    luxury: 'लक्जरी वीआईपी कंसीयज',
-    disclaimer: 'अनुमानित मूल्य केवल संदर्भ के लिए हैं; वास्तविक लागत चिकित्सक द्वारा निर्धारित होगी।'
-  },
-  ur: {
-    brand: 'مہام ہیلتھ',
-    badge: 'پریمیم میڈیکل کنسیرج • ایران منزل',
-    heroTitle: 'عالمی معیار کا علاج، آپ کے لیے منظم',
-    heroSub: 'ایران کے نامور جراحوں اور منظور شدہ ہسپتالوں کے ساتھ بین الاقوامی مریضوں کا براہ راست رابطہ۔',
-    startAssessment: 'مشاورت شروع کریں',
-    whatsappDirect: 'واٹس ایپ پر رابطہ کریں',
-    statPartners: '+۴۰ منظور شدہ IPD مراکز',
-    statSpecialists: '+۱۸۰ ماہر ڈاکٹرز',
-    statSavings: '۷۰٪ سے ۹۰٪ تک بچت',
-    statWait: '۳ دن سے کم میں رابطہ',
-    calculatorTitle: 'علاج کی لاگت اور بچت کا موازنہ',
-    calculatorSub: 'ایران اور دنیا کے دیگر مراکز کے درمیان شفاف موازنہ۔',
-    selectProcedure: 'علاج کا انتخاب کریں',
-    compareAgainst: 'کس سے موازنہ کریں',
-    packageTier: 'کنسیرج پیکیج',
-    estimatedTotal: 'ایران میں متوقع لاگت',
-    estimatedSavings: 'متوقع بچت',
-    timelineTitle: 'آپ کا طبی سفر',
-    timelineSub: 'پہلی مشاورت سے لے کر مکمل صحت یابی تک ۵ مراحل پر مشتمل محفوظ سفر۔',
-    packagesTitle: 'کنسیرج پیکجز',
-    packagesSub: 'اپنی ترجیحات کے مطابق مناسب پیکیج منتخب کریں۔',
-    step1: 'مرحلہ ۱: علاج کی تفصیل',
-    step2: 'مرحلہ ۲: طبی معلومات',
-    step3: 'مرحلہ ۳: رابطہ اور تصدیق',
-    submit: 'درخواست محفوظ طریقے سے جمع کروائیں',
-    male: 'مرد',
-    female: 'عورت',
-    uploadLabel: 'میڈیکل رپورٹس یا تصاویر اپ لوڈ کریں (PDF, JPG زیادہ سے زیادہ 10MB)',
-    essential: 'بنیادی طبی نگہداشت',
-    luxury: 'لگژری وی آئی پی کنسیرج',
-    disclaimer: 'یہ تخمینہ صرف معلومات کے لیے ہے، حتمی قیمت ڈاکٹر کے جائزے کے بعد طے ہوگی۔'
-  }
+// Specialty icon mapping
+const SPECIALTY_ICONS: Record<string, React.ReactNode> = {
+  'rhinoplasty': <Sparkles className="w-5 h-5 text-amber-400" />,
+  'dental': <Smile className="w-5 h-5 text-amber-400" />,
+  'lasik': <Eye className="w-5 h-5 text-amber-400" />,
+  'hair-transplant': <Scissors className="w-5 h-5 text-amber-400" />,
+  'ivf': <Users className="w-5 h-5 text-amber-400" />,
+  'knee-replacement': <Activity className="w-5 h-5 text-amber-400" />,
+  'cardiology-stent': <HeartPulse className="w-5 h-5 text-amber-400" />,
+  'cancer-treatment': <Stethoscope className="w-5 h-5 text-amber-400" />,
+  'bariatric-sleeve': <Compass className="w-5 h-5 text-amber-400" />
 };
 
-const JOURNEY_STEPS = [
-  {
-    phase: '01',
-    title: 'Clinical Assessment & Teleconsult',
-    desc: 'Confidential review of your scans and medical history with board-certified professors.',
-    icon: Stethoscope
-  },
-  {
-    phase: '02',
-    title: 'VIP Arrival & Concierge Escort',
-    desc: 'Medical visa facilitation, airport private transfer, and check-in to partnered 5-star suites.',
-    icon: Plane
-  },
-  {
-    phase: '03',
-    title: 'IPD Hospitalization & Surgery',
-    desc: 'Direct admission to internationally accredited surgical centers with dedicated translators.',
-    icon: Building2
-  },
-  {
-    phase: '04',
-    title: 'Monitored Recovery & Nursing',
-    desc: 'Private nursing, post-op clinical checkups, and bespoke nutrition plans during healing.',
-    icon: HeartHandshake
-  },
-  {
-    phase: '05',
-    title: 'Fit-to-Fly & Post-Discharge Care',
-    desc: 'Comprehensive fit-to-fly clinical certification and 6 months of remote follow-up.',
-    icon: CheckCircle2
-  }
-];
+export default function HomePage() {
+  const [currentLocale, setCurrentLocale] = useState<SupportedLocale>('en');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedSpecialty, setSelectedSpecialty] = useState<string>('rhinoplasty');
+  const [isPending, startTransition] = useTransition();
 
-export default function Home() {
-  const [lang, setLang] = useState<Language>('en');
-  const [modalOpen, setModalOpen] = useState(false);
-  const [step, setStep] = useState<1 | 2 | 3>(1);
-  const [selectedSpecialty, setSelectedSpecialty] = useState<string>(SPECIALTIES[0].id);
-  const [selectedBenchmark, setSelectedBenchmark] = useState<'us' | 'uae' | 'india'>('us');
-  const [selectedPackage, setSelectedPackage] = useState<'essential' | 'luxury'>('luxury');
+  // Consultation Wizard State
+  const [wizardStep, setWizardStep] = useState<number>(1);
+  const [formSubmitted, setFormSubmitted] = useState<boolean>(false);
+  const [formSubmitting, setFormSubmitting] = useState<boolean>(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
+  // Form Fields
   const [formData, setFormData] = useState({
-    specialty: SPECIALTIES[0].name,
-    timeframe: 'Immediate (within 3 weeks)',
-    age: '',
-    gender: 'Female',
-    notes: '',
-    name: '',
-    country: '',
-    whatsapp: '',
-    email: '',
-    package: 'Luxury VIP Concierge',
-    fileName: ''
+    specialtyId: 'rhinoplasty',
+    timeframe: '1-3-months',
+    ageGroup: '30-45',
+    gender: 'prefer-not-to-say',
+    conciergeTier: 'vip',
+    patientName: '',
+    patientEmail: '',
+    patientPhone: '',
+    patientCountry: '',
+    briefNotes: '',
+    fileDetails: ''
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-
-  const t = I18N[lang] || I18N.en;
-  const isRTL = lang === 'fa' || lang === 'ar' || lang === 'ur';
-
-  // Calculator calculations
-  const currentSpecialty = SPECIALTIES.find((s) => s.id === selectedSpecialty) || SPECIALTIES[0];
-  const pkgOffset = selectedPackage === 'luxury' ? 1200 : 450;
-  const iranTotal = currentSpecialty.iranPrice + pkgOffset;
-
-  let benchmarkPrice = currentSpecialty.usUkPrice;
-  if (selectedBenchmark === 'uae') benchmarkPrice = currentSpecialty.uaeTurkeyPrice;
-  if (selectedBenchmark === 'india') benchmarkPrice = currentSpecialty.indiaPrice;
-
-  const dollarSavings = Math.max(0, benchmarkPrice - iranTotal);
-  const percentSavings = Math.round((dollarSavings / benchmarkPrice) * 100);
-
-  // Close modal on Escape
+  // Client-side locale detection
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setModalOpen(false);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    try {
+      const savedLocale = localStorage.getItem('maham_locale') as SupportedLocale;
+      if (savedLocale && TRANSLATIONS[savedLocale]) {
+        setCurrentLocale(savedLocale);
+      } else {
+        const browserLang = navigator.language.split('-')[0].toLowerCase();
+        if (browserLang === 'fa' || browserLang === 'ar' || browserLang === 'sw' || browserLang === 'hi' || browserLang === 'ur') {
+          setCurrentLocale(browserLang as SupportedLocale);
+        }
+      }
+    } catch {
+      // Fallback stays English
+    }
   }, []);
 
+  const t: LocaleConfig = TRANSLATIONS[currentLocale] || TRANSLATIONS.en;
+  const isRtl = t.dir === 'rtl';
+
+  const handleLanguageChange = (locale: SupportedLocale) => {
+    startTransition(() => {
+      setCurrentLocale(locale);
+      try {
+        localStorage.setItem('maham_locale', locale);
+      } catch {}
+      document.documentElement.dir = TRANSLATIONS[locale].dir;
+      document.documentElement.lang = locale;
+    });
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({ ...prev, fileName: e.target.files![0].name }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleWizardSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setFormSubmitting(true);
+    setFormError(null);
 
     try {
-      const response = await fetch('https://formspree.io/f/mjykapno', {
+      const response = await fetch('https://formspree.io/f/mzdjwwba', {
         method: 'POST',
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
         body: JSON.stringify({
-          ...formData,
-          language: lang,
-          submittedAt: new Date().toISOString(),
-          source: 'Maham Health Production Web Portal'
+          specialty: formData.specialtyId,
+          tier: formData.conciergeTier,
+          timeframe: formData.timeframe,
+          ageGroup: formData.ageGroup,
+          gender: formData.gender,
+          fullName: formData.patientName,
+          email: formData.patientEmail,
+          phone: formData.patientPhone,
+          country: formData.patientCountry,
+          notes: formData.briefNotes,
+          locale: currentLocale,
+          submittedAt: new Date().toISOString()
         })
       });
 
       if (response.ok) {
-        setSubmitted(true);
+        setFormSubmitted(true);
       } else {
-        alert('Could not submit inquiry automatically. Please contact us directly at health@maham-group.com or via WhatsApp.');
+        setFormError('Submission failed. Please contact us directly via WhatsApp or health@maham-group.com');
       }
-    } catch (err) {
-      alert('Network issue encountered. Please reach our medical team directly at health@maham-group.com.');
+    } catch {
+      setFormError('Network connection error. Please contact our 24/7 desk via WhatsApp.');
     } finally {
-      setIsSubmitting(false);
+      setFormSubmitting(false);
     }
   };
 
-  const waLink = `https://wa.me/989120000000?text=${encodeURIComponent(
-    `Hello Maham Health. I am interested in confidential coordination for: ${formData.specialty}`
-  )}`;
-
   return (
-    <div className={`min-h-screen bg-[#08111d] text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-200`} dir={isRTL ? 'rtl' : 'ltr'}>
-      {/* Top Header / Language Switcher */}
-      <header className="sticky top-0 z-40 bg-[#08111d]/90 backdrop-blur-md border-b border-slate-800">
+    <div className={`min-h-screen bg-[#08111d] text-slate-100 font-sans selection:bg-amber-400 selection:text-slate-900 ${isRtl ? 'rtl' : 'ltr'}`} dir={t.dir}>
+      {/* Background radial effects */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gradient-to-b from-blue-900/20 via-indigo-900/10 to-transparent blur-3xl opacity-60" />
+        <div className="absolute top-[30%] right-[-10%] w-[600px] h-[600px] bg-amber-500/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[20%] left-[-10%] w-[600px] h-[600px] bg-blue-600/5 blur-[120px] rounded-full" />
+      </div>
+
+      {/* HEADER NAVIGATION */}
+      <header className="sticky top-0 z-50 backdrop-blur-xl bg-[#08111d]/85 border-b border-slate-800/80 transition-all">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <div className="w-10 h-10 rounded-lg bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-slate-950 font-black tracking-widest text-lg shadow-lg shadow-amber-500/10">
-              MH
+          {/* Brand Logo */}
+          <Link href="/" className="flex items-center gap-3 group">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20 ring-1 ring-amber-300/30 group-hover:scale-105 transition-transform">
+              <span className="font-serif font-black text-xl text-slate-950">M</span>
             </div>
-            <div>
-              <span className="text-xl font-bold tracking-wider text-white uppercase block leading-tight">
-                {t.brand}
+            <div className="flex flex-col">
+              <span className="text-xl font-bold tracking-tight text-white flex items-center gap-1.5 font-serif">
+                MAHAM <span className="text-amber-400 font-light text-sm tracking-widest uppercase">HEALTH</span>
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-amber-400 font-semibold">
-                Medical Concierge
+              <span className="text-[10px] text-slate-400 tracking-wider uppercase font-medium">
+                Soorin Maham Medical Concierge
               </span>
             </div>
+          </Link>
+
+          {/* Desktop Nav Links */}
+          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+            <a href="#specialties" className="hover:text-amber-400 transition-colors">
+              {t.nav.specialties}
+            </a>
+            <a href="#why-iran" className="hover:text-amber-400 transition-colors">
+              {t.nav.whyIran}
+            </a>
+            <a href="#concierge" className="hover:text-amber-400 transition-colors">
+              {t.nav.concierge}
+            </a>
+            <a href="#consultation" className="hover:text-amber-400 transition-colors">
+              {t.nav.consultation}
+            </a>
+            <a href="#hospitals" className="hover:text-amber-400 transition-colors">
+              {t.nav.hospitals}
+            </a>
+          </nav>
+
+          {/* Action CTAs & Language Selector */}
+          <div className="hidden lg:flex items-center gap-4">
+            {/* Language Dropdown Selector */}
+            <div className="relative group">
+              <button 
+                type="button" 
+                className="flex items-center gap-2 px-3 py-1.5 text-xs font-semibold text-slate-300 bg-slate-900/80 border border-slate-700/80 rounded-lg hover:border-amber-400/50 hover:text-white transition-all"
+                aria-label="Select Language"
+              >
+                <Globe2 className="w-3.5 h-3.5 text-amber-400" />
+                <span>{t.nativeName}</span>
+                <span className="text-slate-500 text-[10px]">▼</span>
+              </button>
+
+              <div className="absolute right-0 mt-2 w-48 py-2 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all z-50">
+                <div className="px-3 py-1 text-[11px] font-semibold text-slate-500 uppercase tracking-wider border-b border-slate-800 mb-1">
+                  Supported Languages
+                </div>
+                {(Object.keys(TRANSLATIONS) as SupportedLocale[]).map((loc) => (
+                  <button
+                    key={loc}
+                    onClick={() => handleLanguageChange(loc)}
+                    className={`w-full px-3 py-2 text-left text-xs flex items-center justify-between hover:bg-slate-800/80 transition-colors ${
+                      currentLocale === loc ? 'text-amber-400 font-bold bg-amber-400/5' : 'text-slate-300'
+                    }`}
+                  >
+                    <span>{TRANSLATIONS[loc].nativeName}</span>
+                    <span className="text-[10px] text-slate-500 uppercase">{loc}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Direct Consult Button */}
+            <a
+              href="#consultation"
+              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-semibold text-sm shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2"
+            >
+              <span>{t.hero.ctaPrimary}</span>
+              <ArrowRight className={`w-4 h-4 ${isRtl ? 'rotate-180' : ''}`} />
+            </a>
           </div>
 
-          <div className="flex items-center space-x-3 sm:space-x-6 rtl:space-x-reverse">
-            {/* Language Selector */}
-            <div className="flex items-center bg-slate-900 border border-slate-700/80 rounded-full p-1 text-xs">
-              {(['en', 'fa', 'ar', 'sw', 'hi', 'ur'] as Language[]).map((lng) => (
+          {/* Mobile Menu Button */}
+          <div className="flex md:hidden items-center gap-3">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:text-white"
+              aria-label="Toggle Menu"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="md:hidden bg-slate-900/95 border-b border-slate-800 px-4 pt-3 pb-6 space-y-4">
+            <div className="grid grid-cols-3 gap-2 pb-3 border-b border-slate-800">
+              {(Object.keys(TRANSLATIONS) as SupportedLocale[]).map((loc) => (
                 <button
-                  key={lng}
-                  onClick={() => setLang(lng)}
-                  className={`px-2.5 py-1 rounded-full uppercase font-medium transition-all ${
-                    lang === lng
-                      ? 'bg-amber-500 text-slate-950 font-bold shadow'
-                      : 'text-slate-400 hover:text-white'
+                  key={loc}
+                  onClick={() => {
+                    handleLanguageChange(loc);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`px-2 py-1.5 rounded-lg text-xs font-medium text-center border ${
+                    currentLocale === loc 
+                      ? 'border-amber-400 text-amber-400 bg-amber-400/10' 
+                      : 'border-slate-800 text-slate-400 hover:border-slate-700'
                   }`}
                 >
-                  {lng}
+                  {TRANSLATIONS[loc].nativeName}
                 </button>
               ))}
             </div>
 
-            <button
-              onClick={() => {
-                setModalOpen(true);
-                setStep(1);
-              }}
-              className="hidden sm:inline-flex items-center space-x-2 rtl:space-x-reverse bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 px-5 py-2.5 rounded-full font-bold text-sm shadow-md transition-all active:scale-95"
-            >
-              <span>{t.startAssessment}</span>
-              <ChevronRight className="w-4 h-4 rtl:rotate-180" />
-            </button>
-          </div>
-        </div>
-      </header>
+            <nav className="flex flex-col space-y-3 text-sm font-medium text-slate-200">
+              <a 
+                href="#specialties" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="hover:text-amber-400 py-1"
+              >
+                {t.nav.specialties}
+              </a>
+              <a 
+                href="#why-iran" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="hover:text-amber-400 py-1"
+              >
+                {t.nav.whyIran}
+              </a>
+              <a 
+                href="#concierge" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="hover:text-amber-400 py-1"
+              >
+                {t.nav.concierge}
+              </a>
+              <a 
+                href="#consultation" 
+                onClick={() => setMobileMenuOpen(false)}
+                className="hover:text-amber-400 py-1"
+              >
+                {t.nav.consultation}
+              </a>
+            </nav>
 
-      {/* Hero Section */}
-      <section className="relative pt-12 pb-20 sm:pt-20 sm:pb-28 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent pointer-events-none" />
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center relative z-10">
-          <div className="inline-flex items-center space-x-2 rtl:space-x-reverse bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs px-4 py-1.5 rounded-full mb-6 uppercase tracking-wider font-semibold">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>{t.badge}</span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight mb-6">
-            {t.heroTitle}
-          </h1>
-          <p className="text-base sm:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-10">
-            {t.heroSub}
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button
-              onClick={() => {
-                setModalOpen(true);
-                setStep(1);
-              }}
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-3 rtl:space-x-reverse bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 px-8 py-4 rounded-full font-bold text-base shadow-lg shadow-amber-500/20 transition-all active:scale-95"
-            >
-              <span>{t.startAssessment}</span>
-              <ArrowRight className="w-5 h-5 rtl:rotate-180" />
-            </button>
             <a
-              href="https://wa.me/989055240772"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 rtl:space-x-reverse bg-slate-900/90 hover:bg-slate-800 border border-slate-700 px-7 py-4 rounded-full text-slate-200 font-semibold text-base transition-all"
+              href="#consultation"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full block text-center py-3 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-bold text-sm shadow-md"
             >
-              <MessageCircle className="w-5 h-5 text-emerald-400" />
-              <span>{t.whatsappDirect}</span>
+              {t.hero.ctaPrimary}
             </a>
           </div>
+        )}
+      </header>
 
-          {/* Quick Metrics */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16 text-left rtl:text-right">
-            <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
-              <Building2 className="w-6 h-6 text-amber-400 mb-2" />
-              <div className="text-xl font-bold text-white">{t.statPartners}</div>
-              <div className="text-xs text-slate-400 mt-1">Accredited surgical hospitals</div>
-            </div>
-            <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
-              <Award className="w-6 h-6 text-amber-400 mb-2" />
-              <div className="text-xl font-bold text-white">{t.statSpecialists}</div>
-              <div className="text-xs text-slate-400 mt-1">Academic department heads</div>
-            </div>
-            <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
-              <ShieldCheck className="w-6 h-6 text-amber-400 mb-2" />
-              <div className="text-xl font-bold text-white">{t.statSavings}</div>
-              <div className="text-xs text-slate-400 mt-1">Compared to US & UK rates</div>
-            </div>
-            <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5">
-              <Clock className="w-6 h-6 text-amber-400 mb-2" />
-              <div className="text-xl font-bold text-white">{t.statWait}</div>
-              <div className="text-xs text-slate-400 mt-1">Rapid concierge turnaround</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Price & Savings Calculator */}
-      <section className="py-16 bg-slate-950/60 border-y border-slate-800">
+      {/* HERO SECTION */}
+      <section className="relative pt-16 pb-20 md:pt-24 md:pb-32 overflow-hidden z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center space-x-2 rtl:space-x-reverse text-amber-400 text-sm font-semibold mb-2">
-              <Calculator className="w-4 h-4" />
-              <span>TRANSPARENT MEDICAL SAVINGS</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4">
-              {t.calculatorTitle}
-            </h2>
-            <p className="text-slate-400 text-sm sm:text-base">
-              {t.calculatorSub}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            {/* Controls */}
-            <div className="lg:col-span-7 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-6">
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
-                  {t.selectProcedure}
-                </label>
-                <select
-                  value={selectedSpecialty}
-                  onChange={(e) => setSelectedSpecialty(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-400"
-                >
-                  {SPECIALTIES.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.name} ({s.category})
-                    </option>
-                  ))}
-                </select>
+          <div className="grid lg:grid-cols-12 gap-12 items-center">
+            {/* Left Column: Core Value Proposition */}
+            <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-amber-400/30 text-amber-300 text-xs font-semibold tracking-wide shadow-inner">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                <span>{t.hero.badge}</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
-                    {t.compareAgainst}
-                  </label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {[
-                      { key: 'us', label: 'US / UK' },
-                      { key: 'uae', label: 'UAE / TR' },
-                      { key: 'india', label: 'India' }
-                    ].map((b) => (
-                      <button
-                        key={b.key}
-                        type="button"
-                        onClick={() => setSelectedBenchmark(b.key as any)}
-                        className={`py-2 px-3 text-xs font-semibold rounded-lg border transition-all ${
-                          selectedBenchmark === b.key
-                            ? 'bg-amber-500 text-slate-950 border-amber-400'
-                            : 'bg-slate-950 text-slate-300 border-slate-700 hover:border-slate-500'
-                        }`}
-                      >
-                        {b.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white font-serif leading-[1.15]">
+                {t.hero.title}
+              </h1>
 
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
-                    {t.packageTier}
-                  </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedPackage('essential')}
-                      className={`py-2 px-3 text-xs font-semibold rounded-lg border transition-all ${
-                        selectedPackage === 'essential'
-                          ? 'bg-amber-500 text-slate-950 border-amber-400'
-                          : 'bg-slate-950 text-slate-300 border-slate-700 hover:border-slate-500'
-                      }`}
-                    >
-                      Essential Care
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedPackage('luxury')}
-                      className={`py-2 px-3 text-xs font-semibold rounded-lg border transition-all ${
-                        selectedPackage === 'luxury'
-                          ? 'bg-amber-500 text-slate-950 border-amber-400'
-                          : 'bg-slate-950 text-slate-300 border-slate-700 hover:border-slate-500'
-                      }`}
-                    >
-                      Luxury VIP
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4 border-t border-slate-800 text-xs text-slate-400 flex items-center justify-between">
-                <span>Estimated Stay & Recovery in Iran:</span>
-                <span className="font-semibold text-slate-200">{currentSpecialty.recoveryDays}</span>
-              </div>
-            </div>
-
-            {/* Savings Display Card */}
-            <div className="lg:col-span-5 bg-gradient-to-br from-slate-900 to-[#101b2b] border border-amber-500/30 rounded-2xl p-6 sm:p-8 relative overflow-hidden shadow-2xl">
-              <div className="text-xs uppercase tracking-widest text-amber-400 font-bold mb-2">
-                Comparative Cost Summary
-              </div>
-              <div className="flex items-baseline space-x-2 rtl:space-x-reverse mb-6">
-                <span className="text-4xl sm:text-5xl font-black text-white">
-                  ${iranTotal.toLocaleString()}
-                </span>
-                <span className="text-xs text-slate-400">USD (Iran Total)</span>
-              </div>
-
-              <div className="space-y-3 mb-6 bg-slate-950/50 p-4 rounded-xl border border-slate-800/80 text-sm">
-                <div className="flex justify-between items-center text-slate-300">
-                  <span>Selected Benchmark Price:</span>
-                  <span className="font-mono text-slate-400 line-through">
-                    ${benchmarkPrice.toLocaleString()} USD
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-amber-400 font-bold text-base">
-                  <span>Net Estimated Saving:</span>
-                  <span>${dollarSavings.toLocaleString()} ({percentSavings}%)</span>
-                </div>
-              </div>
-
-              <button
-                onClick={() => {
-                  setFormData((prev) => ({ ...prev, specialty: currentSpecialty.name }));
-                  setModalOpen(true);
-                  setStep(1);
-                }}
-                className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 py-3.5 rounded-xl font-bold text-sm shadow-md transition-all active:scale-95"
-              >
-                Book Consultation for {currentSpecialty.id}
-              </button>
-
-              <p className="text-[11px] text-slate-400 text-center mt-3">
-                {t.disclaimer}
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto lg:mx-0 font-normal">
+                {t.hero.subtitle}
               </p>
+
+              {/* Action Buttons */}
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                <a
+                  href="#consultation"
+                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-bold text-base shadow-xl shadow-amber-500/25 hover:shadow-amber-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+                >
+                  <span>{t.hero.ctaPrimary}</span>
+                  <ArrowRight className={`w-5 h-5 ${isRtl ? 'rotate-180' : ''}`} />
+                </a>
+
+                <a
+                  href="https://wa.me/989055240772"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto px-7 py-4 rounded-xl bg-slate-900/80 hover:bg-slate-800/80 border border-slate-700/80 hover:border-slate-600 text-slate-200 font-semibold text-base transition-all flex items-center justify-center gap-3 backdrop-blur-md"
+                >
+                  <MessageSquare className="w-5 h-5 text-emerald-400" />
+                  <span>{t.hero.ctaSecondary}</span>
+                </a>
+              </div>
+
+              {/* Key Trust Metrics */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-800/80">
+                <div className="space-y-1">
+                  <div className="text-2xl font-bold text-white font-serif tracking-tight">40+</div>
+                  <div className="text-xs text-slate-400 font-medium">IPD Partner Centers</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-2xl font-bold text-white font-serif tracking-tight">180+</div>
+                  <div className="text-xs text-slate-400 font-medium">Board-Certified Specialists</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-2xl font-bold text-amber-400 font-serif tracking-tight">70–90%</div>
+                  <div className="text-xs text-slate-400 font-medium">Potential Savings</div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-2xl font-bold text-white font-serif tracking-tight">&lt; 3 Days</div>
+                  <div className="text-xs text-slate-400 font-medium">Waiting Time</div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Benchmark Comparison Table */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 text-center">
-          Official Benchmark Pricing
-        </h2>
-        <p className="text-sm text-slate-400 mb-8 text-center max-w-2xl mx-auto">
-          Compare starting estimates for surgical procedures performed by certified Iranian professors.
-        </p>
+            {/* Right Column: Hero Visual Feature Box */}
+            <div className="lg:col-span-5 relative">
+              <div className="relative rounded-3xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800/90 p-6 md:p-8 shadow-2xl backdrop-blur-xl">
+                {/* Floating Badge */}
+                <div className="absolute -top-4 -right-4 bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 text-xs font-black uppercase tracking-wider px-4 py-1.5 rounded-full shadow-lg">
+                  Direct Care Coordination
+                </div>
 
-        <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/60 shadow-xl">
-          <table className="w-full text-left rtl:text-right text-sm">
-            <thead className="bg-slate-950/80 text-xs uppercase text-slate-400 border-b border-slate-800">
-              <tr>
-                <th className="py-4 px-6">Clinical Specialty</th>
-                <th className="py-4 px-4 text-amber-400 font-bold">Iran Estimate</th>
-                <th className="py-4 px-4">India</th>
-                <th className="py-4 px-4">UAE / Turkey</th>
-                <th className="py-4 px-4">US / UK</th>
-                <th className="py-4 px-6 text-center">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-800 text-slate-300">
-              {SPECIALTIES.map((item) => (
-                <tr key={item.id} className="hover:bg-slate-800/40 transition-colors">
-                  <td className="py-4 px-6 font-semibold text-white">
-                    <div>{item.name}</div>
-                    <div className="text-xs text-slate-400">{item.category} • Stay: {item.recoveryDays}</div>
-                  </td>
-                  <td className="py-4 px-4 font-bold text-amber-300">
-                    ${item.iranPrice.toLocaleString()}
-                  </td>
-                  <td className="py-4 px-4 font-mono text-slate-400">
-                    ${item.indiaPrice.toLocaleString()}
-                  </td>
-                  <td className="py-4 px-4 font-mono text-slate-400">
-                    ${item.uaeTurkeyPrice.toLocaleString()}
-                  </td>
-                  <td className="py-4 px-4 font-mono text-slate-400">
-                    ${item.usUkPrice.toLocaleString()}
-                  </td>
-                  <td className="py-4 px-6 text-center">
-                    <button
-                      onClick={() => {
-                        setFormData((prev) => ({ ...prev, specialty: item.name }));
-                        setModalOpen(true);
-                        setStep(1);
-                      }}
-                      className="text-xs bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-slate-200 px-3.5 py-1.5 rounded-lg border border-slate-700 transition-all font-semibold"
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4 pb-4 border-b border-slate-800">
+                    <div className="w-12 h-12 rounded-2xl bg-amber-400/10 border border-amber-400/30 flex items-center justify-center text-amber-400">
+                      <ShieldCheck className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h2 className="text-base font-bold text-white">Full-Spectrum Medical Concierge</h2>
+                      <p className="text-xs text-slate-400">Licensed IPD Hospitals in Tehran</p>
+                    </div>
+                  </div>
+
+                  {/* Highlights list */}
+                  <div className="space-y-3.5 text-xs text-slate-300">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white block font-medium">Personal Medical Case Officer</strong>
+                        Fluent in English, Arabic, Persian &amp; Swahili at bedside.
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white block font-medium">Expedited Iran T-Visa (Medical Visa)</strong>
+                        Digital pre-approval documentation processed in 3–5 working days.
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white block font-medium">VIP Hospital En-Suite Rooms</strong>
+                        Direct access to accredited private wings at Pars, Khatam, and Gandhi.
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <div>
+                        <strong className="text-white block font-medium">Post-Op Recovery &amp; Chauffeur</strong>
+                        Luxury 5-star hotel partners with round-the-clock nurse monitoring.
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Callout box */}
+                  <div className="mt-4 p-4 rounded-2xl bg-amber-500/5 border border-amber-500/20 text-xs text-amber-200/90 flex items-center justify-between">
+                    <div>
+                      <span className="block font-bold text-amber-300">Need immediate case review?</span>
+                      <span className="text-[11px] text-slate-400">Our medical board replies within 12 hours.</span>
+                    </div>
+                    <a
+                      href="#consultation"
+                      className="px-3.5 py-1.5 rounded-lg bg-amber-400 text-slate-950 font-bold text-xs hover:bg-amber-300 transition-colors"
                     >
                       Inquire
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Patient Journey */}
-      <section className="py-16 bg-slate-950/70 border-t border-slate-800">
+      {/* SPECIALTIES & PRICE BENCHMARK SECTION */}
+      <section id="specialties" className="py-20 md:py-28 relative z-10 bg-slate-950/60 border-t border-slate-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4">
-              {t.timelineTitle}
+          <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-amber-400">
+              {t.specialties.sectionTitle}
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base">
-              {t.timelineSub}
+            <h3 className="text-3xl sm:text-4xl font-bold font-serif text-white tracking-tight">
+              Transparent Global Price Benchmark
+            </h3>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              All-inclusive estimates covering clinical procedures, internationally accredited surgical teams, and dedicated care.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {JOURNEY_STEPS.map((s, idx) => {
-              const Icon = s.icon;
-              return (
-                <div key={idx} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl relative flex flex-col justify-between">
-                  <div>
-                    <div className="text-2xl font-black text-amber-400/30 mb-3">{s.phase}</div>
-                    <div className="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-400 mb-4">
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-base font-bold text-white mb-2">{s.title}</h3>
-                    <p className="text-xs text-slate-400 leading-relaxed">{s.desc}</p>
-                  </div>
+          {/* Table / Cards Showcase */}
+          <div className="space-y-6">
+            <div className="overflow-x-auto rounded-3xl border border-slate-800 bg-slate-900/60 backdrop-blur-xl shadow-2xl">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr className="border-b border-slate-800 bg-slate-950/80 text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    <th className="py-4 px-6">{t.specialties.tableProcedure}</th>
+                    <th className="py-4 px-6 text-amber-400">{t.specialties.tableIran}</th>
+                    <th className="py-4 px-6">{t.specialties.tableIndia}</th>
+                    <th className="py-4 px-6">{t.specialties.tableUaeTurkey}</th>
+                    <th className="py-4 px-6">{t.specialties.tableUsaUk}</th>
+                    <th className="py-4 px-6 text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                  {SPECIALTIES_DATA.map((item) => {
+                    const localized = t.specialties.items[item.id as keyof typeof t.specialties.items];
+                    const title = localized ? localized.name : item.title;
+                    const category = localized ? localized.category : item.category;
+                    const recovery = localized ? localized.recoveryDays : `${item.recoveryDays} days Stay`;
+
+                    return (
+                      <tr 
+                        key={item.id}
+                        className="hover:bg-slate-800/40 transition-colors group cursor-pointer"
+                        onClick={() => {
+                          setSelectedSpecialty(item.id);
+                          setFormData(prev => ({ ...prev, specialtyId: item.id }));
+                          const el = document.getElementById('consultation');
+                          if (el) el.scrollIntoView({ behavior: 'smooth' });
+                        }}
+                      >
+                        <td className="py-5 px-6">
+                          <div className="flex items-center gap-3">
+                            <div className="p-2 rounded-xl bg-slate-800 border border-slate-700/60 group-hover:border-amber-400/50 transition-colors">
+                              {SPECIALTY_ICONS[item.id] || <Stethoscope className="w-5 h-5 text-amber-400" />}
+                            </div>
+                            <div>
+                              <div className="font-bold text-white text-base group-hover:text-amber-400 transition-colors">
+                                {title}
+                              </div>
+                              <div className="text-xs text-slate-400 flex items-center gap-2 mt-0.5">
+                                <span>{category}</span>
+                                <span className="text-slate-600">•</span>
+                                <span className="text-amber-300/80">{recovery}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+
+                        {/* Iran Price */}
+                        <td className="py-5 px-6">
+                          <div className="font-extrabold text-amber-400 text-lg font-serif">
+                            {item.iranEstimate}
+                          </div>
+                          <span className="inline-block px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/20">
+                            Save up to {item.savings}
+                          </span>
+                        </td>
+
+                        {/* Benchmark: India */}
+                        <td className="py-5 px-6 text-slate-400 font-medium">
+                          {item.indiaBenchmark}
+                        </td>
+
+                        {/* Benchmark: UAE/Turkey */}
+                        <td className="py-5 px-6 text-slate-400 font-medium">
+                          {item.uaeTurkeyBenchmark}
+                        </td>
+
+                        {/* Benchmark: USA/UK */}
+                        <td className="py-5 px-6 text-slate-400 font-medium">
+                          {item.usaUkBenchmark}
+                        </td>
+
+                        {/* Direct Consultation Link */}
+                        <td className="py-5 px-6 text-center">
+                          <button
+                            type="button"
+                            className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-amber-400 hover:text-slate-950 text-slate-200 text-xs font-bold transition-all border border-slate-700 hover:border-amber-400"
+                          >
+                            Inquire
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            <p className="text-xs text-slate-500 text-center italic">
+              * Indicative medical quotes based on standard uncomplicated clinical protocols. Final quotation prepared upon review of diagnostic tests and surgeon evaluation.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* CONCIERGE PACKAGES SECTION */}
+      <section id="concierge" className="py-20 md:py-28 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-amber-400">
+              {t.concierge.sectionTitle}
+            </h2>
+            <h3 className="text-3xl sm:text-4xl font-bold font-serif text-white tracking-tight">
+              Curated Concierge Packages
+            </h3>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Choose the level of personal assistance and comfort suited for you and your companion.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {/* Essential Care Package */}
+            <div className="rounded-3xl bg-slate-900/60 border border-slate-800 p-8 flex flex-col justify-between hover:border-slate-700 transition-all">
+              <div className="space-y-6">
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-semibold">
+                  Standard Support
                 </div>
-              );
-            })}
+                <div>
+                  <h4 className="text-2xl font-bold font-serif text-white">{t.concierge.standardTitle}</h4>
+                  <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                    Designed for clinical focus and seamless hospital navigation.
+                  </p>
+                </div>
+
+                <ul className="space-y-3.5 text-xs text-slate-300 pt-4 border-t border-slate-800">
+                  {t.concierge.standardFeatures.map((feat, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="pt-8">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData(prev => ({ ...prev, conciergeTier: 'standard' }));
+                    const el = document.getElementById('consultation');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="w-full py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm transition-colors border border-slate-700"
+                >
+                  Select Essential Plan
+                </button>
+              </div>
+            </div>
+
+            {/* Luxury VIP Package */}
+            <div className="rounded-3xl bg-gradient-to-b from-slate-900/95 via-slate-900/80 to-slate-950 border-2 border-amber-400/60 p-8 flex flex-col justify-between shadow-2xl shadow-amber-500/10 relative">
+              <div className="absolute -top-3 right-6 bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-md">
+                Most Recommended
+              </div>
+
+              <div className="space-y-6">
+                <div className="inline-block px-3 py-1 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-300 text-xs font-bold">
+                  All-Inclusive Luxury
+                </div>
+                <div>
+                  <h4 className="text-2xl font-bold font-serif text-white">{t.concierge.vipTitle}</h4>
+                  <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                    Unrivaled comfort, five-star hospitality, and end-to-end discreet service.
+                  </p>
+                </div>
+
+                <ul className="space-y-3.5 text-xs text-slate-300 pt-4 border-t border-slate-800">
+                  {t.concierge.vipFeatures.map((feat, idx) => (
+                    <li key={idx} className="flex items-start gap-3">
+                      <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <span className="font-medium text-slate-200">{feat}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="pt-8">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData(prev => ({ ...prev, conciergeTier: 'vip' }));
+                    const el = document.getElementById('consultation');
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-bold text-sm shadow-lg shadow-amber-500/20 hover:scale-[1.01] transition-all"
+                >
+                  Select Luxury VIP
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Concierge Packages */}
-      <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-2xl sm:text-4xl font-bold text-white mb-4">
-            {t.packagesTitle}
-          </h2>
-          <p className="text-slate-400 text-sm sm:text-base">
-            {t.packagesSub}
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* Essential Care */}
-          <div className="bg-slate-900/80 border border-slate-800 rounded-3xl p-8 relative flex flex-col justify-between">
-            <div>
-              <div className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-2">Standard Tier</div>
-              <h3 className="text-2xl font-bold text-white mb-4">{t.essential}</h3>
-              <p className="text-slate-400 text-sm mb-6">
-                Comprehensive clinical coordination, hospital booking, and primary interpreter services.
-              </p>
-              <ul className="space-y-3 text-sm text-slate-300 mb-8">
-                <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>Medical Visa Authorization code</span>
-                </li>
-                <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>IPD hospital admission & surgery coordination</span>
-                </li>
-                <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>Dedicated medical translator at hospital</span>
-                </li>
-                <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>Post-discharge clinical documentation</span>
-                </li>
-              </ul>
-            </div>
-            <button
-              onClick={() => {
-                setFormData((prev) => ({ ...prev, package: 'Essential Medical Care' }));
-                setModalOpen(true);
-                setStep(1);
-              }}
-              className="w-full py-3 rounded-xl border border-slate-700 hover:border-amber-400 text-white font-semibold text-sm transition-all"
-            >
-              Select Essential Care
-            </button>
+      {/* WHY IRAN & ACCREDITATION SECTION */}
+      <section id="why-iran" className="py-20 md:py-28 bg-slate-950/70 border-y border-slate-900 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-amber-400">
+              {t.whyIran.sectionTitle}
+            </h2>
+            <h3 className="text-3xl sm:text-4xl font-bold font-serif text-white tracking-tight">
+              Medical Excellence &amp; Global Value
+            </h3>
+            <p className="text-slate-400 text-sm sm:text-base leading-relaxed">
+              Why thousands of discerning patients from the Middle East, East Africa, and Central Asia choose Iran every year.
+            </p>
           </div>
 
-          {/* Luxury VIP Concierge */}
-          <div className="bg-gradient-to-b from-slate-900 to-[#101e33] border-2 border-amber-500/60 rounded-3xl p-8 relative flex flex-col justify-between shadow-2xl">
-            <div className="absolute -top-3 right-8 bg-amber-500 text-slate-950 text-[10px] font-black uppercase tracking-wider px-3 py-1 rounded-full">
-              Recommended
-            </div>
-            <div>
-              <div className="text-amber-400 font-bold text-xs uppercase tracking-widest mb-2">All-Inclusive Luxury</div>
-              <h3 className="text-2xl font-bold text-white mb-4">{t.luxury}</h3>
-              <p className="text-slate-300 text-sm mb-6">
-                White-glove medical tourism: 5-star hotel, private airport transfers, and 24/7 personal handler.
-              </p>
-              <ul className="space-y-3 text-sm text-slate-200 mb-8">
-                <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>VIP fast-track medical visa handling</span>
-                </li>
-                <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>5-Star partnered hotel suites during recovery</span>
-                </li>
-                <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>Private chauffeur airport & hospital transfers</span>
-                </li>
-                <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>24/7 Dedicated personal concierge & nursing</span>
-                </li>
-                <li className="flex items-center space-x-3 rtl:space-x-reverse">
-                  <CheckCircle2 className="w-4 h-4 text-amber-400 shrink-0" />
-                  <span>6 Months remote telemedicine follow-up</span>
-                </li>
-              </ul>
-            </div>
-            <button
-              onClick={() => {
-                setFormData((prev) => ({ ...prev, package: 'Luxury VIP Concierge' }));
-                setModalOpen(true);
-                setStep(1);
-              }}
-              className="w-full bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 hover:to-amber-300 text-slate-950 py-3 rounded-xl font-bold text-sm shadow-md transition-all active:scale-95"
-            >
-              Select Luxury VIP Concierge
-            </button>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {t.whyIran.points.map((pt, idx) => (
+              <div 
+                key={idx}
+                className="rounded-2xl bg-slate-900/60 border border-slate-800 p-6 space-y-3 hover:border-amber-400/40 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400 font-bold font-serif">
+                  0{idx + 1}
+                </div>
+                <h4 className="text-base font-bold text-white">{pt.title}</h4>
+                <p className="text-xs text-slate-400 leading-relaxed">{pt.desc}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </section>
 
-      {/* Footer */}
-      <footer className="bg-slate-950 border-t border-slate-800 py-12 text-center text-xs text-slate-400">
-        <div className="max-w-7xl mx-auto px-4 space-y-4">
-          <div className="text-white font-bold text-base tracking-wider uppercase">MAHAM HEALTH</div>
-          <p className="text-slate-400 max-w-md mx-auto">
-            A specialized healthcare concierge division under Soorin Maham / Maham Group.
-          </p>
-          <div className="text-amber-400/90 font-mono">
-            Direct Inquiries: health@maham-group.com
-          </div>
-          <div className="text-slate-400 text-[11px] pt-4 border-t border-slate-900">
-            Regional Presence & Coordination Hubs: Tehran • Dubai • Dar es Salaam • New Delhi
-          </div>
-          <div className="text-[10px] text-slate-400">
-            © {new Date().getFullYear()} Maham Health. All clinical procedures require physician sign-off.
-          </div>
-        </div>
-      </footer>
-
-      {/* 3-Step Consultation Wizard Modal */}
-      {modalOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm overflow-y-auto"
-        >
-          <div className="bg-slate-900 border border-slate-800 rounded-3xl max-w-xl w-full p-6 sm:p-8 relative shadow-2xl my-8">
-            <button
-              onClick={() => setModalOpen(false)}
-              aria-label="Close modal"
-              className="absolute top-5 right-5 text-slate-400 hover:text-white p-2 rounded-full hover:bg-slate-800"
-            >
-              <X className="w-5 h-5" />
-            </button>
-
-            {!submitted ? (
+          {/* Hospitals showcase strip */}
+          <div id="hospitals" className="mt-16 p-8 rounded-3xl bg-slate-900/40 border border-slate-800/80">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
-                {/* Stepper indicator */}
-                <div className="flex items-center justify-between border-b border-slate-800 pb-4 mb-6 text-xs font-semibold">
-                  <span className={step >= 1 ? 'text-amber-400' : 'text-slate-400'}>1. Treatment</span>
-                  <span className={step >= 2 ? 'text-amber-400' : 'text-slate-400'}>2. Profile</span>
-                  <span className={step >= 3 ? 'text-amber-400' : 'text-slate-400'}>3. Contact & Documents</span>
+                <h4 className="text-lg font-bold text-white font-serif">Accredited IPD Partner Hospital Network</h4>
+                <p className="text-xs text-slate-400 mt-1">
+                  Private medical facilities holding International Patient Department licenses from Iran Ministry of Health.
+                </p>
+              </div>
+              <div className="flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-300">
+                <span className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700/60">Pars Hospital</span>
+                <span className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700/60">Khatam Al-Anbia</span>
+                <span className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700/60">Gandhi Hotel-Hospital</span>
+                <span className="px-4 py-2 rounded-xl bg-slate-800/80 border border-slate-700/60">Noor Eye Hospital</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3-STEP CONSULTATION WIZARD SECTION */}
+      <section id="consultation" className="py-20 md:py-32 relative z-10">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-amber-400">
+              {t.wizard.sectionTitle}
+            </h2>
+            <h3 className="text-3xl sm:text-4xl font-bold font-serif text-white tracking-tight">
+              Start Your Private Medical Inquiry
+            </h3>
+            <p className="text-slate-400 text-sm max-w-xl mx-auto">
+              Our medical board prepares a comprehensive feasibility evaluation and customized quotation within 12 hours.
+            </p>
+          </div>
+
+          <div className="rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl p-6 sm:p-10 backdrop-blur-xl relative">
+            {/* Step Indicators */}
+            <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-800">
+              <div className={`flex items-center gap-3 ${wizardStep >= 1 ? 'text-amber-400' : 'text-slate-600'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${
+                  wizardStep >= 1 ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 text-slate-400'
+                }`}>
+                  1
                 </div>
+                <span className="text-xs font-semibold hidden sm:inline">{t.wizard.step1Title}</span>
+              </div>
 
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Step 1: Treatment & Timeframe */}
-                  {step === 1 && (
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-bold text-white mb-2">{t.step1}</h3>
-                      <div>
-                        <label className="block text-xs text-slate-300 mb-1">Select Specialty</label>
-                        <select
-                          name="specialty"
-                          value={formData.specialty}
-                          onChange={handleInputChange}
-                          className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-400"
-                        >
-                          {SPECIALTIES.map((s) => (
-                            <option key={s.id} value={s.name}>
-                              {s.name}
-                            </option>
-                          ))}
-                        </select>
+              <div className="h-0.5 w-12 sm:w-20 bg-slate-800" />
+
+              <div className={`flex items-center gap-3 ${wizardStep >= 2 ? 'text-amber-400' : 'text-slate-600'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${
+                  wizardStep >= 2 ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 text-slate-400'
+                }`}>
+                  2
+                </div>
+                <span className="text-xs font-semibold hidden sm:inline">{t.wizard.step2Title}</span>
+              </div>
+
+              <div className="h-0.5 w-12 sm:w-20 bg-slate-800" />
+
+              <div className={`flex items-center gap-3 ${wizardStep >= 3 ? 'text-amber-400' : 'text-slate-600'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${
+                  wizardStep >= 3 ? 'bg-amber-400 text-slate-950' : 'bg-slate-800 text-slate-400'
+                }`}>
+                  3
+                </div>
+                <span className="text-xs font-semibold hidden sm:inline">{t.wizard.step3Title}</span>
+              </div>
+            </div>
+
+            {/* Error Message */}
+            {formError && (
+              <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-3">
+                <AlertCircle className="w-5 h-5 shrink-0" />
+                <span>{formError}</span>
+              </div>
+            )}
+
+            {/* Success State */}
+            {formSubmitted ? (
+              <div className="text-center py-12 space-y-6">
+                <div className="w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 mx-auto">
+                  <CheckCircle2 className="w-8 h-8" />
+                </div>
+                <h4 className="text-2xl font-bold font-serif text-white">{t.wizard.successTitle}</h4>
+                <p className="text-sm text-slate-300 max-w-md mx-auto leading-relaxed">
+                  {t.wizard.successDesc}
+                </p>
+
+                {/* Direct WhatsApp Immediate Forward */}
+                <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                  {(() => {
+                    const selectedObj = SPECIALTIES_DATA.find(s => s.id === formData.specialtyId);
+                    const whatsappMsg = `Hello Maham Health Concierge,\n\nI have submitted my medical inquiry:\n- Specialty: ${selectedObj?.title || formData.specialtyId}\n- Name: ${formData.patientName}\n- Country: ${formData.patientCountry || 'International'}\n- Package: ${formData.conciergeTier.toUpperCase()}\n- Notes: ${formData.briefNotes || 'None'}\n\nPlease review my medical travel case.`;
+                    const encodedWhatsappMsg = encodeURIComponent(whatsappMsg);
+                    const whatsappUrl = `https://wa.me/989055240772?text=${encodedWhatsappMsg}`;
+
+                    return (
+                      <a
+                        href={whatsappUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg flex items-center gap-2"
+                      >
+                        <MessageSquare className="w-4 h-4" />
+                        <span>Open Consultation on WhatsApp</span>
+                      </a>
+                    );
+                  })()}
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormSubmitted(false);
+                      setWizardStep(1);
+                    }}
+                    className="px-6 py-3.5 rounded-xl bg-slate-800 text-slate-300 text-sm font-semibold hover:bg-slate-700"
+                  >
+                    Submit Another Inquiry
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleWizardSubmit} className="space-y-6">
+                {/* STEP 1: Select Specialty & Tier */}
+                {wizardStep === 1 && (
+                  <div className="space-y-6">
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                        {t.wizard.fieldSpecialty} *
+                      </label>
+                      <div className="grid sm:grid-cols-3 gap-3">
+                        {SPECIALTIES_DATA.map((item) => {
+                          const localized = t.specialties.items[item.id as keyof typeof t.specialties.items];
+                          const name = localized ? localized.name : item.title;
+                          const isSelected = formData.specialtyId === item.id;
+
+                          return (
+                            <button
+                              type="button"
+                              key={item.id}
+                              onClick={() => setFormData(prev => ({ ...prev, specialtyId: item.id }))}
+                              className={`p-3.5 rounded-2xl border text-left flex flex-col justify-between transition-all ${
+                                isSelected 
+                                  ? 'border-amber-400 bg-amber-400/10 text-white' 
+                                  : 'border-slate-800 bg-slate-950/40 text-slate-300 hover:border-slate-700'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="p-1.5 rounded-lg bg-slate-900 border border-slate-800">
+                                  {SPECIALTY_ICONS[item.id] || <Stethoscope className="w-4 h-4 text-amber-400" />}
+                                </span>
+                                <span className="text-[11px] font-bold text-amber-400">{item.iranEstimate}</span>
+                              </div>
+                              <span className="text-xs font-semibold">{name}</span>
+                            </button>
+                          );
+                        })}
                       </div>
+                    </div>
 
-                      <div>
-                        <label className="block text-xs text-slate-300 mb-1">Travel Timeframe</label>
+                    {/* Concierge Level Selector */}
+                    <div className="space-y-2 pt-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                        Select Concierge Level *
+                      </label>
+                      <div className="grid grid-cols-2 gap-4">
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, conciergeTier: 'standard' }))}
+                          className={`p-4 rounded-2xl border text-left transition-all ${
+                            formData.conciergeTier === 'standard'
+                              ? 'border-amber-400 bg-amber-400/10'
+                              : 'border-slate-800 bg-slate-950/40 hover:border-slate-700'
+                          }`}
+                        >
+                          <div className="text-xs font-bold text-white">{t.concierge.standardTitle}</div>
+                          <div className="text-[11px] text-slate-400 mt-1">Medical coordination &amp; transfers</div>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, conciergeTier: 'vip' }))}
+                          className={`p-4 rounded-2xl border text-left transition-all ${
+                            formData.conciergeTier === 'vip'
+                              ? 'border-amber-400 bg-amber-400/10'
+                              : 'border-slate-800 bg-slate-950/40 hover:border-slate-700'
+                          }`}
+                        >
+                          <div className="text-xs font-bold text-amber-400">{t.concierge.vipTitle} (VIP)</div>
+                          <div className="text-[11px] text-slate-400 mt-1">5-Star luxury, private chauffeur</div>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end pt-4">
+                      <button
+                        type="button"
+                        onClick={() => setWizardStep(2)}
+                        className="px-6 py-3 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs hover:bg-amber-300 transition-colors flex items-center gap-2"
+                      >
+                        <span>Next: Timeline &amp; Health Profile</span>
+                        <ChevronRight className={`w-4 h-4 ${isRtl ? 'rotate-180' : ''}`} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 2: Timeframe & Medical Profile */}
+                {wizardStep === 2 && (
+                  <div className="space-y-6">
+                    <div className="grid sm:grid-cols-3 gap-4">
+                      {/* Timeframe */}
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                          {t.wizard.fieldTimeframe} *
+                        </label>
                         <select
                           name="timeframe"
                           value={formData.timeframe}
                           onChange={handleInputChange}
-                          className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-400"
+                          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs focus:border-amber-400 focus:outline-none"
                         >
-                          <option value="Immediate (within 3 weeks)">Immediate (within 3 weeks)</option>
-                          <option value="1 to 2 months">1 to 2 months</option>
-                          <option value="3 to 6 months">3 to 6 months</option>
-                          <option value="Just planning & exploring">Just planning & exploring</option>
+                          <option value="immediate">Immediate (&lt; 2 weeks)</option>
+                          <option value="1-month">Within 1 Month</option>
+                          <option value="1-3-months">1 to 3 Months</option>
+                          <option value="exploring">Flexible / Exploring</option>
                         </select>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => setStep(2)}
-                        className="w-full mt-4 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl transition-all"
-                      >
-                        Continue to Step 2
-                      </button>
-                    </div>
-                  )}
-
-                  {/* Step 2: Medical Profile */}
-                  {step === 2 && (
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-bold text-white mb-2">{t.step2}</h3>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-xs text-slate-300 mb-1">Age</label>
-                          <input
-                            type="number"
-                            name="age"
-                            required
-                            placeholder="e.g. 35"
-                            value={formData.age}
-                            onChange={handleInputChange}
-                            className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-400"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs text-slate-300 mb-1">Gender</label>
-                          <div className="grid grid-cols-2 gap-2">
-                            <button
-                              type="button"
-                              onClick={() => setFormData((p) => ({ ...p, gender: 'Male' }))}
-                              className={`py-3 text-xs font-bold rounded-xl border transition-all ${
-                                formData.gender === 'Male'
-                                  ? 'bg-amber-500 text-slate-950 border-amber-400'
-                                  : 'bg-slate-950 text-slate-300 border-slate-700'
-                              }`}
-                            >
-                              {t.male}
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => setFormData((p) => ({ ...p, gender: 'Female' }))}
-                              className={`py-3 text-xs font-bold rounded-xl border transition-all ${
-                                formData.gender === 'Female'
-                                  ? 'bg-amber-500 text-slate-950 border-amber-400'
-                                  : 'bg-slate-950 text-slate-300 border-slate-700'
-                              }`}
-                            >
-                              {t.female}
-                            </button>
-                          </div>
-                        </div>
+                      {/* Age Group */}
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                          {t.wizard.fieldAge}
+                        </label>
+                        <select
+                          name="ageGroup"
+                          value={formData.ageGroup}
+                          onChange={handleInputChange}
+                          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs focus:border-amber-400 focus:outline-none"
+                        >
+                          <option value="under-18">Under 18</option>
+                          <option value="18-30">18 – 30</option>
+                          <option value="30-45">30 – 45</option>
+                          <option value="45-60">45 – 60</option>
+                          <option value="60-plus">60+</option>
+                        </select>
                       </div>
 
-                      <div>
-                        <label className="block text-xs text-slate-300 mb-1">Medical Background & Questions</label>
-                        <textarea
-                          name="notes"
-                          rows={3}
-                          placeholder="Briefly describe symptoms, previous surgeries, or specific questions..."
-                          value={formData.notes}
+                      {/* Gender */}
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                          {t.wizard.fieldGender}
+                        </label>
+                        <select
+                          name="gender"
+                          value={formData.gender}
                           onChange={handleInputChange}
-                          className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-400"
+                          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs focus:border-amber-400 focus:outline-none"
+                        >
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="prefer-not-to-say">Prefer not to say</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    {/* Brief Clinical Notes */}
+                    <div className="space-y-2">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                        {t.wizard.fieldNotes}
+                      </label>
+                      <textarea
+                        name="briefNotes"
+                        rows={3}
+                        value={formData.briefNotes}
+                        onChange={handleInputChange}
+                        placeholder="Please describe symptoms, existing diagnoses, previous surgeries, or specific surgeon preferences..."
+                        className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs focus:border-amber-400 focus:outline-none resize-none"
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4">
+                      <button
+                        type="button"
+                        onClick={() => setWizardStep(1)}
+                        className="px-5 py-3 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs hover:bg-slate-700 transition-colors"
+                      >
+                        Back
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => setWizardStep(3)}
+                        className="px-6 py-3 rounded-xl bg-amber-400 text-slate-950 font-bold text-xs hover:bg-amber-300 transition-colors flex items-center gap-2"
+                      >
+                        <span>Next: Patient Contact &amp; Records</span>
+                        <ChevronRight className={`w-4 h-4 ${isRtl ? 'rotate-180' : ''}`} />
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* STEP 3: Contact Details & Submit */}
+                {wizardStep === 3 && (
+                  <div className="space-y-6">
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {/* Name */}
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                          {t.wizard.fieldName} *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          name="patientName"
+                          value={formData.patientName}
+                          onChange={handleInputChange}
+                          placeholder="Full Name (as in passport)"
+                          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs focus:border-amber-400 focus:outline-none"
                         />
                       </div>
 
-                      <div className="flex gap-3">
-                        <button
-                          type="button"
-                          onClick={() => setStep(1)}
-                          className="w-1/3 py-3 border border-slate-700 text-slate-300 rounded-xl text-sm"
-                        >
-                          Back
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setStep(3)}
-                          className="w-2/3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3 rounded-xl transition-all"
-                        >
-                          Continue to Step 3
-                        </button>
+                      {/* Country of Residence */}
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                          {t.wizard.fieldCountry} *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          name="patientCountry"
+                          value={formData.patientCountry}
+                          onChange={handleInputChange}
+                          placeholder="e.g. Tanzania, UAE, Oman, India, UK"
+                          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs focus:border-amber-400 focus:outline-none"
+                        />
                       </div>
                     </div>
-                  )}
 
-                  {/* Step 3: Verification & Contact */}
-                  {step === 3 && (
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-bold text-white mb-2">{t.step3}</h3>
-
-                      <div>
-                        <label className="block text-xs text-slate-300 mb-1">{t.uploadLabel}</label>
-                        <div className="border border-dashed border-slate-700 rounded-xl p-4 text-center bg-slate-950 hover:border-amber-400 transition-all cursor-pointer relative">
-                          <input
-                            type="file"
-                            accept=".pdf,.jpg,.jpeg,.png"
-                            onChange={handleFileChange}
-                            className="absolute inset-0 opacity-0 cursor-pointer w-full h-full"
-                          />
-                          <Upload className="w-5 h-5 text-amber-400 mx-auto mb-1" />
-                          <span className="text-xs text-slate-400 block">
-                            {formData.fileName ? formData.fileName : 'Click to select medical scans or reports'}
-                          </span>
-                        </div>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {/* WhatsApp / Phone */}
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                          {t.wizard.fieldPhone} *
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          name="patientPhone"
+                          value={formData.patientPhone}
+                          onChange={handleInputChange}
+                          placeholder="+255 / +971 / +98 Phone Number"
+                          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs focus:border-amber-400 focus:outline-none"
+                        />
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-xs text-slate-300 mb-1">Full Name</label>
-                          <input
-                            type="text"
-                            name="name"
-                            required
-                            placeholder="John Doe"
-                            value={formData.name}
-                            onChange={handleInputChange}
-                            className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-2.5 text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs text-slate-300 mb-1">Country of Residence</label>
-                          <input
-                            type="text"
-                            name="country"
-                            required
-                            placeholder="e.g. Tanzania, UAE, UK"
-                            value={formData.country}
-                            onChange={handleInputChange}
-                            className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-2.5 text-sm"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                          <label className="block text-xs text-slate-300 mb-1">WhatsApp Number</label>
-                          <input
-                            type="tel"
-                            name="whatsapp"
-                            required
-                            placeholder="+1 234 567 8900"
-                            value={formData.whatsapp}
-                            onChange={handleInputChange}
-                            className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-2.5 text-sm"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-xs text-slate-300 mb-1">Email Address</label>
-                          <input
-                            type="email"
-                            name="email"
-                            required
-                            placeholder="name@example.com"
-                            value={formData.email}
-                            onChange={handleInputChange}
-                            className="w-full bg-slate-950 border border-slate-700 text-white rounded-xl px-4 py-2.5 text-sm"
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex gap-3 pt-2">
-                        <button
-                          type="button"
-                          onClick={() => setStep(2)}
-                          className="w-1/3 py-3 border border-slate-700 text-slate-300 rounded-xl text-sm"
-                        >
-                          Back
-                        </button>
-                        <button
-                          type="submit"
-                          disabled={isSubmitting}
-                          className="w-2/3 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 text-slate-950 font-bold py-3 rounded-xl transition-all shadow-md"
-                        >
-                          {isSubmitting ? 'Submitting...' : t.submit}
-                        </button>
+                      {/* Email */}
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                          {t.wizard.fieldEmail} *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          name="patientEmail"
+                          value={formData.patientEmail}
+                          onChange={handleInputChange}
+                          placeholder="name@example.com"
+                          className="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-slate-200 text-xs focus:border-amber-400 focus:outline-none"
+                        />
                       </div>
                     </div>
-                  )}
-                </form>
-              </div>
-            ) : (
-              <div className="text-center py-8 space-y-4">
-                <CheckCircle2 className="w-14 h-14 text-emerald-400 mx-auto" />
-                <h3 className="text-2xl font-bold text-white">Inquiry Received Confidentially</h3>
-                <p className="text-sm text-slate-300 max-w-sm mx-auto">
-                  Our clinical director will evaluate your inquiry and contact you via WhatsApp and Email within 24 hours.
-                </p>
-                <div className="pt-4">
-                  <a
-                    href={waLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center space-x-2 rtl:space-x-reverse bg-emerald-600 hover:bg-emerald-500 text-white px-6 py-3 rounded-xl font-bold text-sm"
-                  >
-                    <MessageCircle className="w-5 h-5" />
-                    <span>Open Direct WhatsApp Handoff</span>
-                  </a>
-                </div>
-              </div>
+
+                    {/* Confidentiality note */}
+                    <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-[11px] text-slate-400 space-y-1">
+                      <div className="font-bold text-slate-300 flex items-center gap-1.5">
+                        <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Strict Medical Privacy &amp; Non-Disclosure</span>
+                      </div>
+                      <p>
+                        Your medical data is shared exclusively with the attending Chief of Department for clinical review. We never share records with third parties.
+                      </p>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4">
+                      <button
+                        type="button"
+                        onClick={() => setWizardStep(2)}
+                        className="px-5 py-3 rounded-xl bg-slate-800 text-slate-300 font-semibold text-xs hover:bg-slate-700 transition-colors"
+                      >
+                        Back
+                      </button>
+
+                      <button
+                        type="submit"
+                        disabled={formSubmitting}
+                        className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 text-slate-950 font-bold text-xs shadow-lg shadow-amber-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 disabled:opacity-50"
+                      >
+                        {formSubmitting ? (
+                          <span>Submitting Case...</span>
+                        ) : (
+                          <>
+                            <Send className="w-4 h-4" />
+                            <span>{t.wizard.submitButton}</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </form>
             )}
           </div>
         </div>
-      )}
+      </section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-slate-800/80 bg-slate-950 pt-16 pb-12 relative z-10 text-xs text-slate-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {/* Col 1: Brand */}
+            <div className="space-y-4 md:col-span-1">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 font-black text-sm">
+                  M
+                </div>
+                <span className="font-bold text-base text-white tracking-tight font-serif">
+                  MAHAM HEALTH
+                </span>
+              </div>
+              <p className="text-slate-400 leading-relaxed text-xs">
+                {t.legal.tradeNote}
+              </p>
+              <div className="text-[11px] text-slate-500">
+                Operating desks in Tehran, Dubai, Dar es Salaam &amp; Mumbai.
+              </div>
+            </div>
+
+            {/* Col 2: Specialties */}
+            <div className="space-y-3">
+              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">Specialties</h5>
+              <ul className="space-y-2 text-slate-400">
+                <li><a href="#specialties" className="hover:text-amber-400">Cosmetic Rhinoplasty</a></li>
+                <li><a href="#specialties" className="hover:text-amber-400">Titanium Dental Implants</a></li>
+                <li><a href="#specialties" className="hover:text-amber-400">Femto-LASIK Vision Correction</a></li>
+                <li><a href="#specialties" className="hover:text-amber-400">FUE Hair Restoration</a></li>
+                <li><a href="#specialties" className="hover:text-amber-400">IVF &amp; Fertility Protocols</a></li>
+              </ul>
+            </div>
+
+            {/* Col 3: Concierge & Hospitals */}
+            <div className="space-y-3">
+              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">Patient Concierge</h5>
+              <ul className="space-y-2 text-slate-400">
+                <li><a href="#concierge" className="hover:text-amber-400">Iran T-Visa Assistance</a></li>
+                <li><a href="#concierge" className="hover:text-amber-400">5-Star Hotel Suites</a></li>
+                <li><a href="#concierge" className="hover:text-amber-400">Airport VIP Meet &amp; Greet</a></li>
+                <li><a href="#hospitals" className="hover:text-amber-400">Pars &amp; Gandhi IPD Wings</a></li>
+                <li><a href="#consultation" className="hover:text-amber-400">Direct Case Submission</a></li>
+              </ul>
+            </div>
+
+            {/* Col 4: Contact & Inquiries */}
+            <div className="space-y-3">
+              <h5 className="font-bold text-white uppercase tracking-wider text-[11px]">Direct Inquiries</h5>
+              <div className="space-y-2 text-slate-300">
+                <div>
+                  <span className="block text-[10px] text-slate-500 uppercase">Case Evaluation Desk</span>
+                  <a href="mailto:health@maham-group.com" className="text-amber-400 hover:underline">
+                    health@maham-group.com
+                  </a>
+                </div>
+                <div>
+                  <span className="block text-[10px] text-slate-500 uppercase">WhatsApp Concierge Desk</span>
+                  <a href="https://wa.me/989055240772" className="text-emerald-400 hover:underline">
+                    +98 905 524 0772
+                  </a>
+                </div>
+                <div>
+                  <span className="block text-[10px] text-slate-500 uppercase">Parent Corporation</span>
+                  <span>Soorin Maham Trade &amp; Industry Development Corp.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-slate-900 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
+            <div>
+              &copy; {new Date().getFullYear()} Soorin Maham Corp. All rights reserved. {t.legal.disclaimer}
+            </div>
+            <div className="flex items-center gap-6">
+              <a href="#consultation" className="hover:text-slate-400">Privacy Policy</a>
+              <a href="#consultation" className="hover:text-slate-400">Terms of Care</a>
+              <a href="#consultation" className="hover:text-slate-400">IPD Accreditation</a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
