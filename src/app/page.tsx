@@ -537,7 +537,7 @@ export default function Home() {
               <ArrowRight className="w-5 h-5 rtl:rotate-180" />
             </button>
             <a
-              href="https://wa.me/989120000000"
+              href="https://wa.me/989055240772"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center space-x-2 rtl:space-x-reverse bg-slate-900/90 hover:bg-slate-800 border border-slate-700 px-7 py-4 rounded-full text-slate-200 font-semibold text-base transition-all"
