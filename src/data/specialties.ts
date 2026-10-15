@@ -3,7 +3,7 @@ export interface Specialty {
   name: string;
   category: string;
   recoveryDays: string;
-  mahamIranPrice: number;
+  iranPrice: number;
   indiaPrice: number;
   uaeTurkeyPrice: number;
   usUkPrice: number;
@@ -16,7 +16,7 @@ export const SPECIALTIES_DATA: Specialty[] = [
     name: "Rhinoplasty (Nose Surgery)",
     category: "Cosmetic & Plastic Surgery",
     recoveryDays: "7–10 days",
-    mahamIranPrice: 1650,
+    iranPrice: 1650,
     indiaPrice: 2800,
     uaeTurkeyPrice: 4500,
     usUkPrice: 8500,
@@ -27,7 +27,7 @@ export const SPECIALTIES_DATA: Specialty[] = [
     name: "Dental Implants (Premium Titanium)",
     category: "Dental Care",
     recoveryDays: "3–5 days",
-    mahamIranPrice: 550,
+    iranPrice: 550,
     indiaPrice: 800,
     uaeTurkeyPrice: 1500,
     usUkPrice: 2800,
@@ -38,7 +38,7 @@ export const SPECIALTIES_DATA: Specialty[] = [
     name: "LASIK / Femto-LASIK (Both Eyes)",
     category: "Ophthalmology",
     recoveryDays: "2–3 days",
-    mahamIranPrice: 1100,
+    iranPrice: 1100,
     indiaPrice: 1400,
     uaeTurkeyPrice: 2800,
     usUkPrice: 4200,
@@ -47,9 +47,9 @@ export const SPECIALTIES_DATA: Specialty[] = [
   {
     id: "hair-transplant",
     name: "Hair Transplant (FUE / Micro-FUE)",
-    category: "Cosmetic & Hair Restoration",
+    category: "Restoration & Aesthetics",
     recoveryDays: "3–4 days",
-    mahamIranPrice: 1250,
+    iranPrice: 1250,
     indiaPrice: 2000,
     uaeTurkeyPrice: 2600,
     usUkPrice: 6000,
@@ -58,20 +58,20 @@ export const SPECIALTIES_DATA: Specialty[] = [
   {
     id: "ivf",
     name: "IVF (Full Treatment Cycle + ICSI)",
-    category: "Fertility & Reproductive Health",
+    category: "Reproductive Medicine",
     recoveryDays: "10–14 days",
-    mahamIranPrice: 3200,
+    iranPrice: 3200,
     indiaPrice: 4500,
     uaeTurkeyPrice: 7500,
     usUkPrice: 15000,
     savings: "78%"
   },
   {
-    id: "orthopedic-knee",
+    id: "knee-replacement",
     name: "Total Knee Replacement",
-    category: "Orthopedics & Joint Surgery",
+    category: "Orthopedics & Joint Care",
     recoveryDays: "10–14 days",
-    mahamIranPrice: 4200,
+    iranPrice: 4200,
     indiaPrice: 7500,
     uaeTurkeyPrice: 11000,
     usUkPrice: 22000,
@@ -80,20 +80,20 @@ export const SPECIALTIES_DATA: Specialty[] = [
   {
     id: "cardiology-stent",
     name: "Cardiology Stent / Angioplasty",
-    category: "Cardiology & Vascular",
+    category: "Cardiovascular Care",
     recoveryDays: "4–7 days",
-    mahamIranPrice: 3800,
+    iranPrice: 3800,
     indiaPrice: 6500,
     uaeTurkeyPrice: 9500,
     usUkPrice: 20000,
     savings: "81%"
   },
   {
-    id: "oncology",
-    name: "Cancer Treatment (Initial Protocol)",
-    category: "Oncology",
+    id: "oncology-protocol",
+    name: "Oncology Initial Treatment Protocol",
+    category: "Oncology & Chemotherapy",
     recoveryDays: "7–14 days",
-    mahamIranPrice: 4500,
+    iranPrice: 4500,
     indiaPrice: 8000,
     uaeTurkeyPrice: 12000,
     usUkPrice: 25000,
@@ -102,9 +102,9 @@ export const SPECIALTIES_DATA: Specialty[] = [
   {
     id: "bariatric-sleeve",
     name: "Bariatric Sleeve Surgery",
-    category: "Weight Loss Surgery",
+    category: "Metabolic & Weight Loss",
     recoveryDays: "5–7 days",
-    mahamIranPrice: 2850,
+    iranPrice: 2850,
     indiaPrice: 4800,
     uaeTurkeyPrice: 6500,
     usUkPrice: 12000,
