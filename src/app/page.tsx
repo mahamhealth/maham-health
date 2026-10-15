@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ShieldCheck,
   Award,
@@ -357,7 +357,13 @@ export default function Home() {
 
   const t = I18N[lang];
   const isRtl = lang === 'fa' || lang === 'ar' || lang === 'ur';
-
+  useEffect(() => {
+  if (typeof document !== 'undefined') {
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+  }
+}, [lang, isRTL]);
+  
   const selectedSpecialty = SPECIALTIES.find(s => s.id === selectedSpecialtyId) || SPECIALTIES[0];
   const benchmarkCost = benchmarkRegion === 'usUk' 
     ? selectedSpecialty.usUkPrice 
