@@ -113,15 +113,6 @@ ${medicalNotes}`
 
   return (
     <div dir={isRtl ? 'rtl' : 'ltr'} className="min-h-screen bg-slate-50 text-slate-900 font-sans">
-      <a
-        href="https://wa.me/989055240772"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`fixed bottom-6 ${isRtl ? 'left-6' : 'right-6'} z-50 flex items-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20ba5a] transition duration-200`}
-      >
-        <MessageCircle className="w-5 h-5" />
-        <span className="font-semibold text-sm">WhatsApp</span>
-      </a>
 
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
