@@ -357,12 +357,13 @@ export default function Home() {
 
   const t = I18N[lang];
   const isRtl = lang === 'fa' || lang === 'ar' || lang === 'ur';
+
   useEffect(() => {
-  if (typeof document !== 'undefined') {
-    document.documentElement.lang = lang;
-    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
-  }
-}, [lang, isRTL]);
+    if (typeof document !== 'undefined') {
+      document.documentElement.lang = lang;
+      document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+    }
+  }, [lang, isRtl]);
   
   const selectedSpecialty = SPECIALTIES.find(s => s.id === selectedSpecialtyId) || SPECIALTIES[0];
   const benchmarkCost = benchmarkRegion === 'usUk' 
