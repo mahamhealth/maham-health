@@ -23,325 +23,21 @@ import {
   Building2,
   ArrowRight
 } from 'lucide-react';
+import { SPECIALTIES_DATA } from '../data/specialties';
+import { TRANSLATIONS, type Language } from '../data/translations';
 
-type Language = 'en' | 'fa' | 'ar' | 'sw' | 'hi' | 'ur';
+type BenchmarkRegion = 'usUk' | 'uaeTurkey' | 'india';
+type TierType = 'essential' | 'vip';
 
-interface Specialty {
-  id: string;
-  name: string;
-  category: string;
-  recoveryDays: string;
-  iranPrice: number;
-  indiaPrice: number;
-  uaeTurkeyPrice: number;
-  usUkPrice: number;
-}
-
-const SPECIALTIES: Specialty[] = [
-  {
-    id: 'rhinoplasty',
-    name: 'Rhinoplasty (Nose Surgery)',
-    category: 'Cosmetic & Plastic Surgery',
-    recoveryDays: '7–10 days',
-    iranPrice: 1650,
-    indiaPrice: 2800,
-    uaeTurkeyPrice: 4500,
-    usUkPrice: 8500
-  },
-  {
-    id: 'dental-implants',
-    name: 'Dental Implants (Premium Titanium)',
-    category: 'Dental Care',
-    recoveryDays: '3–5 days',
-    iranPrice: 550,
-    indiaPrice: 800,
-    uaeTurkeyPrice: 1500,
-    usUkPrice: 2800
-  },
-  {
-    id: 'lasik',
-    name: 'LASIK / Femto-LASIK (Both Eyes)',
-    category: 'Ophthalmology',
-    recoveryDays: '2–3 days',
-    iranPrice: 1100,
-    indiaPrice: 1400,
-    uaeTurkeyPrice: 2800,
-    usUkPrice: 4200
-  },
-  {
-    id: 'hair-transplant',
-    name: 'Hair Transplant (FUE / Micro-FUE)',
-    category: 'Restoration & Aesthetics',
-    recoveryDays: '3–4 days',
-    iranPrice: 1250,
-    indiaPrice: 2000,
-    uaeTurkeyPrice: 2600,
-    usUkPrice: 6000
-  },
-  {
-    id: 'ivf',
-    name: 'IVF (Full Treatment Cycle + ICSI)',
-    category: 'Reproductive Medicine',
-    recoveryDays: '10–14 days',
-    iranPrice: 3200,
-    indiaPrice: 4500,
-    uaeTurkeyPrice: 7500,
-    usUkPrice: 15000
-  },
-  {
-    id: 'knee-replacement',
-    name: 'Total Knee Replacement',
-    category: 'Orthopedics & Joint Care',
-    recoveryDays: '10–14 days',
-    iranPrice: 4200,
-    indiaPrice: 7500,
-    uaeTurkeyPrice: 11000,
-    usUkPrice: 22000
-  },
-  {
-    id: 'cardiology-stent',
-    name: 'Cardiology Stent / Angioplasty',
-    category: 'Cardiovascular Care',
-    recoveryDays: '4–7 days',
-    iranPrice: 3800,
-    indiaPrice: 6500,
-    uaeTurkeyPrice: 9500,
-    usUkPrice: 20000
-  },
-  {
-    id: 'oncology-protocol',
-    name: 'Oncology Initial Treatment Protocol',
-    category: 'Oncology & Chemotherapy',
-    recoveryDays: '7–14 days',
-    iranPrice: 4500,
-    indiaPrice: 8000,
-    uaeTurkeyPrice: 12000,
-    usUkPrice: 25000
-  },
-  {
-    id: 'bariatric-sleeve',
-    name: 'Bariatric Sleeve Surgery',
-    category: 'Metabolic & Weight Loss',
-    recoveryDays: '5–7 days',
-    iranPrice: 2850,
-    indiaPrice: 4800,
-    uaeTurkeyPrice: 6500,
-    usUkPrice: 12000
-  }
-];
-
-const I18N: Record<Language, {
-  brand: string;
-  badge: string;
-  heroTitle: string;
-  heroSub: string;
-  startAssessment: string;
-  whatsappDirect: string;
-  statPartners: string;
-  statSpecialists: string;
-  statSavings: string;
-  statWait: string;
-  calculatorTitle: string;
-  calculatorSub: string;
-  selectProcedure: string;
-  compareAgainst: string;
-  packageTier: string;
-  estimatedTotal: string;
-  estimatedSavings: string;
-  timelineTitle: string;
-  timelineSub: string;
-  packagesTitle: string;
-  packagesSub: string;
-  step1: string;
-  step2: string;
-  step3: string;
-  submit: string;
-  male: string;
-  female: string;
-}> = {
-  en: {
-    brand: 'Maham Health',
-    badge: 'Premier Medical Concierge • Official IPD Partner Hospitals',
-    heroTitle: 'World-Class Healthcare, At 70–90% Below Global Costs',
-    heroSub: 'Orchestrating bespoke private medical journeys to leading accredited hospitals in Iran with internationally trained specialists and white-glove concierge care.',
-    startAssessment: 'Start Free Assessment',
-    whatsappDirect: 'Chat on WhatsApp',
-    statPartners: '40+ IPD Partner Centers',
-    statSpecialists: '180+ Board-Certified Specialists',
-    statSavings: '70–90% Typical Savings',
-    statWait: '< 3 Days Wait Time',
-    calculatorTitle: 'Interactive Savings Calculator',
-    calculatorSub: 'Select your procedure and origin benchmark to view estimated savings.',
-    selectProcedure: 'Select Treatment / Procedure',
-    compareAgainst: 'Compare Against Benchmark',
-    packageTier: 'Concierge Package Tier',
-    estimatedTotal: 'Estimated Iran Treatment Cost',
-    estimatedSavings: 'Your Estimated Cost Savings',
-    timelineTitle: 'Your Patient Journey',
-    timelineSub: 'A seamless, discreet 5-stage medical travel experience from initial consultation to recovery.',
-    packagesTitle: 'Curated Concierge Packages',
-    packagesSub: 'Choose the level of clinical support and luxury hospitality tailored for you and your companion.',
-    step1: 'Step 1: Clinical Focus',
-    step2: 'Step 2: Patient Profile',
-    step3: 'Step 3: Contact & Concierge',
-    submit: 'Submit Confidential Request',
-    male: 'Male',
-    female: 'Female'
-  },
-  fa: {
-    brand: 'ماهام هلث',
-    badge: 'دپارتمان خدمات بین‌المللی سلامت • بیمارستان‌های معتبر IPD',
-    heroTitle: 'خدمات درمانی فوق تخصصی، با ۷۰ تا ۹۰ درصد صرفه‌جویی جهانی',
-    heroSub: 'هماهنگی خدمات درمانی تشریفاتی در برترین بیمارستان‌های معتبر ایران با پزشکان فوق تخصص و مراقبت VIP.',
-    startAssessment: 'درخواست ارزیابی رایگان',
-    whatsappDirect: 'ارتباط مستقیم در واتس‌اپ',
-    statPartners: '۴۰+ مرکز همکار IPD',
-    statSpecialists: '۱۸۰+ پزشک فوق تخصص',
-    statSavings: '۷۰–۹۰٪ صرفه‌جویی نوعی',
-    statWait: 'کمتر از ۳ روز نوبت‌دهی',
-    calculatorTitle: 'محاسبه‌گر هوشمند صرفه‌جویی هزینه',
-    calculatorSub: 'درمان و کشور مقصد مقایسه را انتخاب کنید تا میزان صرفه‌جویی محاسبه شود.',
-    selectProcedure: 'انتخاب نوع خدمت درمانی',
-    compareAgainst: 'مقایسه با هزینه جهانی در',
-    packageTier: 'سطح پکیج همراهی و تشریفات',
-    estimatedTotal: 'برآورد هزینه درمان در ایران',
-    estimatedSavings: 'صرفه‌جویی تخمینی شما',
-    timelineTitle: 'مراحل سفر درمانی شما',
-    timelineSub: 'مسیری شفاف و دقیق از ارزیابی پرونده تا درمان و بهبودی کامل.',
-    packagesTitle: 'پکیج‌های تشریفات و اقامت',
-    packagesSub: 'سطح خدمات تشریفاتی و رفاهی متناسب با نیاز بیمار و همراه را انتخاب نمایید.',
-    step1: 'مرحله ۱: انتخاب درمان',
-    step2: 'مرحله ۲: مشخصات بیمار',
-    step3: 'مرحله ۳: اطلاعات تماس و پکیج',
-    submit: 'ثبت درخواست محرمانه',
-    male: 'مرد',
-    female: 'زن'
-  },
-  ar: {
-    brand: 'مهام هيلث',
-    badge: 'خدمات الرعاية الطبية الفاخرة • مستشفيات IPD المعتمدة',
-    heroTitle: 'رعاية صحية عالمية المستوى، بتوفير ٧٠–٩٠٪ من التكاليف العالمية',
-    heroSub: 'تنظيم رحلات علاجية خاصة لأفضل المستشفيات المعتمدة في إيران مع كبار الاستشاريين وخدمات كونسيرج متكاملة.',
-    startAssessment: 'ابدأ التقييم المجاني',
-    whatsappDirect: 'تواصل عبر واتساب',
-    statPartners: '+٤٠ مركزاً طبياً معتمداً',
-    statSpecialists: '+١٨٠ طبيباً واستشارياً',
-    statSavings: 'وفر ٧٠–٩٠٪ من التكاليف',
-    statWait: 'أقل من ٣ أيام للمواعيد',
-    calculatorTitle: 'حاسبة توفير التكاليف العلاجية',
-    calculatorSub: 'اختر الإجراء الطبي والوجهة المقارنة لمعرفة المبلغ الموفر بدقة.',
-    selectProcedure: 'اختر العلاج أو العملية',
-    compareAgainst: 'مقارنة التكلفة مع',
-    packageTier: 'باقة الكونسيرج والإقامة',
-    estimatedTotal: 'التكلفة التقديرية في إيران',
-    estimatedSavings: 'إجمالي التوفير التقديري',
-    timelineTitle: 'رحلة المريض المتكاملة',
-    timelineSub: 'رحلة رعاية طبية وإقامة فاخرة من أول استشارة حتى الشفاء التام.',
-    packagesTitle: 'باقات الكونسيرج والضيافة',
-    packagesSub: 'اختر مستوى الخدمات اللوجستية والفندقية المصاحبة لرحلتك العلاجية.',
-    step1: 'الخطوة ١: التخصص الطبي',
-    step2: 'الخطوة ٢: بيانات المريض',
-    step3: 'الخطوة ٣: بيانات الاتصال والباقة',
-    submit: 'إرسال الطلب بسرية تامة',
-    male: 'ذكر',
-    female: 'أنثى'
-  },
-  sw: {
-    brand: 'Maham Health',
-    badge: 'Huduma Maalum za Matibabu • Hospitali Zilizoidhinishwa za IPD',
-    heroTitle: 'Matibabu ya Kimataifa, Okoa 70–90% ya Gharama Duniani',
-    heroSub: 'Safari maalum za matibabu ya kibinafsi katika hospitali zinazoongoza nchini Iran na madaktari bingwa.',
-    startAssessment: 'Anza Tathmini ya Bure',
-    whatsappDirect: 'Wasiliana kwa WhatsApp',
-    statPartners: 'Vituo 40+ vya IPD',
-    statSpecialists: 'Madaktari Bingwa 180+',
-    statSavings: 'Akiba ya 70–90%',
-    statWait: 'Chini ya Siku 3',
-    calculatorTitle: 'Kikokotoo cha Akiba ya Gharama',
-    calculatorSub: 'Chagua huduma na nchi ya kulinganisha kuona kiwango utakachookoa.',
-    selectProcedure: 'Chagua Huduma ya Matibabu',
-    compareAgainst: 'Linganisha na Gharama za',
-    packageTier: 'Kiwango cha Huduma za Concierge',
-    estimatedTotal: 'Gharama ya Matibabu Iran',
-    estimatedSavings: 'Kiwango Unachookoa',
-    timelineTitle: 'Hatua za Safari Yako',
-    timelineSub: 'Mpangilio madhubuti kuanzia ukaguzi wa ripoti hadi kupona kabisa.',
-    packagesTitle: 'Vifurushi vya Ukarimu na Concierge',
-    packagesSub: 'Chagua kiwango cha usaidizi na huduma za malazi unachohitaji.',
-    step1: 'Hatua 1: Aina ya Matibabu',
-    step2: 'Hatua 2: Wasifu wa Mgonjwa',
-    step3: 'Hatua 3: Mawasiliano na Kifurushi',
-    submit: 'Tuma Maombi kwa Usiri',
-    male: 'Mwanaume',
-    female: 'Mwanamke'
-  },
-  hi: {
-    brand: 'महाम हेल्थ',
-    badge: 'प्रीमियर मेडिकल कंसीयर्ज • अधिकृत IPD पार्टनर अस्पताल',
-    heroTitle: 'विश्व स्तरीय स्वास्थ्य सेवा, वैश्विक लागत से 70-90% कम पर',
-    heroSub: 'विशेषज्ञ डॉक्टरों और वीआईपी कंसीयर्ज सेवाओं के साथ ईरान के अग्रणी अस्पतालों में व्यक्तिगत चिकित्सा यात्राएं।',
-    startAssessment: 'निःशुल्क मूल्यांकन शुरू करें',
-    whatsappDirect: 'व्हाट्सएप पर बात करें',
-    statPartners: '40+ IPD पार्टनर अस्पताल',
-    statSpecialists: '180+ विशेषज्ञ डॉक्टर्स',
-    statSavings: '70–90% बचत',
-    statWait: '< 3 दिन प्रतीक्षा समय',
-    calculatorTitle: 'लागत बचत कैलकुलेटर',
-    calculatorSub: 'अपनी प्रक्रिया चुनें और अनुमानित बचत देखने के लिए तुलना करें।',
-    selectProcedure: 'उपचार / प्रक्रिया चुनें',
-    compareAgainst: 'तुलना का मानक चुनें',
-    packageTier: 'कंसीयर्ज पैकेज स्तर',
-    estimatedTotal: 'ईरान में अनुमानित उपचार लागत',
-    estimatedSavings: 'आपकी अनुमानित कुल बचत',
-    timelineTitle: 'रोगी यात्रा के चरण',
-    timelineSub: 'परामर्श से लेकर पूरी रिकवरी तक एक निर्बाध और सुरक्षित चिकित्सा यात्रा।',
-    packagesTitle: 'कंसीयर्ज और आतिथ्य पैकेज',
-    packagesSub: 'अपनी और अपने साथी की जरूरतों के अनुसार उपयुक्त स्तर चुनें।',
-    step1: 'चरण 1: नैदानिक सेवा',
-    step2: 'चरण 2: रोगी विवरण',
-    step3: 'चरण 3: संपर्क और पैकेज',
-    submit: 'गोपनीय अनुरोध भेजें',
-    male: 'पुरुष',
-    female: 'महिला'
-  },
-  ur: {
-    brand: 'ماہم ہیلتھ',
-    badge: 'پریمیئر میڈیکل کونسیرج • باضابطہ IPD پارٹنر ہسپتال',
-    heroTitle: 'عالمی معیار کا علاج، بین الاقوامی اخراجات سے 70 تا 90 فیصد کم',
-    heroSub: 'ایران کے اعلیٰ ترین ہسپتالوں میں معروف ماہرین اور وی آئی پی سہولیات کے ساتھ نجی طبی اسفار۔',
-    startAssessment: 'مفت جائزہ شروع کریں',
-    whatsappDirect: 'واٹس ایپ پر رابطہ کریں',
-    statPartners: '+40 پارٹنر مراکز',
-    statSpecialists: '+180 بورڈ سرٹیفائیڈ ماہرین',
-    statSavings: '70–90% بچت',
-    statWait: '3 دن سے کم انتظار',
-    calculatorTitle: 'لاگت میں بچت کا کیلکولیٹر',
-    calculatorSub: 'اپنا طریقہ علاج منتخب کریں اور تخمینہ شدہ بچت معلوم کریں۔',
-    selectProcedure: 'طریقہ علاج منتخب کریں',
-    compareAgainst: 'موازنہ کس ملک سے کریں',
-    packageTier: 'کونسیرج پیکیج کا درجہ',
-    estimatedTotal: 'ایران میں علاج کی تخمینہ لاگت',
-    estimatedSavings: 'آپ کی کل تخمینہ بچت',
-    timelineTitle: 'مریض کا سفری لائحہ عمل',
-    timelineSub: 'پہلے مشورے سے مکمل صحت یابی تک کا ایک منظم اور محفوظ سفر۔',
-    packagesTitle: 'کونسیرج اور رہائش کے پیکیجز',
-    packagesSub: 'اپنی اور اپنے تیماردار کی ضروریات کے مطابق پیکیج کا انتخاب کریں۔',
-    step1: 'مرحلہ 1: علاج کا انتخاب',
-    step2: 'مرحلہ 2: مریض کی معلومات',
-    step3: 'مرحلہ 3: رابطہ اور پیکیج',
-    submit: 'خفیہ درخواست جمع کروائیں',
-    male: 'مرد',
-    female: 'عورت'
-  }
-};
+const SPECIALTIES = SPECIALTIES_DATA;
+const I18N = TRANSLATIONS;
 
 export default function Home() {
   const [lang, setLang] = useState<Language>('en');
   const [selectedSpecialtyId, setSelectedSpecialtyId] = useState<string>('rhinoplasty');
-  const [benchmarkRegion, setBenchmarkRegion] = useState<'usUk' | 'uaeTurkey' | 'india'>('usUk');
-  const [selectedTier, setSelectedTier] = useState<'essential' | 'vip'>('vip');
-  
-  // Wizard State
+  const [benchmarkRegion, setBenchmarkRegion] = useState<BenchmarkRegion>('usUk');
+  const [selectedTier, setSelectedTier] = useState<TierType>('vip');
+
   const [wizardStep, setWizardStep] = useState<number>(1);
   const [wizardSpecialty, setWizardSpecialty] = useState<string>('rhinoplasty');
   const [timeframe, setTimeframe] = useState<string>('immediate');
@@ -352,7 +48,7 @@ export default function Home() {
   const [country, setCountry] = useState<string>('');
   const [whatsapp, setWhatsapp] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [wizardTier, setWizardTier] = useState<'essential' | 'vip'>('vip');
+  const [wizardTier, setWizardTier] = useState<TierType>('vip');
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const t = I18N[lang];
@@ -364,18 +60,20 @@ export default function Home() {
       document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
     }
   }, [lang, isRtl]);
-  
-  const selectedSpecialty = SPECIALTIES.find(s => s.id === selectedSpecialtyId) || SPECIALTIES[0];
-  const benchmarkCost = benchmarkRegion === 'usUk' 
-    ? selectedSpecialty.usUkPrice 
-    : benchmarkRegion === 'uaeTurkey' 
-      ? selectedSpecialty.uaeTurkeyPrice 
-      : selectedSpecialty.indiaPrice;
-      
+
+  const selectedSpecialty = SPECIALTIES.find((s) => s.id === selectedSpecialtyId) || SPECIALTIES[0];
+
+  const benchmarkCost =
+    benchmarkRegion === 'usUk'
+      ? selectedSpecialty.usUkPrice
+      : benchmarkRegion === 'uaeTurkey'
+        ? selectedSpecialty.uaeTurkeyPrice
+        : selectedSpecialty.indiaPrice;
+
   const tierCost = selectedTier === 'vip' ? 1400 : 650;
   const iranTotal = selectedSpecialty.iranPrice + tierCost;
   const totalSavings = Math.max(0, benchmarkCost - iranTotal);
-  const savingsPct = Math.round((totalSavings / benchmarkCost) * 100);
+  const savingsPct = benchmarkCost > 0 ? Math.round((totalSavings / benchmarkCost) * 100) : 0;
 
   const handleWizardSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -384,25 +82,47 @@ export default function Home() {
 
   const getWhatsAppWizardLink = () => {
     const text = encodeURIComponent(
-      `Hello Maham Health,\n\nI would like to request a consultation:\n- Treatment: ${wizardSpecialty}\n- Timeframe: ${timeframe}\n- Name: ${fullName}\n- Country: ${country}\n- Selected Tier: ${wizardTier.toUpperCase()}`
+      `Hello Maham Health,
+
+I would like to request a consultation:
+- Treatment: ${wizardSpecialty}
+- Timeframe: ${timeframe}
+- Age: ${age}
+- Gender: ${gender}
+- Name: ${fullName}
+- Country: ${country}
+- WhatsApp: ${whatsapp}
+- Email: ${email}
+- Selected Tier: ${wizardTier}
+
+Medical Notes:
+${medicalNotes}`
     );
     return `https://wa.me/989055240772?text=${text}`;
   };
 
+  const validateStep = (step: number) => {
+    if (step === 1) {
+      return Boolean(wizardSpecialty);
+    }
+    if (step === 2) {
+      return Boolean(age && age.trim() !== '');
+    }
+    return true;
+  };
+
   return (
     <div dir={isRtl ? 'rtl' : 'ltr'} className="min-h-screen bg-slate-50 text-slate-900 font-sans">
-      {/* Floating WhatsApp Button */}
       <a
         href="https://wa.me/989055240772"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20ba5a] transition duration-200"
+        className={`fixed bottom-6 ${isRtl ? 'left-6' : 'right-6'} z-50 flex items-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20ba5a] transition duration-200`}
       >
         <MessageCircle className="w-5 h-5" />
         <span className="font-semibold text-sm">WhatsApp</span>
       </a>
 
-      {/* Navigation Header */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -444,7 +164,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/50 via-white to-slate-50 py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/70 border border-blue-200 text-[#0B3C95] text-xs font-semibold mb-6">
@@ -476,7 +195,6 @@ export default function Home() {
             </a>
           </div>
 
-          {/* Stats Bar */}
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             <div className="p-4 bg-white rounded-xl border border-slate-200 shadow-sm">
               <div className="text-2xl font-bold text-[#0B3C95]">40+</div>
@@ -498,7 +216,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Interactive Savings Calculator */}
       <section className="py-20 bg-white border-t border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
@@ -606,7 +323,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Results Card */}
             <div className="lg:col-span-5 bg-[#0B3C95] text-white p-6 sm:p-8 rounded-2xl shadow-xl flex flex-col justify-between h-full">
               <div>
                 <div className="text-xs font-semibold text-blue-200 uppercase tracking-widest">
@@ -654,7 +370,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Consultation Wizard Section */}
       <section id="consultation" className="py-20 bg-slate-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
@@ -688,33 +403,20 @@ export default function Home() {
               </div>
             ) : (
               <div>
-                {/* Wizard Steps Indicator */}
                 <div className="grid grid-cols-3 gap-2 mb-8 pb-6 border-b border-slate-100 text-center">
-                  <div
-                    className={`text-xs font-bold py-1 border-b-2 ${
-                      wizardStep === 1 ? 'border-[#0062E6] text-[#0062E6]' : 'border-transparent text-slate-400'
-                    }`}
-                  >
-                    1. Treatment
-                  </div>
-                  <div
-                    className={`text-xs font-bold py-1 border-b-2 ${
-                      wizardStep === 2 ? 'border-[#0062E6] text-[#0062E6]' : 'border-transparent text-slate-400'
-                    }`}
-                  >
-                    2. Profile
-                  </div>
-                  <div
-                    className={`text-xs font-bold py-1 border-b-2 ${
-                      wizardStep === 3 ? 'border-[#0062E6] text-[#0062E6]' : 'border-transparent text-slate-400'
-                    }`}
-                  >
-                    3. Contact
-                  </div>
+                  {[1, 2, 3].map((step) => (
+                    <div
+                      key={step}
+                      className={`text-xs font-bold py-1 border-b-2 ${
+                        wizardStep === step ? 'border-[#0062E6] text-[#0062E6]' : 'border-transparent text-slate-400'
+                      }`}
+                    >
+                      {step}. {step === 1 ? 'Treatment' : step === 2 ? 'Profile' : 'Contact'}
+                    </div>
+                  ))}
                 </div>
 
                 <form onSubmit={handleWizardSubmit}>
-                  {/* Step 1 */}
                   {wizardStep === 1 && (
                     <div className="space-y-5">
                       <div>
@@ -737,7 +439,11 @@ export default function Home() {
                       <div className="flex justify-end pt-4">
                         <button
                           type="button"
-                          onClick={() => setWizardStep(2)}
+                          onClick={() => {
+                            if (validateStep(1)) {
+                              setWizardStep(2);
+                            }
+                          }}
                           className="px-6 py-2.5 bg-[#0062E6] hover:bg-[#0B3C95] text-white font-semibold rounded-xl transition flex items-center gap-2"
                         >
                           Next Step <ChevronRight className="w-4 h-4" />
@@ -746,7 +452,6 @@ export default function Home() {
                     </div>
                   )}
 
-                  {/* Step 2 */}
                   {wizardStep === 2 && (
                     <div className="space-y-5">
                       <div className="grid grid-cols-2 gap-4">
@@ -816,7 +521,11 @@ export default function Home() {
                         </button>
                         <button
                           type="button"
-                          onClick={() => setWizardStep(3)}
+                          onClick={() => {
+                            if (validateStep(2)) {
+                              setWizardStep(3);
+                            }
+                          }}
                           className="px-6 py-2.5 bg-[#0062E6] hover:bg-[#0B3C95] text-white font-semibold rounded-xl transition flex items-center gap-2"
                         >
                           Next Step <ChevronRight className="w-4 h-4" />
@@ -825,7 +534,6 @@ export default function Home() {
                     </div>
                   )}
 
-                  {/* Step 3 */}
                   {wizardStep === 3 && (
                     <div className="space-y-4">
                       <div>
@@ -891,7 +599,7 @@ export default function Home() {
                         </label>
                         <select
                           value={wizardTier}
-                          onChange={(e) => setWizardTier(e.target.value as 'essential' | 'vip')}
+                          onChange={(e) => setWizardTier(e.target.value as TierType)}
                           className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-slate-900 focus:ring-2 focus:ring-[#0062E6] focus:outline-none"
                         >
                           <option value="essential">Essential Care Package</option>
@@ -924,7 +632,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
