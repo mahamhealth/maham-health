@@ -6,12 +6,14 @@ import Home from '../components/Home';
 
 export default function RootPage() {
   const router = useRouter();
-  const repoBasePath = process.env.NODE_ENV === 'production' ? '/maham-health' : '';
+  const repoBasePath =
+    process.env.NODE_ENV === 'production' ? '/maham-health' : '';
 
   useEffect(() => {
     if (typeof navigator === 'undefined') return;
 
-    const navigatorLang = navigator.language || navigator.languages?.[0] || '';
+    const navigatorLang =
+      navigator.language || navigator.languages?.[0] || '';
     const prefix = navigatorLang.split('-')[0].toLowerCase();
 
     const supported = ['fa', 'ar', 'ur', 'sw', 'hi'];
