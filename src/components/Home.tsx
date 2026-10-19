@@ -235,7 +235,7 @@ ${medicalNotes}`
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
             <div className="lg:col-span-2 bg-slate-50 p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
               <label className="block text-sm font-semibold text-slate-700 mb-3">
-                {t.selectSpecialty}
+                {t.selectProcedure}
               </label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                 {SPECIALTIES.map((s) => (
