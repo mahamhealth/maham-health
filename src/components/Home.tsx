@@ -78,17 +78,28 @@ export default function Home({ initialLanguage = 'en' }: { initialLanguage?: Lan
   const savingsPct =
     benchmarkCost > 0 ? Math.round((totalSavings / benchmarkCost) * 100) : 0;
 
+  const getSpecialtyName = (specialtyId: string, locale: Language = lang) => {
+    const foundSpecialty = SPECIALTIES.find((s) => s.id === specialtyId) || SPECIALTIES[0];
+    return foundSpecialty.name[locale] || foundSpecialty.name.en;
+  };
+
   const handleWizardSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!fullName.trim() || !country.trim() || !whatsapp.trim() || !email.trim()) {
+      return;
+    }
+
     setIsSubmitted(true);
   };
 
   const getWhatsAppWizardLink = () => {
+    const selectedWizardSpecialty = SPECIALTIES.find((s) => s.id === wizardSpecialty) || SPECIALTIES[0];
     const text = encodeURIComponent(
       `Hello Maham Health,
 
 I would like to request a consultation:
-- Treatment: ${wizardSpecialty}
+- Treatment: ${selectedWizardSpecialty.name[lang] || selectedWizardSpecialty.name.en}
 - Timeframe: ${timeframe}
 - Age: ${age}
 - Gender: ${gender}
@@ -108,6 +119,14 @@ ${medicalNotes}`
   const validateStep = (step: number) => {
     if (step === 1) return Boolean(wizardSpecialty);
     if (step === 2) return Boolean(age && age.trim() !== '');
+    if (step === 3) {
+      return Boolean(
+        fullName.trim() &&
+        country.trim() &&
+        whatsapp.trim() &&
+        email.trim()
+      );
+    }
     return true;
   };
 
@@ -224,7 +243,6 @@ ${medicalNotes}`
         </div>
       </section>
 
-      {/* Calculator Section */}
       <section className="py-16 bg-white border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
@@ -248,7 +266,7 @@ ${medicalNotes}`
                         : 'bg-white text-slate-800 border-slate-200 hover:border-blue-300'
                     }`}
                   >
-                    <span className="font-medium text-sm">{s.name[lang] || s.name.en}</span>
+                    <span className="font-medium text-sm">{getSpecialtyName(s.id)}</span>
                     <ChevronRight className="w-4 h-4 opacity-70" />
                   </button>
                 ))}
@@ -287,7 +305,6 @@ ${medicalNotes}`
               </div>
             </div>
 
-            {/* Results Card */}
             <div className="bg-[#08111d] text-white p-6 sm:p-8 rounded-2xl shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
               <h3 className="text-xl font-bold mb-6 text-blue-100">{t.costBreakdown}</h3>
@@ -322,7 +339,6 @@ ${medicalNotes}`
         </div>
       </section>
 
-      {/* Consultation Wizard Section */}
       <section id="consultation" className="py-20 bg-slate-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
@@ -336,9 +352,9 @@ ${medicalNotes}`
                 <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Check className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-[#0B3C95]">{t.successTitle || "Assessment Complete!"}</h3>
+                <h3 className="text-2xl font-bold text-[#0B3C95]">{t.successTitle || 'Assessment Complete!'}</h3>
                 <p className="mt-2 text-slate-600 max-w-md mx-auto">
-                  {t.successSub || "Click below to securely forward your case details to our medical coordinators via WhatsApp."}
+                  {t.successSub || 'Click below to securely forward your case details to our medical coordinators via WhatsApp.'}
                 </p>
                 <a
                   href={getWhatsAppWizardLink()}
@@ -347,7 +363,7 @@ ${medicalNotes}`
                   className="mt-6 inline-flex items-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20ba5a] text-white font-semibold rounded-xl shadow-lg transition"
                 >
                   <MessageCircle className="w-5 h-5" />
-                  {t.sendToWhatsApp || "Send Details to WhatsApp"}
+                  {t.sendToWhatsApp || 'Send Details to WhatsApp'}
                 </a>
               </div>
             ) : (
@@ -370,7 +386,7 @@ ${medicalNotes}`
 
                 {wizardStep === 1 && (
                   <div className="space-y-6">
-                    <h3 className="text-lg font-bold text-slate-800">{t.step1Title || "Select Your Treatment"}</h3>
+                    <h3 className="text-lg font-bold text-slate-800">{t.step1Title || 'Select Your Treatment'}</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {SPECIALTIES.map((s) => (
                         <button
@@ -383,7 +399,7 @@ ${medicalNotes}`
                               : 'bg-white text-slate-800 border-slate-200 hover:border-blue-300'
                           }`}
                         >
-                          <span className="font-medium text-sm">{s.name[lang] || s.name.en}</span>
+                          <span className="font-medium text-sm">{getSpecialtyName(s.id)}</span>
                         </button>
                       ))}
                     </div>
@@ -392,7 +408,7 @@ ${medicalNotes}`
 
                 {wizardStep === 2 && (
                   <div className="space-y-6">
-                    <h3 className="text-lg font-bold text-slate-800">{t.step2Title || "Patient Details & Timeframe"}</h3>
+                    <h3 className="text-lg font-bold text-slate-800">{t.step2Title || 'Patient Details & Timeframe'}</h3>
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-2">Age</label>
                       <input
@@ -444,7 +460,7 @@ ${medicalNotes}`
 
                 {wizardStep === 3 && (
                   <div className="space-y-6">
-                    <h3 className="text-lg font-bold text-slate-800">{t.step3Title || "Contact & Concierge Tier"}</h3>
+                    <h3 className="text-lg font-bold text-slate-800">{t.step3Title || 'Contact & Concierge Tier'}</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-1">Full Name</label>
@@ -488,6 +504,18 @@ ${medicalNotes}`
                         />
                       </div>
                     </div>
+
+                    <div>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">Medical Notes</label>
+                      <textarea
+                        value={medicalNotes}
+                        onChange={(e) => setMedicalNotes(e.target.value)}
+                        rows={4}
+                        placeholder="Briefly describe your case or treatment goals..."
+                        className="w-full p-3 border border-slate-300 rounded-xl text-sm resize-none"
+                      />
+                    </div>
+
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-2">Concierge Package Tier</label>
                       <select
@@ -525,7 +553,8 @@ ${medicalNotes}`
                   ) : (
                     <button
                       type="submit"
-                      className="ml-auto px-8 py-3 bg-[#0062E6] hover:bg-[#0B3C95] text-white font-semibold rounded-xl shadow-lg transition"
+                      disabled={!validateStep(3)}
+                      className="ml-auto px-8 py-3 bg-[#0062E6] hover:bg-[#0B3C95] text-white font-semibold rounded-xl shadow-lg transition disabled:opacity-50"
                     >
                       Complete Assessment
                     </button>
