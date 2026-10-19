@@ -14,7 +14,11 @@ export function generateStaticParams() {
   ];
 }
 
-export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+export function generateMetadata({
+  params
+}: {
+  params: { locale: string };
+}): Metadata {
   const locale = params.locale || 'en';
 
   return {
@@ -23,6 +27,10 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
   };
 }
 
-export default function LocalePage({ params }: { params: { locale: string } }) {
+export default function LocalePage({
+  params
+}: {
+  params: { locale: string };
+}) {
   return <Home initialLanguage={params.locale as any} />;
 }
