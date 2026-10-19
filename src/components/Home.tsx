@@ -3,26 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import {
   ShieldCheck,
-  Award,
-  Globe2,
-  Clock,
-  Sparkles,
-  CheckCircle2,
-  Calendar,
-  User,
-  Phone,
-  Mail,
-  Send,
-  Plane,
-  FileText,
-  HeartHandshake,
-  Stethoscope,
+  Check,
   ChevronRight,
-  Calculator,
   MessageCircle,
-  Building2,
-  ArrowRight,
-  Check
+  ArrowRight
 } from 'lucide-react';
 import { SPECIALTIES_DATA } from '../data/specialties';
 import { TRANSLATIONS, type Language } from '../data/translations';
@@ -78,28 +62,17 @@ export default function Home({ initialLanguage = 'en' }: { initialLanguage?: Lan
   const savingsPct =
     benchmarkCost > 0 ? Math.round((totalSavings / benchmarkCost) * 100) : 0;
 
-  const getSpecialtyName = (specialtyId: string, locale: Language = lang) => {
-    const foundSpecialty = SPECIALTIES.find((s) => s.id === specialtyId) || SPECIALTIES[0];
-    return foundSpecialty.name[locale] || foundSpecialty.name.en;
-  };
-
   const handleWizardSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!fullName.trim() || !country.trim() || !whatsapp.trim() || !email.trim()) {
-      return;
-    }
-
     setIsSubmitted(true);
   };
 
   const getWhatsAppWizardLink = () => {
-    const selectedWizardSpecialty = SPECIALTIES.find((s) => s.id === wizardSpecialty) || SPECIALTIES[0];
     const text = encodeURIComponent(
       `Hello Maham Health,
 
 I would like to request a consultation:
-- Treatment: ${selectedWizardSpecialty.name[lang] || selectedWizardSpecialty.name.en}
+- Treatment: ${wizardSpecialty}
 - Timeframe: ${timeframe}
 - Age: ${age}
 - Gender: ${gender}
@@ -119,31 +92,11 @@ ${medicalNotes}`
   const validateStep = (step: number) => {
     if (step === 1) return Boolean(wizardSpecialty);
     if (step === 2) return Boolean(age && age.trim() !== '');
-    if (step === 3) {
-      return Boolean(
-        fullName.trim() &&
-        country.trim() &&
-        whatsapp.trim() &&
-        email.trim()
-      );
-    }
     return true;
   };
 
   return (
     <div dir={isRtl ? 'rtl' : 'ltr'} className="min-h-screen bg-slate-50 text-slate-900 font-sans">
-      <a
-        href="https://wa.me/989055240772"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`fixed bottom-6 ${
-          isRtl ? 'left-6' : 'right-6'
-        } z-50 flex items-center gap-2 bg-[#25D366] text-white px-5 py-3 rounded-full shadow-2xl hover:bg-[#20ba5a] transition duration-200`}
-      >
-        <MessageCircle className="w-5 h-5" />
-        <span className="font-semibold text-sm">WhatsApp</span>
-      </a>
-
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -152,7 +105,7 @@ ${medicalNotes}`
             </div>
             <div>
               <span className="text-xl font-bold tracking-tight text-[#0B3C95] block leading-none">
-                MAHAM HEALTH
+                {t.brand}
               </span>
               <span className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">
                 Soorin Maham Group
@@ -187,6 +140,7 @@ ${medicalNotes}`
         </div>
       </header>
 
+      {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/50 via-white to-slate-50 py-20 lg:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-100/70 border border-blue-200 text-[#0B3C95] text-xs font-semibold mb-6">
@@ -243,6 +197,7 @@ ${medicalNotes}`
         </div>
       </section>
 
+      {/* Calculator Section */}
       <section className="py-16 bg-white border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
@@ -266,7 +221,7 @@ ${medicalNotes}`
                         : 'bg-white text-slate-800 border-slate-200 hover:border-blue-300'
                     }`}
                   >
-                    <span className="font-medium text-sm">{getSpecialtyName(s.id)}</span>
+                    <span className="font-medium text-sm">{s.name}</span>
                     <ChevronRight className="w-4 h-4 opacity-70" />
                   </button>
                 ))}
@@ -275,51 +230,52 @@ ${medicalNotes}`
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-slate-200">
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    {t.benchmarkRegion}
+                    {t.compareAgainst}
                   </label>
                   <select
                     value={benchmarkRegion}
                     onChange={(e) => setBenchmarkRegion(e.target.value as BenchmarkRegion)}
                     className="w-full p-3 bg-white border border-slate-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#0062E6]"
                   >
-                    <option value="usUk">{t.usUk}</option>
-                    <option value="uaeTurkey">{t.uaeTurkey}</option>
-                    <option value="india">{t.india}</option>
+                    <option value="usUk">US / UK Benchmark</option>
+                    <option value="uaeTurkey">UAE / Turkey Benchmark</option>
+                    <option value="india">India Benchmark</option>
                   </select>
                 </div>
 
                 <div>
                   <label className="block text-sm font-semibold text-slate-700 mb-2">
-                    {t.conciergeTier}
+                    {t.packageTier}
                   </label>
                   <select
                     value={selectedTier}
                     onChange={(e) => setSelectedTier(e.target.value as TierType)}
                     className="w-full p-3 bg-white border border-slate-300 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#0062E6]"
                   >
-                    <option value="essential">{t.tierEssential}</option>
-                    <option value="premium">{t.tierPremium}</option>
-                    <option value="vip">{t.tierVip}</option>
+                    <option value="essential">Essential Care (+$650)</option>
+                    <option value="premium">Premium Care (+$950)</option>
+                    <option value="vip">Luxury VIP (+$1,400)</option>
                   </select>
                 </div>
               </div>
             </div>
 
+            {/* Results Card */}
             <div className="bg-[#08111d] text-white p-6 sm:p-8 rounded-2xl shadow-xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
-              <h3 className="text-xl font-bold mb-6 text-blue-100">{t.costBreakdown}</h3>
+              <h3 className="text-xl font-bold mb-6 text-blue-100">Cost Comparison</h3>
 
               <div className="space-y-4 text-sm">
                 <div className="flex justify-between pb-3 border-b border-slate-800">
-                  <span className="text-slate-400">{t.benchmarkCost}</span>
+                  <span className="text-slate-400">Benchmark Price</span>
                   <span className="font-semibold">${benchmarkCost.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between pb-3 border-b border-slate-800">
-                  <span className="text-slate-400">{t.iranBase}</span>
+                  <span className="text-slate-400">{t.estimatedTotal}</span>
                   <span className="font-semibold">${selectedSpecialty.iranPrice.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between pb-3 border-b border-slate-800">
-                  <span className="text-slate-400">{t.conciergeAddon}</span>
+                  <span className="text-slate-400">Concierge Tier</span>
                   <span className="font-semibold">+${tierCost}</span>
                 </div>
                 <div className="flex justify-between pt-2 text-base font-bold text-blue-400">
@@ -332,18 +288,19 @@ ${medicalNotes}`
                 href="#consultation"
                 className="mt-8 w-full block text-center py-3.5 bg-[#0062E6] hover:bg-blue-600 text-white font-semibold rounded-xl shadow-lg transition"
               >
-                {t.proceedWithConsultation}
+                {t.startAssessment}
               </a>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Consultation Wizard Section */}
       <section id="consultation" className="py-20 bg-slate-50">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-[#0B3C95]">{t.wizardTitle}</h2>
-            <p className="mt-2 text-slate-600">{t.wizardSub}</p>
+            <h2 className="text-3xl font-bold text-[#0B3C95]">{t.timelineTitle}</h2>
+            <p className="mt-2 text-slate-600">{t.timelineSub}</p>
           </div>
 
           <div className="bg-white p-8 rounded-2xl border border-slate-200 shadow-lg">
@@ -352,9 +309,9 @@ ${medicalNotes}`
                 <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Check className="w-8 h-8" />
                 </div>
-                <h3 className="text-2xl font-bold text-[#0B3C95]">{t.successTitle || 'Assessment Complete!'}</h3>
+                <h3 className="text-2xl font-bold text-[#0B3C95]">Assessment Complete!</h3>
                 <p className="mt-2 text-slate-600 max-w-md mx-auto">
-                  {t.successSub || 'Click below to securely forward your case details to our medical coordinators via WhatsApp.'}
+                  Click below to securely forward your case details to our medical coordinators via WhatsApp.
                 </p>
                 <a
                   href={getWhatsAppWizardLink()}
@@ -363,7 +320,7 @@ ${medicalNotes}`
                   className="mt-6 inline-flex items-center gap-2 px-8 py-4 bg-[#25D366] hover:bg-[#20ba5a] text-white font-semibold rounded-xl shadow-lg transition"
                 >
                   <MessageCircle className="w-5 h-5" />
-                  {t.sendToWhatsApp || 'Send Details to WhatsApp'}
+                  Forward to WhatsApp
                 </a>
               </div>
             ) : (
@@ -386,7 +343,7 @@ ${medicalNotes}`
 
                 {wizardStep === 1 && (
                   <div className="space-y-6">
-                    <h3 className="text-lg font-bold text-slate-800">{t.step1Title || 'Select Your Treatment'}</h3>
+                    <h3 className="text-lg font-bold text-slate-800">{t.step1}</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {SPECIALTIES.map((s) => (
                         <button
@@ -399,7 +356,7 @@ ${medicalNotes}`
                               : 'bg-white text-slate-800 border-slate-200 hover:border-blue-300'
                           }`}
                         >
-                          <span className="font-medium text-sm">{getSpecialtyName(s.id)}</span>
+                          <span className="font-medium text-sm">{s.name}</span>
                         </button>
                       ))}
                     </div>
@@ -408,7 +365,7 @@ ${medicalNotes}`
 
                 {wizardStep === 2 && (
                   <div className="space-y-6">
-                    <h3 className="text-lg font-bold text-slate-800">{t.step2Title || 'Patient Details & Timeframe'}</h3>
+                    <h3 className="text-lg font-bold text-slate-800">{t.step2}</h3>
                     <div>
                       <label className="block text-sm font-semibold text-slate-700 mb-2">Age</label>
                       <input
@@ -430,7 +387,7 @@ ${medicalNotes}`
                             checked={gender === 'male'}
                             onChange={() => setGender('male')}
                           />
-                          <span>Male</span>
+                          <span>{t.male}</span>
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer">
                           <input
@@ -439,7 +396,7 @@ ${medicalNotes}`
                             checked={gender === 'female'}
                             onChange={() => setGender('female')}
                           />
-                          <span>Female</span>
+                          <span>{t.female}</span>
                         </label>
                       </div>
                     </div>
@@ -460,7 +417,7 @@ ${medicalNotes}`
 
                 {wizardStep === 3 && (
                   <div className="space-y-6">
-                    <h3 className="text-lg font-bold text-slate-800">{t.step3Title || 'Contact & Concierge Tier'}</h3>
+                    <h3 className="text-lg font-bold text-slate-800">{t.step3}</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-1">Full Name</label>
@@ -504,20 +461,8 @@ ${medicalNotes}`
                         />
                       </div>
                     </div>
-
                     <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Medical Notes</label>
-                      <textarea
-                        value={medicalNotes}
-                        onChange={(e) => setMedicalNotes(e.target.value)}
-                        rows={4}
-                        placeholder="Briefly describe your case or treatment goals..."
-                        className="w-full p-3 border border-slate-300 rounded-xl text-sm resize-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">Concierge Package Tier</label>
+                      <label className="block text-sm font-semibold text-slate-700 mb-2">{t.packagesTitle}</label>
                       <select
                         value={wizardTier}
                         onChange={(e) => setWizardTier(e.target.value as TierType)}
@@ -553,10 +498,9 @@ ${medicalNotes}`
                   ) : (
                     <button
                       type="submit"
-                      disabled={!validateStep(3)}
-                      className="ml-auto px-8 py-3 bg-[#0062E6] hover:bg-[#0B3C95] text-white font-semibold rounded-xl shadow-lg transition disabled:opacity-50"
+                      className="ml-auto px-8 py-3 bg-[#0062E6] hover:bg-[#0B3C95] text-white font-semibold rounded-xl shadow-lg transition"
                     >
-                      Complete Assessment
+                      {t.submit}
                     </button>
                   )}
                 </div>
@@ -566,6 +510,7 @@ ${medicalNotes}`
         </div>
       </section>
 
+      {/* Footer */}
       <footer className="bg-[#08111d] text-slate-400 py-12 border-t border-slate-800 text-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="font-semibold text-white">Maham Health — Soorin Maham Trade & Industry Development Corporation</p>
