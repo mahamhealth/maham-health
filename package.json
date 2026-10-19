@@ -2,6 +2,7 @@
   "name": "maham-health",
   "version": "1.0.0",
   "private": true,
+  "homepage": "https://mahamhealth.github.io/maham-health",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
