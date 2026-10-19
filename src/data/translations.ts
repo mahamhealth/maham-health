@@ -28,6 +28,27 @@ export interface I18nSet {
   submit: string;
   male: string;
   female: string;
+  usUk: string;
+  uaeTurkey: string;
+  india: string;
+  benchmarkRegion: string;
+  conciergeTier: string;
+  tierEssential: string;
+  tierPremium: string;
+  tierVip: string;
+  costBreakdown: string;
+  benchmarkCost: string;
+  iranBase: string;
+  conciergeAddon: string;
+  wizardTitle: string;
+  wizardSub: string;
+  successTitle: string;
+  successSub: string;
+  sendToWhatsApp: string;
+  step1Title: string;
+  step2Title: string;
+  step3Title: string;
+  proceedWithConsultation: string;
 }
 
 export const TRANSLATIONS: Record<Language, I18nSet> = {
@@ -58,7 +79,28 @@ export const TRANSLATIONS: Record<Language, I18nSet> = {
     step3: 'Step 3: Contact & Concierge',
     submit: 'Submit Confidential Request',
     male: 'Male',
-    female: 'Female'
+    female: 'Female',
+    usUk: 'United States / UK',
+    uaeTurkey: 'UAE / Turkey',
+    india: 'India',
+    benchmarkRegion: 'Benchmark Region',
+    conciergeTier: 'Concierge Tier',
+    tierEssential: 'Essential Care',
+    tierPremium: 'Premium Care',
+    tierVip: 'Luxury VIP',
+    costBreakdown: 'Cost Breakdown',
+    benchmarkCost: 'Benchmark Cost',
+    iranBase: 'Iran Base Price',
+    conciergeAddon: 'Concierge Add-On',
+    wizardTitle: 'Free Consultation & Case Assessment',
+    wizardSub: 'Tell us a little about your care goals and we’ll help coordinate your next steps.',
+    successTitle: 'Assessment Complete!',
+    successSub: 'Click below to securely forward your case details to our medical coordinators via WhatsApp.',
+    sendToWhatsApp: 'Send Details to WhatsApp',
+    step1Title: 'Select Your Treatment',
+    step2Title: 'Patient Details & Timeframe',
+    step3Title: 'Contact & Concierge Tier',
+    proceedWithConsultation: 'Proceed to Consultation'
   },
   fa: {
     brand: 'ماهام هلث',
@@ -87,7 +129,28 @@ export const TRANSLATIONS: Record<Language, I18nSet> = {
     step3: 'مرحله ۳: اطلاعات تماس و پکیج',
     submit: 'ثبت درخواست محرمانه',
     male: 'مرد',
-    female: 'زن'
+    female: 'زن',
+    usUk: 'ایالات متحده / بریتانیا',
+    uaeTurkey: 'امارات / ترکیه',
+    india: 'هند',
+    benchmarkRegion: 'منطقه مرجع',
+    conciergeTier: 'سطح concierge',
+    tierEssential: 'پشتیبانی پایه',
+    tierPremium: 'پشتیبانی ویژه',
+    tierVip: 'VIP لوکس',
+    costBreakdown: 'تجزیه هزینه',
+    benchmarkCost: 'هزینه مرجع',
+    iranBase: 'قیمت پایه ایران',
+    conciergeAddon: 'هزینه concierge',
+    wizardTitle: 'مشاوره رایگان و ارزیابی پرونده',
+    wizardSub: 'کمی درباره اهداف درمانی خود بگویید تا در مسیر بعدی همراهتان شویم.',
+    successTitle: 'ارزیابی کامل شد!',
+    successSub: 'برای ارسال جزئیات پرونده به هماهنگ‌کنندگان پزشکی از واتساپ استفاده کنید.',
+    sendToWhatsApp: 'ارسال جزئیات به واتساپ',
+    step1Title: 'درمان خود را انتخاب کنید',
+    step2Title: 'جزئیات بیمار و زمانبندی',
+    step3Title: 'اطلاعات تماس و سطح concierge',
+    proceedWithConsultation: 'ادامه به مشاوره'
   },
   ar: {
     brand: 'مهام هيلث',
@@ -108,7 +171,7 @@ export const TRANSLATIONS: Record<Language, I18nSet> = {
     estimatedTotal: 'التكلفة التقديرية في إيران',
     estimatedSavings: 'إجمالي التوفير التقديري',
     timelineTitle: 'رحلة المريض المتكاملة',
-    timelineSub: 'رحلة رعاية طبية وُفرت بعناية منذ أول استشارة حتى الشفاء التام.',
+    timelineSub: 'رحلة رعاية طبية منظمة منذ أول استشارة حتى الشفاء التام.',
     packagesTitle: 'باقات الكونسيرج والضيافة',
     packagesSub: 'اختر مستوى الخدمات اللوجستية والفندقية المصاحبة لرحلتك العلاجية.',
     step1: 'الخطوة ١: التخصص الطبي',
@@ -116,7 +179,28 @@ export const TRANSLATIONS: Record<Language, I18nSet> = {
     step3: 'الخطوة ٣: بيانات الاتصال والباقة',
     submit: 'إرسال الطلب بسرية تامة',
     male: 'ذكر',
-    female: 'أنثى'
+    female: 'أنثى',
+    usUk: 'الولايات المتحدة / المملكة المتحدة',
+    uaeTurkey: 'الإمارات / تركيا',
+    india: 'الهند',
+    benchmarkRegion: 'منطقة المقارنة',
+    conciergeTier: 'مستوى الخدمة',
+    tierEssential: 'العناية الأساسية',
+    tierPremium: 'العناية المميزة',
+    tierVip: 'VIP فاخر',
+    costBreakdown: 'تفصيل التكلفة',
+    benchmarkCost: 'تكلفة المعيار',
+    iranBase: 'سعر إيران الأساسي',
+    conciergeAddon: 'رسوم الخدمة',
+    wizardTitle: 'استشارة مجانية وتقييم الحالة',
+    wizardSub: 'أخبرنا قليلاً عن احتياجاتك حتى نساعدك في تنظيم الخطوات التالية.',
+    successTitle: 'اكتمل التقييم!',
+    successSub: 'اضغط أدناه لإرسال تفاصيل حالتك بشكل آمن إلى منسقينا عبر واتساب.',
+    sendToWhatsApp: 'إرسال التفاصيل إلى واتساب',
+    step1Title: 'اختر العلاج',
+    step2Title: 'تفاصيل المريض ووقت العلاج',
+    step3Title: 'بيانات الاتصال ومستوى الخدمة',
+    proceedWithConsultation: 'المتابعة إلى الاستشارة'
   },
   sw: {
     brand: 'Maham Health',
@@ -145,13 +229,34 @@ export const TRANSLATIONS: Record<Language, I18nSet> = {
     step3: 'Hatua 3: Mawasiliano na Kifurushi',
     submit: 'Tuma Maombi kwa Usiri',
     male: 'Mwanaume',
-    female: 'Mwanamke'
+    female: 'Mwanamke',
+    usUk: 'Marekani / Uingereza',
+    uaeTurkey: 'UAE / Uturuki',
+    india: 'India',
+    benchmarkRegion: 'Mkoa wa Kulinganisha',
+    conciergeTier: 'Kiwango cha Concierge',
+    tierEssential: 'Huduma ya Msingi',
+    tierPremium: 'Huduma ya Premium',
+    tierVip: 'VIP ya Kubwa',
+    costBreakdown: 'Kugawanya Gharama',
+    benchmarkCost: 'Gharama ya Kulinganisha',
+    iranBase: 'Gharama ya Iran',
+    conciergeAddon: 'Gharama ya Concierge',
+    wizardTitle: 'Ushauri wa Bure na Tathmini ya Kesi',
+    wizardSub: 'Tuambie kidogo kuhusu lengo lako la matibabu ili tukusaidie hatua zifuatazo.',
+    successTitle: 'Tathmini Imekamilika!',
+    successSub: 'Bofya hapa kutuma maelezo yako kwa koordina za matibabu kupitia WhatsApp.',
+    sendToWhatsApp: 'Tuma Maelezo kwa WhatsApp',
+    step1Title: 'Chagua Tiba Yako',
+    step2Title: 'Maelezo ya Mgonjwa na Muda',
+    step3Title: 'Mawasiliano na Kiwango cha Concierge',
+    proceedWithConsultation: 'Enda kwenye Ushauri'
   },
   hi: {
     brand: 'महाम हेल्थ',
     badge: 'प्रीमियर मेडिकल कंसीयर्ज • अधिकृत IPD पार्टनर अस्पताल',
     heroTitle: 'विश्व स्तरीय स्वास्थ्य सेवा, वैश्विक लागत से 70-90% कम पर',
-    heroSub: 'विशेषज्ञ डॉक्टरों और वीआईपी कंसीयर्ज सेवाओं के साथ ईरान के अग्रणी अस्पतालों में निजी चिकित्सा यात्रा की व्यवस्था।',
+    heroSub: 'विशेषज्ञ डॉक्टरों और वीआईपी कंसीयर्ज सेवाओं के साथ ईरान के अग्रणी अस्पतालों के लिए विशेष यात्रा प्रबंधन।',
     startAssessment: 'निःशुल्क मूल्यांकन शुरू करें',
     whatsappDirect: 'व्हाट्सएप पर बात करें',
     statPartners: '40+ IPD पार्टनर अस्पताल',
@@ -174,7 +279,28 @@ export const TRANSLATIONS: Record<Language, I18nSet> = {
     step3: 'चरण 3: संपर्क और पैकेज',
     submit: 'गोपनीय अनुरोध भेजें',
     male: 'पुरुष',
-    female: 'महिला'
+    female: 'महिला',
+    usUk: 'संयुक्त राज्य / यूके',
+    uaeTurkey: 'यूएई / तुर्की',
+    india: 'भारत',
+    benchmarkRegion: 'तुलना क्षेत्र',
+    conciergeTier: 'कंसीयर्ज स्तर',
+    tierEssential: 'मूलभूत देखभाल',
+    tierPremium: 'प्रीमियम देखभाल',
+    tierVip: 'लक्ज़री VIP',
+    costBreakdown: 'लागत विवरण',
+    benchmarkCost: 'तुलना लागत',
+    iranBase: 'ईरान आधार मूल्य',
+    conciergeAddon: 'कंसीयर्ज शुल्क',
+    wizardTitle: 'मुफ्त परामर्श और केस मूल्यांकन',
+    wizardSub: 'अपनी चिकित्सीय जरूरतों के बारे में कुछ बताएं, हम अगली कदमों के लिए सहयोग करेंगे।',
+    successTitle: 'मूल्यांकन पूर्ण!',
+    successSub: 'अपना मामला सुरक्षित रूप से व्हाट्सएप पर भेजने के लिए नीचे क्लिक करें।',
+    sendToWhatsApp: 'विवरण व्हाट्सएप पर भेजें',
+    step1Title: 'अपना उपचार चुनें',
+    step2Title: 'रोगी विवरण और समयसीमा',
+    step3Title: 'संपर्क और कंसीयर्ज स्तर',
+    proceedWithConsultation: 'परामर्श के लिए आगे बढ़ें'
   },
   ur: {
     brand: 'ماہم ہیلتھ',
@@ -203,6 +329,27 @@ export const TRANSLATIONS: Record<Language, I18nSet> = {
     step3: 'مرحلہ 3: رابطہ اور پیکیج',
     submit: 'خفیہ درخواست جمع کروائیں',
     male: 'مرد',
-    female: 'عورت'
+    female: 'عورت',
+    usUk: 'امریکا / برطانیہ',
+    uaeTurkey: 'متحدہ عرب امارات / ترکی',
+    india: 'بھارت',
+    benchmarkRegion: 'موازنہ کا خطہ',
+    conciergeTier: 'کونسیرج سطح',
+    tierEssential: 'بنیادی سروس',
+    tierPremium: 'پریمیم سروس',
+    tierVip: 'لوکس VIP',
+    costBreakdown: 'لاگت کا تجزیہ',
+    benchmarkCost: 'موازنہ لاگت',
+    iranBase: 'ایران کی بنیادی قیمت',
+    conciergeAddon: 'کونسیرج فیس',
+    wizardTitle: 'مفت مشاورت اور کیس جائزہ',
+    wizardSub: 'اپنی طبی ضروریات کے بارے میں تھوڑا بتائیں تاکہ ہم اگلی مراحل میں آپ کی مدد کریں۔',
+    successTitle: 'جائزہ مکمل!',
+    successSub: 'اپنی تفصیلات محفوظ طریقے سے WhatsApp پر بھیجنے کے لیے نیچے کلک کریں۔',
+    sendToWhatsApp: 'تفصیلات WhatsApp پر بھیجیں',
+    step1Title: 'اپنا علاج منتخب کریں',
+    step2Title: 'مریض کی تفصیلات اور وقت',
+    step3Title: 'رابطہ اور کونسیرج سطح',
+    proceedWithConsultation: 'مشاورت کے لیے آگے بڑھیں'
   }
 };
