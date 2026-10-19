@@ -228,8 +228,8 @@ ${medicalNotes}`
       <section className="py-16 bg-white border-y border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl font-bold text-[#0B3C95]">{t.calcTitle}</h2>
-            <p className="mt-2 text-slate-600">{t.calcSub}</p>
+            <h2 className="text-3xl font-bold text-[#0B3C95]">{t.calculatorTitle}</h2>
+            <p className="mt-2 text-slate-600">{t.calculatorSub}</p>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
