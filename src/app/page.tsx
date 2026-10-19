@@ -6,6 +6,7 @@ import Home from '../components/Home';
 
 export default function RootPage() {
   const router = useRouter();
+  const repoBasePath = process.env.NODE_ENV === 'production' ? '/maham-health' : '';
 
   useEffect(() => {
     if (typeof navigator === 'undefined') return;
@@ -16,10 +17,8 @@ export default function RootPage() {
     const supported = ['fa', 'ar', 'ur', 'sw', 'hi'];
     const matched = supported.includes(prefix) ? prefix : 'en';
 
-    // Replace to locale route (trailing slash preserved for static export)
-    router.replace(`/${matched}/`);
-  }, [router]);
+    router.replace(`${repoBasePath}/${matched}/`);
+  }, [repoBasePath, router]);
 
-  // Render the home UI (fallback) so a static export still has content.
   return <Home initialLanguage="en" />;
 }
