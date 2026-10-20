@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Home from '@/components/Home';
+import Home from '../components/Home';
 
 export default function RootPage() {
   const router = useRouter();
