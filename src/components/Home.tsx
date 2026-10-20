@@ -306,7 +306,7 @@ const I18N: Record<Language, {
   },
   ur: {
     brand: 'مہام ہیلتھ',
-    badge: 'ایران کے لیے سرکاری میڈیکل ٹ্যুরزم کونسیرج',
+    badge: 'ایران کے لیے سرکاری میڈیکل ٹ্যورزم کونسیرج',
     heroTitle: 'ایران میں عالمی معیار کی طبی دیکھ بھال، اعلی درجے کے کونسیرج کے ساتھ',
     heroSub: 'JCI سے تسلیم شدہ اسپتالوں، VIP ہوائی اڈے کی منتقلی اور نجی ریکوری سویٹس کے ساتھ 9 اعلی درجے کی خصوصیات میں 70% سے 90% تک لاگت کی بچت کا تجربہ کریں۔',
     startAssessment: 'مفت مشاورت شروع کریں',
@@ -457,279 +457,407 @@ export default function HomePage({ initialLanguage = 'en' }: Props) {
   return (
     <div
       dir={isRTL ? 'rtl' : 'ltr'}
-      className="min-h-screen bg-[#08111d] text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-200"
+      className="min-h-screen bg-[#08111d] text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-200 flex flex-col justify-between"
     >
-      {/* Navigation Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-[#08111d]/80 border-b border-slate-800/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
-              <span className="text-[#08111d] font-black text-xl">M</span>
+      <div>
+        {/* Navigation Header */}
+        <header className="sticky top-0 z-50 backdrop-blur-md bg-[#08111d]/80 border-b border-slate-800/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center shadow-lg shadow-amber-500/20">
+                <span className="text-[#08111d] font-black text-xl">M</span>
+              </div>
+              <div>
+                <span className="font-bold text-xl tracking-wider text-white block">{t.brand}</span>
+                <span className="text-[10px] text-amber-400 uppercase tracking-widest block font-medium">Soorin Maham Group</span>
+              </div>
             </div>
-            <div>
-              <span className="font-bold text-xl tracking-wider text-white block">{t.brand}</span>
-              <span className="text-[10px] text-amber-400 uppercase tracking-widest block font-medium">Soorin Maham Group</span>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-4">
-            {/* Language Selector */}
-            <select
-              aria-label="Select Language"
-              value={lang}
-              onChange={(e) => setLang(e.target.value as Language)}
-              className="bg-slate-900 border border-slate-700 text-xs text-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-amber-400"
-            >
-              <option value="en">English (EN)</option>
-              <option value="fa">فارسی (FA)</option>
-              <option value="ar">العربية (AR)</option>
-              <option value="sw">Kiswahili (SW)</option>
-              <option value="hi">हिन्दी (HI)</option>
-              <option value="ur">اردو (UR)</option>
-            </select>
+            <div className="flex items-center gap-4">
+              {/* Language Selector */}
+              <select
+                aria-label="Select Language"
+                value={lang}
+                onChange={(e) => setLang(e.target.value as Language)}
+                className="bg-slate-900 border border-slate-700 text-xs text-slate-300 rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-amber-400"
+              >
+                <option value="en">English (EN)</option>
+                <option value="fa">فارسی (FA)</option>
+                <option value="ar">العربية (AR)</option>
+                <option value="sw">Kiswahili (SW)</option>
+                <option value="hi">हिन्दी (HI)</option>
+                <option value="ur">اردو (UR)</option>
+              </select>
 
-            <a
-              href={whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
-            >
-              <MessageCircle className="w-4 h-4" />
-              <span>{t.whatsappDirect}</span>
-            </a>
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden sm:inline-flex items-center gap-2 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-400 border border-emerald-500/30 px-4 py-2 rounded-xl text-sm font-semibold transition-all"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>{t.whatsappDirect}</span>
+              </a>
 
-            <button
-              onClick={() => {
-                setStep(1);
-                setSubmitted(false);
-                setIsModalOpen(true);
-              }}
-              className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-[#08111d] font-bold px-5 py-2.5 rounded-xl text-sm shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2"
-            >
-              <Sparkles className="w-4 h-4" />
-              <span>{t.startAssessment}</span>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section */}
-      <section className="relative pt-20 pb-24 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-500/10 via-[#08111d] to-[#08111d] pointer-events-none" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-3xl mx-auto space-y-6">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold tracking-wide uppercase">
-              <ShieldCheck className="w-4 h-4 text-amber-400" />
-              <span>{t.badge}</span>
-            </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
-              {t.heroTitle}
-            </h1>
-            <p className="text-lg text-slate-300 leading-relaxed">{t.heroSub}</p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <button
                 onClick={() => {
                   setStep(1);
                   setSubmitted(false);
                   setIsModalOpen(true);
                 }}
-                className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-[#08111d] font-bold px-8 py-4 rounded-xl text-base shadow-xl shadow-amber-500/25 transition-all flex items-center justify-center gap-3"
+                className="bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-[#08111d] font-bold px-5 py-2.5 rounded-xl text-sm shadow-lg shadow-amber-500/20 transition-all flex items-center gap-2"
               >
+                <Sparkles className="w-4 h-4" />
                 <span>{t.startAssessment}</span>
-                <ArrowRight className="w-5 h-5" />
               </button>
-              <a
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700 px-8 py-4 rounded-xl text-base font-semibold transition-all flex items-center justify-center gap-3"
-              >
-                <MessageCircle className="w-5 h-5 text-emerald-400" />
-                <span>{t.whatsappDirect}</span>
-              </a>
             </div>
           </div>
+        </header>
 
-          {/* Stats Bar */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 pt-12 border-t border-slate-800">
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-extrabold text-amber-400">15+</div>
-              <div className="text-xs sm:text-sm text-slate-400 mt-1">{t.statPartners}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-extrabold text-white">200+</div>
-              <div className="text-xs sm:text-sm text-slate-400 mt-1">{t.statSpecialists}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-extrabold text-amber-400">75-90%</div>
-              <div className="text-xs sm:text-sm text-slate-400 mt-1">{t.statSavings}</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl sm:text-4xl font-extrabold text-white">24h</div>
-              <div className="text-xs sm:text-sm text-slate-400 mt-1">{t.statWait}</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Cost & Savings Calculator */}
-      <section className="py-20 bg-slate-950/50 border-y border-slate-800/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold text-white mb-4">{t.calculatorTitle}</h2>
-            <p className="text-slate-400 text-sm sm:text-base">{t.calculatorSub}</p>
-          </div>
-
-          <div className="max-w-4xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div>
-                <label htmlFor={calcSpecialtySelectId} className="block text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">
-                  {t.selectProcedure}
-                </label>
-                <select
-                  id={calcSpecialtySelectId}
-                  value={calcSpecialtyId}
-                  onChange={(e) => setCalcSpecialtyId(e.target.value)}
-                  className="w-auto max-w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-amber-400"
+        {/* Hero Section */}
+        <section className="relative pt-20 pb-24 overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-500/10 via-[#08111d] to-[#08111d] pointer-events-none" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="text-center max-w-3xl mx-auto space-y-6">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold tracking-wide uppercase">
+                <ShieldCheck className="w-4 h-4 text-amber-400" />
+                <span>{t.badge}</span>
+              </div>
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                {t.heroTitle}
+              </h1>
+              <p className="text-lg text-slate-300 leading-relaxed">{t.heroSub}</p>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                <button
+                  onClick={() => {
+                    setStep(1);
+                    setSubmitted(false);
+                    setIsModalOpen(true);
+                  }}
+                  className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-[#08111d] font-bold px-8 py-4 rounded-xl text-base shadow-xl shadow-amber-500/25 transition-all flex items-center justify-center gap-3"
                 >
-                  {SPECIALTIES.map((s) => (
-                    <option key={s.id} value={s.id}>
-                      {s.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label htmlFor={calcBenchmarkSelectId} className="block text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">
-                  {t.compareAgainst}
-                </label>
-                <select
-                  id={calcBenchmarkSelectId}
-                  value={calcBenchmark}
-                  onChange={(e) => setCalcBenchmark(e.target.value as any)}
-                  className="w-auto max-w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-amber-400"
+                  <span>{t.startAssessment}</span>
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+                <a
+                  href={whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-slate-700 px-8 py-4 rounded-xl text-base font-semibold transition-all flex items-center justify-center gap-3"
                 >
-                  <option value="us">US / UK Average</option>
-                  <option value="uae">UAE / Turkey Average</option>
-                  <option value="india">India Average</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">
-                  {t.packageTier}
-                </label>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => setCalcPackage('essential')}
-                    className={`py-3 rounded-xl text-xs font-bold border transition-all ${
-                      calcPackage === 'essential'
-                        ? 'bg-amber-500 text-[#08111d] border-amber-500'
-                        : 'bg-slate-950 text-slate-300 border-slate-700 hover:border-slate-600'
-                    }`}
-                  >
-                    Essential Care
-                  </button>
-                  <button
-                    onClick={() => setCalcPackage('vip')}
-                    className={`py-3 rounded-xl text-xs font-bold border transition-all ${
-                      calcPackage === 'vip'
-                        ? 'bg-amber-500 text-[#08111d] border-amber-500'
-                        : 'bg-slate-950 text-slate-300 border-slate-700 hover:border-slate-600'
-                    }`}
-                  >
-                    VIP Luxury
-                  </button>
-                </div>
+                  <MessageCircle className="w-5 h-5 text-emerald-400" />
+                  <span>{t.whatsappDirect}</span>
+                </a>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-slate-800 text-center">
-              <div className="bg-slate-950/60 p-6 rounded-2xl border border-slate-800">
-                <span className="text-xs text-slate-400 uppercase tracking-widest block mb-1">Benchmark Price</span>
-                <span className="text-2xl sm:text-3xl font-extrabold text-slate-300">${benchmarkPrice.toLocaleString()}</span>
+            {/* Stats Bar */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 pt-12 border-t border-slate-800">
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-extrabold text-amber-400">15+</div>
+                <div className="text-xs sm:text-sm text-slate-400 mt-1">{t.statPartners}</div>
               </div>
-              <div className="bg-slate-950/60 p-6 rounded-2xl border border-amber-500/30">
-                <span className="text-xs text-amber-400 uppercase tracking-widest block mb-1">{t.estimatedTotal}</span>
-                <span className="text-2xl sm:text-3xl font-extrabold text-amber-400">${iranTotal.toLocaleString()}</span>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-extrabold text-white">200+</div>
+                <div className="text-xs sm:text-sm text-slate-400 mt-1">{t.statSpecialists}</div>
               </div>
-              <div className="bg-slate-950/60 p-6 rounded-2xl border border-emerald-500/30">
-                <span className="text-xs text-emerald-400 uppercase tracking-widest block mb-1">{t.estimatedSavings}</span>
-                <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400">
-                  ${dollarSavings.toLocaleString()} ({percentSavings}%)
-                </span>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-extrabold text-amber-400">75-90%</div>
+                <div className="text-xs sm:text-sm text-slate-400 mt-1">{t.statSavings}</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl sm:text-4xl font-extrabold text-white">24h</div>
+                <div className="text-xs sm:text-sm text-slate-400 mt-1">{t.statWait}</div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Specialties Comparison Table */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold text-white mb-4">Elite Specialties & Transparent Pricing</h2>
-            <p className="text-slate-400 text-sm sm:text-base">Compare Iran’s clinical pricing directly against international medical hubs.</p>
-          </div>
+        {/* Cost & Savings Calculator */}
+        <section className="py-20 bg-slate-950/50 border-y border-slate-800/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <h2 className="text-3xl font-bold text-white mb-4">{t.calculatorTitle}</h2>
+              <p className="text-slate-400 text-sm sm:text-base">{t.calculatorSub}</p>
+            </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead>
-                <tr className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-400 bg-slate-900/50">
-                  <th className="p-4 rounded-l-xl">Specialty Procedure</th>
-                  <th className="p-4">Recovery</th>
-                  <th className="p-4 text-amber-400">Iran (Maham)</th>
-                  <th className="p-4">India</th>
-                  <th className="p-4">UAE / Turkey</th>
-                  <th className="p-4 rounded-r-xl">US / UK</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-800 text-sm">
-                {SPECIALTIES.map((s) => (
-                  <tr key={s.id} className="hover:bg-slate-900/30 transition-colors">
-                    <td className="p-4 font-semibold text-white">
-                      {s.name}
-                      <span className="block text-xs text-slate-400 font-normal mt-0.5">{s.category}</span>
-                    </td>
-                    <td className="p-4 text-slate-300">{s.recoveryDays}</td>
-                    <td className="p-4 font-bold text-amber-400">${s.iranPrice.toLocaleString()}</td>
-                    <td className="p-4 text-slate-300">${s.indiaPrice.toLocaleString()}</td>
-                    <td className="p-4 text-slate-300">${s.uaeTurkeyPrice.toLocaleString()}</td>
-                    <td className="p-4 text-slate-400">${s.usUkPrice.toLocaleString()}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      {/* Journey Steps Section */}
-      <section className="py-20 bg-slate-950/50 border-t border-slate-800/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold text-white mb-4">{t.timelineTitle}</h2>
-            <p className="text-slate-400 text-sm sm:text-base">{t.timelineSub}</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            {JOURNEY_STEPS.map((stepItem, idx) => (
-              <div key={idx} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl relative flex flex-col justify-between">
+            <div className="max-w-4xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div>
-                  <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-2">{stepItem.phase}</span>
-                  <h3 className="font-bold text-white text-base mb-3">{stepItem.title}</h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">{stepItem.desc}</p>
+                  <label htmlFor={calcSpecialtySelectId} className="block text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">
+                    {t.selectProcedure}
+                  </label>
+                  <select
+                    id={calcSpecialtySelectId}
+                    value={calcSpecialtyId}
+                    onChange={(e) => setCalcSpecialtyId(e.target.value)}
+                    className="w-auto max-w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-amber-400"
+                  >
+                    {SPECIALTIES.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500">
-                  <span>Phase {idx + 1} of 5</span>
-                  <CheckCircle2 className="w-4 h-4 text-amber-500/60" />
+
+                <div>
+                  <label htmlFor={calcBenchmarkSelectId} className="block text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">
+                    {t.compareAgainst}
+                  </label>
+                  <select
+                    id={calcBenchmarkSelectId}
+                    value={calcBenchmark}
+                    onChange={(e) => setCalcBenchmark(e.target.value as any)}
+                    className="w-auto max-w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-4 py-3 focus:outline-none focus:border-amber-400"
+                  >
+                    <option value="us">US / UK Average</option>
+                    <option value="uae">UAE / Turkey Average</option>
+                    <option value="india">India Average</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-semibold uppercase tracking-wider text-amber-400 mb-2">
+                    {t.packageTier}
+                  </label>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      onClick={() => setCalcPackage('essential')}
+                      className={`py-3 rounded-xl text-xs font-bold border transition-all ${
+                        calcPackage === 'essential'
+                          ? 'bg-amber-500 text-[#08111d] border-amber-500'
+                          : 'bg-slate-950 text-slate-300 border-slate-700 hover:border-slate-600'
+                      }`}
+                    >
+                      Essential Care
+                    </button>
+                    <button
+                      onClick={() => setCalcPackage('vip')}
+                      className={`py-3 rounded-xl text-xs font-bold border transition-all ${
+                        calcPackage === 'vip'
+                          ? 'bg-amber-500 text-[#08111d] border-amber-500'
+                          : 'bg-slate-950 text-slate-300 border-slate-700 hover:border-slate-600'
+                      }`}
+                    >
+                      VIP Luxury
+                    </button>
+                  </div>
                 </div>
               </div>
-            ))}
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8 border-t border-slate-800 text-center">
+                <div className="bg-slate-950/60 p-6 rounded-2xl border border-slate-800">
+                  <span className="text-xs text-slate-400 uppercase tracking-widest block mb-1">Benchmark Price</span>
+                  <span className="text-2xl sm:text-3xl font-extrabold text-slate-300">${benchmarkPrice.toLocaleString()}</span>
+                </div>
+                <div className="bg-slate-950/60 p-6 rounded-2xl border border-amber-500/30">
+                  <span className="text-xs text-amber-400 uppercase tracking-widest block mb-1">{t.estimatedTotal}</span>
+                  <span className="text-2xl sm:text-3xl font-extrabold text-amber-400">${iranTotal.toLocaleString()}</span>
+                </div>
+                <div className="bg-slate-950/60 p-6 rounded-2xl border border-emerald-500/30">
+                  <span className="text-xs text-emerald-400 uppercase tracking-widest block mb-1">{t.estimatedSavings}</span>
+                  <span className="text-2xl sm:text-3xl font-extrabold text-emerald-400">
+                    ${dollarSavings.toLocaleString()} ({percentSavings}%)
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Specialties Comparison Table */}
+        <section className="py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <h2 className="text-3xl font-bold text-white mb-4">Elite Specialties & Transparent Pricing</h2>
+              <p className="text-slate-400 text-sm sm:text-base">Compare Iran’s clinical pricing directly against international medical hubs.</p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-slate-800 text-xs uppercase tracking-wider text-slate-400 bg-slate-900/50">
+                    <th className="p-4 rounded-l-xl">Specialty Procedure</th>
+                    <th className="p-4">Recovery</th>
+                    <th className="p-4 text-amber-400">Iran (Maham)</th>
+                    <th className="p-4">India</th>
+                    <th className="p-4">UAE / Turkey</th>
+                    <th className="p-4 rounded-r-xl">US / UK</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800 text-sm">
+                  {SPECIALTIES.map((s) => (
+                    <tr key={s.id} className="hover:bg-slate-900/30 transition-colors">
+                      <td className="p-4 font-semibold text-white">
+                        {s.name}
+                        <span className="block text-xs text-slate-400 font-normal mt-0.5">{s.category}</span>
+                      </td>
+                      <td className="p-4 text-slate-300">{s.recoveryDays}</td>
+                      <td className="p-4 font-bold text-amber-400">${s.iranPrice.toLocaleString()}</td>
+                      <td className="p-4 text-slate-300">${s.indiaPrice.toLocaleString()}</td>
+                      <td className="p-4 text-slate-300">${s.uaeTurkeyPrice.toLocaleString()}</td>
+                      <td className="p-4 text-slate-400">${s.usUkPrice.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Journey Steps Section */}
+        <section className="py-20 bg-slate-950/50 border-t border-slate-800/80">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center max-w-2xl mx-auto mb-16">
+              <h2 className="text-3xl font-bold text-white mb-4">{t.timelineTitle}</h2>
+              <p className="text-slate-400 text-sm sm:text-base">{t.timelineSub}</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+              {JOURNEY_STEPS.map((stepItem, idx) => (
+                <div key={idx} className="bg-slate-900 border border-slate-800 p-6 rounded-2xl relative flex flex-col justify-between">
+                  <div>
+                    <span className="text-xs font-bold text-amber-400 uppercase tracking-widest block mb-2">{stepItem.phase}</span>
+                    <h3 className="font-bold text-white text-base mb-3">{stepItem.title}</h3>
+                    <p className="text-xs text-slate-400 leading-relaxed">{stepItem.desc}</p>
+                  </div>
+                  <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500">
+                    <span>Phase {idx + 1} of 5</span>
+                    <CheckCircle2 className="w-4 h-4 text-amber-500/60" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      </div>
+
+      {/* Official Corporate Footer */}
+      <footer className="border-t border-white/10 bg-[#050b13] text-white">
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
+            {/* Brand and corporate identity */}
+            <div className="lg:col-span-1">
+              <div className="mb-5 flex items-center gap-3">
+                <img
+                  src="/logo-mark.png"
+                  alt="Maham Health"
+                  className="h-11 w-11 object-contain"
+                />
+                <div>
+                  <p className="text-lg font-semibold tracking-wide text-white">
+                    MAHAM HEALTH
+                  </p>
+                  <p className="text-xs uppercase tracking-[0.18em] text-amber-400">
+                    Medical Concierge
+                  </p>
+                </div>
+              </div>
+
+              <p className="max-w-sm text-sm leading-7 text-slate-400">
+                Premium medical-tourism coordination for international patients
+                seeking trusted treatment and specialist care in Iran.
+              </p>
+
+              <p className="mt-5 text-xs leading-6 text-slate-500">
+                A healthcare concierge service operated by Soorin Maham Trade &
+                Industry Development Corporation.
+              </p>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.16em] text-amber-400">
+                Maham Health
+              </h3>
+              <ul className="space-y-3 text-sm text-slate-400">
+                <li>
+                  <a href="#specialties" className="transition hover:text-white">
+                    Medical Specialties
+                  </a>
+                </li>
+                <li>
+                  <a href="#calculator" className="transition hover:text-white">
+                    Treatment Cost Calculator
+                  </a>
+                </li>
+                <li>
+                  <a href="#packages" className="transition hover:text-white">
+                    Concierge Packages
+                  </a>
+                </li>
+                <li>
+                  <a href="#consultation" className="transition hover:text-white">
+                    Request a Consultation
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            {/* Corporate presence */}
+            <div>
+              <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.16em] text-amber-400">
+                Corporate Presence
+              </h3>
+              <ul className="space-y-3 text-sm text-slate-400">
+                <li>Iran</li>
+                <li>Dubai, United Arab Emirates</li>
+                <li>Tanzania</li>
+                <li>India</li>
+              </ul>
+              <p className="mt-5 text-xs leading-6 text-slate-500">
+                International coordination and business operations through the
+                Soorin Maham corporate network.
+              </p>
+            </div>
+
+            {/* Contact */}
+            <div>
+              <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.16em] text-amber-400">
+                Contact
+              </h3>
+              <ul className="space-y-4 text-sm text-slate-400">
+                <li>
+                  <a
+                    href="https://wa.me/989055240772"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="transition hover:text-white"
+                  >
+                    WhatsApp: +98 905 524 0772
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="mailto:health@maham-group.com"
+                    className="transition hover:text-white"
+                  >
+                    health@maham-group.com
+                  </a>
+                </li>
+                <li className="leading-6">
+                  Consultation support for international patients seeking treatment
+                  in Iran.
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-14 border-t border-white/10 pt-6">
+            <div className="flex flex-col gap-4 text-xs leading-6 text-slate-500 md:flex-row md:items-center md:justify-between">
+              <p>
+                © {new Date().getFullYear()} Soorin Maham Trade & Industry
+                Development Corporation. All rights reserved.
+              </p>
+              <p>
+                Maham Health facilitates medical-tourism coordination and does not
+                provide medical diagnosis or treatment.
+              </p>
+            </div>
           </div>
         </div>
-      </section>
+      </footer>
 
       {/* Consultation Modal Wizard */}
       {isModalOpen && (
