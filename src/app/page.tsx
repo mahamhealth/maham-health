@@ -1,26 +1,24 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Home from '../components/Home';
+import Home from '@/components/Home';
 
 export default function RootPage() {
   const router = useRouter();
-  const repoBasePath =
-    process.env.NODE_ENV === 'production' ? '/maham-health' : '';
 
   useEffect(() => {
-    if (typeof navigator === 'undefined') return;
+    // Detect browser language or fallback to 'en'
+    const browserLang = (navigator.language || navigator.languages?.[0] || 'en').toLowerCase();
+    const langPrefix = browserLang.split('-')[0];
+    
+    const supportedLangs = ['fa', 'ar', 'ur', 'sw', 'hi'];
+    const matched = supportedLangs.includes(langPrefix) ? langPrefix : 'en';
 
-    const navigatorLang =
-      navigator.language || navigator.languages?.[0] || '';
-    const prefix = navigatorLang.split('-')[0].toLowerCase();
+    // Redirect directly to domain root locale path
+    router.replace(`/${matched}/`);
+  }, [router]);
 
-    const supported = ['fa', 'ar', 'ur', 'sw', 'hi'];
-    const matched = supported.includes(prefix) ? prefix : 'en';
-
-    router.replace(`${repoBasePath}/${matched}/`);
-  }, [repoBasePath, router]);
-
+  // Render initial fallback home while redirecting
   return <Home initialLanguage="en" />;
 }
