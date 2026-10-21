@@ -26,10 +26,28 @@ import {
   Star,
   Activity
 } from 'lucide-react';
-import { SPECIALTIES, Specialty } from '@/data/specialties';
-import { TRANSLATIONS, Language } from '@/data/translations';
-import { CLINICS, FAQS, TESTIMONIALS } from '@/data/constants';
-import WhatsAppButton from '@/components/WhatsAppButton';
+
+const SPECIALTIES = [
+  { id: 'rhinoplasty', category: 'Plastic Surgery', recoveryDays: '7-10 Days', iranPrice: 2200, indiaPrice: 3500, uaeTurkeyPrice: 5000, usUkPrice: 12500, savings: '82%', name: { en: 'Rhinoplasty & Facial Surgery' } },
+  { id: 'dental', category: 'Dental Implants', recoveryDays: '3-5 Days', iranPrice: 450, indiaPrice: 700, uaeTurkeyPrice: 1200, usUkPrice: 4000, savings: '88%', name: { en: 'Dental Implants (Per Implant)' } },
+  { id: 'lasik', category: 'Ophthalmology', recoveryDays: '2-3 Days', iranPrice: 800, indiaPrice: 1200, uaeTurkeyPrice: 2000, usUkPrice: 5000, savings: '84%', name: { en: 'LASIK Eye Surgery (Both Eyes)' } },
+  { id: 'hair', category: 'Hair Restoration', recoveryDays: '4-7 Days', iranPrice: 1500, indiaPrice: 2000, uaeTurkeyPrice: 3500, usUkPrice: 10000, savings: '85%', name: { en: 'FUE / DHI Hair Transplant' } },
+  { id: 'ivf', category: 'Fertility', recoveryDays: '10-14 Days', iranPrice: 3500, indiaPrice: 4500, uaeTurkeyPrice: 7000, usUkPrice: 18000, savings: '80%', name: { en: 'IVF Treatment Cycle' } },
+  { id: 'orthopedic', category: 'Orthopedics', recoveryDays: '14-21 Days', iranPrice: 5500, indiaPrice: 7500, uaeTurkeyPrice: 11000, usUkPrice: 35000, savings: '84%', name: { en: 'Knee / Hip Joint Replacement' } },
+];
+
+const CLINICS = [
+  { name: 'Gandhi Hospital', location: 'Tehran', specialty: 'JCI Accredited, Multi-Specialty & Plastic Surgery' },
+  { name: 'Moheb Hospital', location: 'Tehran', specialty: 'Advanced Cardiac & Orthopedic Center' },
+  { name: 'Kish International Hospital', location: 'Kish Island', specialty: 'Resort Recovery & Premium VIP Suites' },
+  { name: 'Dorna Clinic', location: 'Shiraz', specialty: 'Ophthalmology & Fertility Excellence' },
+];
+
+const FAQS = [
+  { q: 'Why is medical care in Iran so affordable?', a: 'Highly skilled board-certified doctors, favorable exchange rates, and lower operational overhead allow top-tier JCI hospitals to offer world-class care at a fraction of US/UK costs.' },
+  { q: 'How does the T-Visa process work?', a: 'Maham Health submits your official medical dossier directly to the Iranian Ministry of Foreign Affairs to issue an expedited T-Visa authorization code within 48–72 hours.' },
+  { q: 'Who will assist me during my stay?', a: 'A dedicated, bilingual VIP concierge manager greets you at the airport, accompanies you to all hospital appointments, and manages your luxury recovery hotel.' }
+];
 
 const CURRENCIES = {
   USD: { code: 'USD', symbol: '$', rate: 1.0, name: 'US Dollar' },
@@ -40,12 +58,9 @@ const CURRENCIES = {
   INR: { code: 'INR', symbol: '₹', rate: 83.0, name: 'Indian Rupee' },
 };
 
-export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?: Language }) {
-  const [lang, setLang] = useState<Language>(initialLanguage);
+export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?: string }) {
   const [currency, setCurrency] = useState<keyof typeof CURRENCIES>('USD');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Wizard state
   const [selectedSpecialtyId, setSelectedSpecialtyId] = useState<string>(SPECIALTIES[0].id);
   const [packageTier, setPackageTier] = useState<'essential' | 'premium' | 'elite'>('premium');
   const [patientName, setPatientName] = useState('');
@@ -54,9 +69,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
   const [patientNotes, setPatientNotes] = useState('');
   const [wizardSubmitted, setWizardSubmitted] = useState(false);
 
-  const t = TRANSLATIONS[lang] || TRANSLATIONS.en;
   const curr = CURRENCIES[currency];
-
   const selectedSpecialty = SPECIALTIES.find(s => s.id === selectedSpecialtyId) || SPECIALTIES[0];
 
   const formatMoney = (amountUSD: number) => {
@@ -71,7 +84,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
   const handleWizardSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setWizardSubmitted(true);
-    const text = `*New Medical Inquiry - Maham Health*%0A*Name:* ${patientName}%0A*Treatment:* ${selectedSpecialty.name[lang] || selectedSpecialty.name.en}%0A*Package:* ${packageTier.toUpperCase()}%0A*Estimated Total:* ${formatMoney(iranTotalUSD)}%0A*Phone:* ${patientPhone}%0A*Notes:* ${patientNotes}`;
+    const text = `*New Medical Inquiry - Maham Health*%0A*Name:* ${patientName}%0A*Treatment:* ${selectedSpecialty.name.en}%0A*Package:* ${packageTier.toUpperCase()}%0A*Estimated Total:* ${formatMoney(iranTotalUSD)}%0A*Phone:* ${patientPhone}%0A*Notes:* ${patientNotes}`;
     window.open(`https://wa.me/989055240772?text=${text}`, '_blank');
   };
 
@@ -90,20 +103,6 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
               <Mail className="w-3.5 h-3.5 text-blue-400" /> health@maham-group.com
             </a>
             <span className="text-slate-600">|</span>
-            {/* Language Selector */}
-            <div className="flex items-center gap-1 bg-slate-900/80 px-2 py-0.5 rounded border border-slate-800">
-              <Globe className="w-3.5 h-3.5 text-blue-400" />
-              {(['en', 'fa', 'ar', 'sw', 'hi', 'ur'] as Language[]).map(l => (
-                <button
-                  key={l}
-                  onClick={() => setLang(l)}
-                  className={`px-1.5 py-0.5 uppercase text-[10px] font-semibold rounded transition ${lang === l ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white'}`}
-                >
-                  {l}
-                </button>
-              ))}
-            </div>
-            {/* Currency Selector */}
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value as any)}
@@ -132,11 +131,11 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
           </div>
 
           <nav className="hidden lg:flex items-center gap-8 font-medium text-sm text-slate-700">
-            <a href="#specialties" className="hover:text-blue-600 transition">{t.navSpecialties || 'Specialties'}</a>
-            <a href="#calculator" className="hover:text-blue-600 transition">{t.navCalculator || 'Cost Estimator'}</a>
-            <a href="#clinics" className="hover:text-blue-600 transition">{t.navClinics || 'Top Hospitals'}</a>
-            <a href="#process" className="hover:text-blue-600 transition">{t.navProcess || 'Journey'}</a>
-            <a href="#faq" className="hover:text-blue-600 transition">{t.navFaq || 'FAQ'}</a>
+            <a href="#specialties" className="hover:text-blue-600 transition">Specialties</a>
+            <a href="#calculator" className="hover:text-blue-600 transition">Cost Estimator</a>
+            <a href="#clinics" className="hover:text-blue-600 transition">Top Hospitals</a>
+            <a href="#process" className="hover:text-blue-600 transition">Journey</a>
+            <a href="#faq" className="hover:text-blue-600 transition">FAQ</a>
           </nav>
 
           <div className="hidden sm:flex items-center gap-3">
@@ -150,19 +149,18 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
             </a>
           </div>
 
-          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden text-slate-700 p-2">
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="lg:hidden text-slate-700 p-2" aria-label="Toggle Menu">
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile dropdown */}
         {mobileMenuOpen && (
           <div className="lg:hidden bg-white border-b border-slate-200 px-6 py-4 space-y-3 shadow-xl">
-            <a href="#specialties" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">{t.navSpecialties || 'Specialties'}</a>
-            <a href="#calculator" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">{t.navCalculator || 'Cost Estimator'}</a>
-            <a href="#clinics" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">{t.navClinics || 'Top Hospitals'}</a>
-            <a href="#process" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">{t.navProcess || 'Journey'}</a>
-            <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">{t.navFaq || 'FAQ'}</a>
+            <a href="#specialties" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">Specialties</a>
+            <a href="#calculator" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">Cost Estimator</a>
+            <a href="#clinics" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">Top Hospitals</a>
+            <a href="#process" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">Journey</a>
+            <a href="#faq" onClick={() => setMobileMenuOpen(false)} className="block py-2 text-slate-700 font-medium">FAQ</a>
             <div className="pt-2">
               <a
                 href="https://wa.me/989055240772"
@@ -186,14 +184,14 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
               <Sparkles className="w-3.5 h-3.5 text-amber-400" /> Soorin Maham Medical Concierge
             </div>
             <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
-              {t.heroTitle || 'World-Class Healthcare in Iran, Curated with Luxury.'}
+              World-Class Healthcare in Iran, Curated with Luxury.
             </h1>
             <p className="text-lg text-slate-300 max-w-2xl leading-relaxed">
-              {t.heroSubtitle || 'Experience JCI-accredited hospitals, world-renowned surgeons, and 70-90% savings compared to Western benchmarks. Complete VIP concierge service from arrival to recovery.'}
+              Experience JCI-accredited hospitals, world-renowned surgeons, and 70-90% savings compared to Western benchmarks. Complete VIP concierge service from arrival to recovery.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <a href="#calculator" className="bg-blue-600 hover:bg-blue-500 text-white px-8 py-4 rounded-xl font-bold shadow-xl shadow-blue-600/30 transition flex items-center justify-center gap-2">
-                {t.heroCtaPrimary || 'Calculate Your Savings'} <ArrowRight className="w-5 h-5" />
+                Calculate Your Savings <ArrowRight className="w-5 h-5" />
               </a>
               <a href="https://wa.me/989055240772" target="_blank" rel="noopener noreferrer" className="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-8 py-4 rounded-xl font-bold transition flex items-center justify-center gap-2">
                 <Phone className="w-5 h-5 text-emerald-400" /> Free WhatsApp Consultation
@@ -233,7 +231,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
                     className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-blue-500"
                   >
                     {SPECIALTIES.map(s => (
-                      <option key={s.id} value={s.id}>{s.name[lang] || s.name.en}</option>
+                      <option key={s.id} value={s.id}>{s.name.en}</option>
                     ))}
                   </select>
                 </div>
@@ -310,7 +308,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
                   <span className="text-xs font-bold px-3 py-1 bg-slate-100 text-slate-700 rounded-full">{s.category}</span>
                   <span className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full">Save {s.savings}</span>
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{s.name[lang] || s.name.en}</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-2">{s.name.en}</h3>
                 <div className="text-xs text-slate-500 flex items-center gap-2 mb-6">
                   <Clock className="w-4 h-4 text-blue-600" /> Recovery: {s.recoveryDays}
                 </div>
@@ -350,7 +348,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
         </div>
       </section>
 
-      {/* Interactive Calculator / Cost Estimator */}
+      {/* Interactive Calculator */}
       <section id="calculator" className="py-20 bg-slate-900 text-white px-4 sm:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -371,7 +369,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
                       onClick={() => setSelectedSpecialtyId(s.id)}
                       className={`text-left p-3.5 rounded-2xl border transition flex flex-col justify-between ${selectedSpecialtyId === s.id ? 'bg-blue-600/20 border-blue-500 text-white' : 'bg-slate-900/60 border-slate-700 text-slate-300 hover:border-slate-600'}`}
                     >
-                      <span className="font-bold text-sm">{s.name[lang] || s.name.en}</span>
+                      <span className="font-bold text-sm">{s.name.en}</span>
                       <span className="text-xs text-blue-400 mt-1 font-semibold">From {formatMoney(s.iranPrice)}</span>
                     </button>
                   ))}
@@ -407,7 +405,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
                   <span className="bg-emerald-500/20 text-emerald-300 text-xs font-bold px-3 py-1 rounded-full">Save {formatMoney(savingsUSD)}</span>
                 </div>
 
-                <h3 className="text-2xl font-extrabold mb-1">{selectedSpecialty.name[lang] || selectedSpecialty.name.en}</h3>
+                <h3 className="text-2xl font-extrabold mb-1">{selectedSpecialty.name.en}</h3>
                 <p className="text-xs text-slate-400 mb-6">Package Tier: <span className="uppercase text-white font-bold">{packageTier}</span></p>
 
                 <div className="space-y-3 py-4 border-t border-b border-slate-700/60 mb-6 text-sm">
@@ -444,7 +442,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
         </div>
       </section>
 
-      {/* Partner Hospitals / Clinics */}
+      {/* Partner Hospitals */}
       <section id="clinics" className="py-20 px-4 sm:px-8 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-xs uppercase tracking-widest bg-blue-50 px-3 py-1 rounded-full">Excellence in Infrastructure</span>
@@ -512,9 +510,6 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
           ))}
         </div>
       </section>
-
-      {/* Floating WhatsApp Button */}
-      <WhatsAppButton />
 
       {/* Footer */}
       <footer className="bg-[#06101e] text-slate-400 py-16 px-4 sm:px-8 border-t border-slate-800">
