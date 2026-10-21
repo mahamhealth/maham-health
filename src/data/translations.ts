@@ -1,355 +1,326 @@
 export type Language = 'en' | 'fa' | 'ar' | 'sw' | 'hi' | 'ur';
 
+export const LOCALES: { code: Language; name: string; native: string; dir: 'ltr' | 'rtl' }[] = [
+  { code: 'en', name: 'English', native: 'English', dir: 'ltr' },
+  { code: 'fa', name: 'Persian', native: 'فارسی', dir: 'rtl' },
+  { code: 'ar', name: 'Arabic', native: 'العربية', dir: 'rtl' },
+  { code: 'sw', name: 'Swahili', native: 'Kiswahili', dir: 'ltr' },
+  { code: 'hi', name: 'Hindi', native: 'हिन्दी', dir: 'ltr' },
+  { code: 'ur', name: 'Urdu', native: 'اردو', dir: 'rtl' }
+];
+
+export const RTL_LANGUAGES: Language[] = ['fa', 'ar', 'ur'];
+
+export const SITE_URL = 'https://mahamhealth.github.io/maham-health';
+
+export interface FaqItem {
+  q: string;
+  a: string;
+}
+
 export interface I18nSet {
-  brand: string;
-  badge: string;
-  heroTitle: string;
+  brandTitle: string;
+  brandSub: string;
+  tagline: string;
+  heroBadge: string;
+  heroHeading: string;
   heroSub: string;
-  startAssessment: string;
-  whatsappDirect: string;
-  statPartners: string;
-  statSpecialists: string;
-  statSavings: string;
-  statWait: string;
-  calculatorTitle: string;
-  calculatorSub: string;
-  selectProcedure: string;
-  compareAgainst: string;
-  packageTier: string;
-  estimatedTotal: string;
-  estimatedSavings: string;
-  timelineTitle: string;
-  timelineSub: string;
-  packagesTitle: string;
-  packagesSub: string;
-  step1: string;
-  step2: string;
-  step3: string;
-  submit: string;
-  male: string;
-  female: string;
-  usUk: string;
-  uaeTurkey: string;
-  india: string;
-  benchmarkRegion: string;
-  conciergeTier: string;
+  ctaBookNow: string;
+  ctaWhatsApp: string;
+  ctaCalculator: string;
+  
+  statsSavings: string;
+  statsHospitals: string;
+  statsVisa: string;
+  statsSupport: string;
+
+  calcTitle: string;
+  calcSub: string;
+  selectSpecialty: string;
+  selectPackage: string;
+  selectCurrency: string;
+  estimatedCost: string;
+  vsWesternBenchmark: string;
+  stayDuration: string;
+  recoveryDuration: string;
+  daysUnit: string;
+  downloadQuoteBtn: string;
+
   tierEssential: string;
+  tierEssentialDesc: string;
   tierPremium: string;
+  tierPremiumDesc: string;
   tierVip: string;
-  costBreakdown: string;
-  benchmarkCost: string;
-  iranBase: string;
-  conciergeAddon: string;
-  wizardTitle: string;
+  tierVipDesc: string;
+
+  specialtiesHeading: string;
+  specialtiesSub: string;
+  compareWithUs: string;
+  iranPriceCol: string;
+  indiaPriceCol: string;
+  uaeTurkeyCol: string;
+  usUkCol: string;
+  detailsBtn: string;
+
+  wizardHeading: string;
   wizardSub: string;
-  successTitle: string;
-  successSub: string;
-  sendToWhatsApp: string;
   step1Title: string;
   step2Title: string;
   step3Title: string;
-  proceedWithConsultation: string;
+  fullName: string;
+  emailLabel: string;
+  phoneLabel: string;
+  countryLabel: string;
+  medicalHistoryLabel: string;
+  submitWizard: string;
+  successMessage: string;
+
+  faqTitle: string;
+  faqSub: string;
+  faq: FaqItem[];
+
+  footerAbout: string;
+  footerCorporate: string;
+  footerRights: string;
+  currencyLabel: string;
 }
+
+export const CURRENCY_RATES: Record<string, { rate: number; symbol: string }> = {
+  USD: { rate: 1, symbol: '$' },
+  EUR: { rate: 0.92, symbol: '€' },
+  AED: { rate: 3.67, symbol: 'AED ' },
+  GBP: { rate: 0.79, symbol: '£' },
+  OMR: { rate: 0.38, symbol: 'OMR ' },
+  INR: { rate: 83.2, symbol: '₹' }
+};
 
 export const TRANSLATIONS: Record<Language, I18nSet> = {
   en: {
-    brand: 'Maham Health',
-    badge: 'Premier Medical Concierge • Official IPD Partner Hospitals',
-    heroTitle: 'World-Class Healthcare, At 70–90% Below Global Costs',
-    heroSub: 'Orchestrating bespoke private medical journeys to leading accredited hospitals in Iran with internationally trained specialists and white-glove concierge care.',
-    startAssessment: 'Start Free Assessment',
-    whatsappDirect: 'Chat on WhatsApp',
-    statPartners: '40+ IPD Partner Centers',
-    statSpecialists: '180+ Board-Certified Specialists',
-    statSavings: '70–90% Typical Savings',
-    statWait: '< 3 Days Wait Time',
-    calculatorTitle: 'Interactive Savings Calculator',
-    calculatorSub: 'Select your procedure and origin benchmark to view estimated savings.',
-    selectProcedure: 'Select Treatment / Procedure',
-    compareAgainst: 'Compare Against Benchmark',
-    packageTier: 'Concierge Package Tier',
-    estimatedTotal: 'Estimated Iran Treatment Cost',
-    estimatedSavings: 'Your Estimated Cost Savings',
-    timelineTitle: 'Your Patient Journey',
-    timelineSub: 'A seamless, discreet 5-stage medical travel experience from initial consultation to recovery.',
-    packagesTitle: 'Curated Concierge Packages',
-    packagesSub: 'Choose the level of clinical support and luxury hospitality tailored for you and your companion.',
-    step1: 'Step 1: Clinical Focus',
-    step2: 'Step 2: Patient Profile',
-    step3: 'Step 3: Contact & Concierge',
-    submit: 'Submit Confidential Request',
-    male: 'Male',
-    female: 'Female',
-    usUk: 'United States / UK',
-    uaeTurkey: 'UAE / Turkey',
-    india: 'India',
-    benchmarkRegion: 'Benchmark Region',
-    conciergeTier: 'Concierge Tier',
+    brandTitle: 'Maham Health',
+    brandSub: 'Soorin Maham Trade & Industry Development Corporation',
+    tagline: 'Elite Medical Tourism Concierge in Iran',
+    heroBadge: 'JCI Accredited Hospitals • Fast-Track Medical T-Visa • VIP Concierge',
+    heroHeading: 'World-Class Healthcare in Iran with 70%–90% Savings',
+    heroSub: 'Experience elite medical tourism managed by Soorin Maham. JCI-accredited hospitals, world-renowned surgeons, VIP private recovery suites, and end-to-end concierge care.',
+    ctaBookNow: 'Book Free Consultation',
+    ctaWhatsApp: 'Chat on WhatsApp',
+    ctaCalculator: 'Estimate Cost & Packages',
+    statsSavings: 'Average Cost Savings vs US/EU',
+    statsHospitals: 'JCI & Ministry Accredited IPD',
+    statsVisa: 'Fast-Track Medical T-Visa Support',
+    statsSupport: '24/7 Dedicated Multilingual Concierge',
+    calcTitle: 'Interactive Treatment Cost & Package Estimator',
+    calcSub: 'Select your specialty, package tier, and preferred currency to get instant transparent pricing.',
+    selectSpecialty: 'Select Medical Specialty',
+    selectPackage: 'Select Care Package Tier',
+    selectCurrency: 'Currency',
+    estimatedCost: 'Estimated Treatment Package',
+    vsWesternBenchmark: 'Savings compared to US/UK benchmark',
+    stayDuration: 'Recommended Hospital & Hotel Stay',
+    recoveryDuration: 'Estimated Recovery Time',
+    daysUnit: 'Days',
+    downloadQuoteBtn: 'Download Official Branded Quote (PDF / Print)',
     tierEssential: 'Essential Care',
-    tierPremium: 'Premium Care',
-    tierVip: 'Luxury VIP',
-    costBreakdown: 'Cost Breakdown',
-    benchmarkCost: 'Benchmark Cost',
-    iranBase: 'Iran Base Price',
-    conciergeAddon: 'Concierge Add-On',
-    wizardTitle: 'Free Consultation & Case Assessment',
-    wizardSub: 'Tell us a little about your care goals and we’ll help coordinate your next steps.',
-    successTitle: 'Assessment Complete!',
-    successSub: 'Click below to securely forward your case details to our medical coordinators via WhatsApp.',
-    sendToWhatsApp: 'Send Details to WhatsApp',
-    step1Title: 'Select Your Treatment',
-    step2Title: 'Patient Details & Timeframe',
-    step3Title: 'Contact & Concierge Tier',
-    proceedWithConsultation: 'Proceed to Consultation'
+    tierEssentialDesc: 'Hospital stay, surgeon fees, airport pickup, and dedicated medical interpreter.',
+    tierPremium: 'Premium Comfort',
+    tierPremiumDesc: 'Adds 4-star hotel stay, private transport, companion visa support, and local SIM.',
+    tierVip: 'VIP Elite Concierge',
+    tierVipDesc: 'Adds 5-star suite accommodation, 24/7 private nurse, VIP CIP airport lounge & excursions.',
+    specialtiesHeading: 'Our Core Medical Specialties & Cost Comparison',
+    specialtiesSub: 'Compare Iran’s elite clinical standards against international medical hubs.',
+    compareWithUs: 'Global Cost Benchmarks',
+    iranPriceCol: 'Iran (Maham)',
+    indiaPriceCol: 'India',
+    uaeTurkeyCol: 'UAE / Turkey',
+    usUkCol: 'US / UK',
+    detailsBtn: 'View Procedure Details & Timeline',
+    wizardHeading: 'Start Your Secure Medical Journey',
+    wizardSub: 'Fill out our 3-step consultation form. Our medical coordinators will reply within 2 hours.',
+    step1Title: '1. Select Specialty',
+    step2Title: '2. Patient Details',
+    step3Title: '3. Medical Upload & Submit',
+    fullName: 'Full Name',
+    emailLabel: 'Email Address',
+    phoneLabel: 'WhatsApp / Mobile Number',
+    countryLabel: 'Country of Residence',
+    medicalHistoryLabel: 'Medical History & Notes (Optional)',
+    submitWizard: 'Submit Confidential Consultation Request',
+    successMessage: 'Thank you! Your request has been securely submitted. Our medical team is reviewing your case and will contact you via WhatsApp shortly.',
+    faqTitle: 'Frequently Asked Questions about Medical Tourism in Iran',
+    faqSub: 'Everything you need to know about safety, visas, payments, and hospital standards.',
+    faq: [
+      {
+        q: 'How does the Iranian Medical T-Visa work?',
+        a: 'Soorin Maham acts as your official guarantor and medical liaison. We submit your passport copy and medical report to the Ministry of Foreign Affairs to issue your official Medical T-Visa authorization code within 3–5 working days, allowing smooth visa stamping at your nearest Iranian embassy or on arrival.'
+      },
+      {
+        q: 'Are the hospitals in Iran safe and internationally accredited?',
+        a: 'Yes. Iran features state-of-the-art hospitals with JCI (Joint Commission International) accreditations and dedicated International Patient Departments (IPD) equipped with cutting-edge medical technology matching US and German standards.'
+      },
+      {
+        q: 'How do international payments work given banking sanctions?',
+        a: 'Soorin Maham provides official, secure corporate invoicing and assists patients with approved international payment channels, tourist debit cards (MahCard/Daric), or direct wire transfers to corporate accounts.'
+      },
+      {
+        q: 'Will I have a translator and private support during my stay?',
+        a: 'Absolutely. Every patient is assigned a 24/7 dedicated personal concierge and medical translator who accompanies you from airport arrival through consultations, surgery, and post-op recovery.'
+      },
+      {
+        q: 'What is included in the Maham Health care packages?',
+        a: 'Depending on your chosen tier (Essential, Premium, or VIP), packages cover hospital admission, surgeon fees, luxury hotel or suite stay, VIP airport transfers, private nursing, and local telecommunications.'
+      },
+      {
+        q: 'How do I send my medical records for a preliminary doctor evaluation?',
+        a: 'You can upload your diagnostic scans, photos, or lab results directly through our 3-step consultation wizard or send them securely via our 24/7 WhatsApp concierge (+989055240772).'
+      }
+    ],
+    footerAbout: 'Maham Health is the premier medical-tourism concierge service operated under Soorin Maham Trade & Industry Development Corporation, connecting international patients with Iran’s elite medical specialists.',
+    footerCorporate: 'Soorin Maham Trade & Industry Development Corporation — Registered International Trade & Medical Services.',
+    footerRights: 'All rights reserved.',
+    currencyLabel: 'Currency'
   },
   fa: {
-    brand: 'ماهام هلث',
-    badge: 'دپارتمان خدمات بین‌المللی سلامت • بیمارستان‌های معتبر IPD',
-    heroTitle: 'خدمات درمانی فوق تخصصی، با ۷۰ تا ۹۰ درصد صرفه‌جویی جهانی',
-    heroSub: 'هماهنگی خدمات درمانی تشریفاتی در برترین بیمارستان‌های معتبر ایران با پزشکان فوق تخصص و مراقبت VIP.',
-    startAssessment: 'درخواست ارزیابی رایگان',
-    whatsappDirect: 'ارتباط مستقیم در واتس‌اپ',
-    statPartners: '۴۰+ مرکز همکار IPD',
-    statSpecialists: '۱۸۰+ پزشک فوق تخصص',
-    statSavings: '۷۰–۹۰٪ صرفه‌جویی نوعی',
-    statWait: 'کمتر از ۳ روز نوبت‌دهی',
-    calculatorTitle: 'محاسبه‌گر هوشمند صرفه‌جویی هزینه',
-    calculatorSub: 'درمان و کشور مقصد مقایسه را انتخاب کنید تا میزان صرفه‌جویی محاسبه شود.',
-    selectProcedure: 'انتخاب نوع خدمت درمانی',
-    compareAgainst: 'مقایسه با هزینه جهانی در',
-    packageTier: 'سطح پکیج همراهی و تشریفات',
-    estimatedTotal: 'برآورد هزینه درمان در ایران',
-    estimatedSavings: 'صرفه‌جویی تخمینی شما',
-    timelineTitle: 'مراحل سفر درمانی شما',
-    timelineSub: 'مسیری شفاف و دقیق از ارزیابی پرونده تا درمان و بهبودی کامل.',
-    packagesTitle: 'پکیج‌های تشریفات و اقامت',
-    packagesSub: 'سطح خدمات تشریفاتی و رفاهی متناسب با نیاز بیمار و همراه را انتخاب نمایید.',
-    step1: 'مرحله ۱: انتخاب درمان',
-    step2: 'مرحله ۲: مشخصات بیمار',
-    step3: 'مرحله ۳: اطلاعات تماس و پکیج',
-    submit: 'ثبت درخواست محرمانه',
-    male: 'مرد',
-    female: 'زن',
-    usUk: 'ایالات متحده / بریتانیا',
-    uaeTurkey: 'امارات / ترکیه',
-    india: 'هند',
-    benchmarkRegion: 'منطقه مرجع',
-    conciergeTier: 'سطح concierge',
-    tierEssential: 'پشتیبانی پایه',
-    tierPremium: 'پشتیبانی ویژه',
-    tierVip: 'VIP لوکس',
-    costBreakdown: 'تجزیه هزینه',
-    benchmarkCost: 'هزینه مرجع',
-    iranBase: 'قیمت پایه ایران',
-    conciergeAddon: 'هزینه concierge',
-    wizardTitle: 'مشاوره رایگان و ارزیابی پرونده',
-    wizardSub: 'کمی درباره اهداف درمانی خود بگویید تا در مسیر بعدی همراهتان شویم.',
-    successTitle: 'ارزیابی کامل شد!',
-    successSub: 'برای ارسال جزئیات پرونده به هماهنگ‌کنندگان پزشکی از واتساپ استفاده کنید.',
-    sendToWhatsApp: 'ارسال جزئیات به واتساپ',
-    step1Title: 'درمان خود را انتخاب کنید',
-    step2Title: 'جزئیات بیمار و زمانبندی',
-    step3Title: 'اطلاعات تماس و سطح concierge',
-    proceedWithConsultation: 'ادامه به مشاوره'
+    brandTitle: 'مهم سلامت (Maham Health)',
+    brandSub: 'شرکت توسعه صنعت و تجارت سورین مهام',
+    tagline: 'پرفروش‌ترین و معتبرترین خدمات گردشگری پزشکی در ایران',
+    heroBadge: 'بیمارستان‌های دارای استاندارد JCI • ویزای درمانی فوری (T-Visa) • خدمات تشریفات VIP',
+    heroHeading: 'خدمات پزشکی و درمانی سطح جهانی در ایران با ۷۰٪ تا ۹۰٪ صرفه‌جویی',
+    heroHeading: 'خدمات پزشکی و درمانی سطح جهانی در ایران با ۷۰٪ تا ۹۰٪ صرفه‌جویی',
+    heroSub: 'تجربه گردشگری پزشکی لوکس زیر نظر سورین مهام. بیمارستان‌های مجهز، جراحان برجسته بین‌المللی، سوئیت‌های اختصاصی اقامتی و پشتیبانی ۲۴ ساعته.',
+    ctaBookNow: 'رزرو مشاوره رایگان پزشکی',
+    ctaWhatsApp: 'گفتگو در واتساپ',
+    ctaCalculator: 'محاسبه آنلاین هزینه و پکیج‌ها',
+    statsSavings: 'میانگین صرفه‌جویی هزینه در مقایسه با آمریکا و اروپا',
+    statsHospitals: 'بیمارستان‌های تخصصی با مجوز رسمی IPD',
+    statsVisa: 'پشتیبانی سریع صدور ویزای درمانی (T-Visa)',
+    statsSupport: 'پشتیبان اختصاصی و مترجم چندزبانه ۲۴/۷',
+    calcTitle: 'محاسبه‌گر تعاملی هزینه‌ها و پکیج‌های درمانی',
+    calcSub: 'تخصص، سطح پکیج و ارز مورد نظر خود را انتخاب کنید تا قیمت شفاف را فورا مشاهده کنید.',
+    selectSpecialty: 'انتخاب تخصص پزشکی',
+    selectPackage: 'انتخاب سطح پکیج خدماتی',
+    selectCurrency: 'واحد پول',
+    estimatedCost: 'برآورد هزینه پکیج درمانی',
+    vsWesternBenchmark: 'صرفه‌جویی نسبت به میانگین آمریکا و اروپا',
+    stayDuration: 'مدت اقامت پیشنهادی در بیمارستان و هتل',
+    recoveryDuration: 'مدت زمان تخمینی بهبودی',
+    daysUnit: 'روز',
+    downloadQuoteBtn: 'دانلود پیش‌فاکتور رسمی شرکتی (PDF / پرینت)',
+    tierEssential: 'پکیج مراقبت اساسی',
+    tierEssentialDesc: 'اقامت در بیمارستان، هزینه‌های جراح، ترانسفر فرودگاهی و مترجم اختصاصی پزشکی.',
+    tierPremium: 'پکیج راحتی ممتاز',
+    tierPremiumDesc: 'شامل اقامت در هتل ۴ ستاره، ترانسفر خصوصی، ویزای همراه و سیمکارت محلی.',
+    tierVip: 'پکیج تشریفات VIP الیت',
+    tierVipDesc: 'شامل هتل ۵ ستاره، پرستار خصوصی ۲۴ ساعته، تشریفات CIP فرودگاه و گشت‌های شهری.',
+    specialtiesHeading: 'تخصص‌های پزشکی و مقایسه هزینه جهانی',
+    specialtiesSub: 'مقایسه استانداردهای بالینی ایران با سایر هاب‌های پزشکی دنیا.',
+    compareWithUs: 'مقایسه هزینه جهانی',
+    iranPriceCol: 'ایران (مهام)',
+    indiaPriceCol: 'هند',
+    uaeTurkeyCol: 'امارات / ترکیه',
+    usUkCol: 'آمریکا / انگلیس',
+    detailsBtn: 'مشاهده جزئیات روند درمان',
+    wizardHeading: 'شروع فرآیند امن سفر درمانی',
+    wizardSub: 'فرم مشاوره ۳ مرحله‌ای را تکمیل کنید. هماهنگ‌کنندگان پزشکی ما ظرف ۲ ساعت پاسخ خواهند داد.',
+    step1Title: '۱. انتخاب تخصص',
+    step2Title: '۲. اطلاعات بیمار',
+    step3Title: '۳. ارسال مدارک پزشکی',
+    fullName: 'نام و نام خانوادگی',
+    emailLabel: 'آدرس ایمیل',
+    phoneLabel: 'شماره واتساپ / موبایل',
+    countryLabel: 'کشور محل سکونت',
+    medicalHistoryLabel: 'سوابق پزشکی و توضیحات (اختیاری)',
+    submitWizard: 'ارسال درخواست مشاوره محرمانه',
+    successMessage: 'با سپاس! درخواست شما با موفقیت ثبت شد. تیم پزشکی ما پرونده شما را بررسی کرده و به زودی از طریق واتساپ با شما تماس خواهد گرفت.',
+    faqTitle: 'سوالات متداول گردشگری پزشکی در ایران',
+    faqSub: 'هرآنچه باید درباره امنیت، ویزا، پرداخت‌ها و استانداردهای بیمارستانی بدانید.',
+    faq: [
+      {
+        q: 'ویزای درمانی (T-Visa) ایران چگونه صادر می‌شود؟',
+        a: 'شرکت سورین مهام به عنوان ضامن رسمی شما، تصویر پاسپورت و مدارک پزشکی شما را به وزارت امور خارجه ارسال کرده و کد رهگیری ویزای درمانی را ظرف ۳ الی ۵ روز کاری صادر می‌کند تا در سفارت یا فرودگاه ویزای شما صادر شود.'
+      },
+      {
+        q: 'آیا بیمارستان‌های ایران ایمن و دارای استانداردهای بین‌المللی هستند؟',
+        a: 'بله. ایران دارای بیمارستان‌های فوق پیشرفته با استانداردهای بین‌المللی JCI و بخش‌های اختصاصی بیماران بین‌الملل (IPD) مجهز به فناوری‌های روز دنیا است.'
+      },
+      {
+        q: 'با وجود تحریم‌های بانکی، پرداخت‌های بین‌المللی چگونه انجام می‌شود؟',
+        a: 'سورین مهام فاکتورهای رسمی شرکتی امن صادر کرده و راهکارهای تاییدشده انتقال وجه، کارت‌های اعتباری گردشگری (مه‌کارت) یا صرافی‌های معتبر را فراهم می‌کند.'
+      },
+      {
+        q: 'آیا در طول اقامت مترجم و همراه اختصاصی خواهم داشت؟',
+        a: 'قطعاً. به هر بیمار یک مشاور و مترجم اختصاصی ۲۴ ساعته اختصاص می‌یابد که از فرودگاه تا ترخیص و بهبودی کامل همراه شماست.'
+      },
+      {
+        q: 'پکیج‌های خدماتی مهام سلامت شامل چه مواردی است؟',
+        a: 'بسته به پکیج انتخابی (اساسی، ممتاز یا VIP)، خدمات شامل پذیرش بیمارستان، دستمزد جراح، هتل یا سوئیت لوکس، ترانسفر CIP، پرستار خصوصی و ارتباطات است.'
+      },
+      {
+        q: 'چگونه مدارک پزشکی خود را برای ارزیابی اولیه پزشک ارسال کنم؟',
+        a: 'شما می‌توانید اسکن‌ها و مدارک خود را از طریق ویزارد مشاوره یا واتساپ اختصاصی (+989055240772) به صورت امن ارسال کنید.'
+      }
+    ],
+    footerAbout: 'مهم سلامت (Maham Health) سرویس پیشتاز گردشگری پزشکی تحت نظارت شرکت توسعه صنعت و تجارت سورین مهام است که بیماران بین‌المللی را به متخصصان برتر ایران متصل می‌کند.',
+    footerCorporate: 'شرکت توسعه صنعت و تجارت سورین مهام — خدمات بازرگانی و پزشکی بین‌المللی.',
+    footerRights: 'تمامی حقوق محفوظ است.',
+    currencyLabel: 'واحد پول'
   },
   ar: {
-    brand: 'مهام هيلث',
-    badge: 'خدمات الرعاية الطبية الفاخرة • مستشفيات IPD المعتمدة',
-    heroTitle: 'رعاية صحية عالمية المستوى، بتوفير ٧٠–٩٠٪ من التكاليف العالمية',
-    heroSub: 'تنظيم رحلات علاجية خاصة لأفضل المستشفيات المعتمدة في إيران مع كبار الاستشاريين وخدمات كونسيرج متكاملة.',
-    startAssessment: 'ابدأ التقييم المجاني',
-    whatsappDirect: 'تواصل عبر واتساب',
-    statPartners: '+٤٠ مركزاً طبياً معتمداً',
-    statSpecialists: '+١٨٠ طبيباً واستشارياً',
-    statSavings: 'وفر ٧٠–٩٠٪ من التكاليف',
-    statWait: 'أقل من ٣ أيام للمواعيد',
-    calculatorTitle: 'حاسبة توفير التكاليف العلاجية',
-    calculatorSub: 'اختر الإجراء الطبي والوجهة المقارنة لمعرفة المبلغ الموفر بدقة.',
-    selectProcedure: 'اختر العلاج أو العملية',
-    compareAgainst: 'مقارنة التكلفة مع',
-    packageTier: 'باقة الكونسيرج والإقامة',
-    estimatedTotal: 'التكلفة التقديرية في إيران',
-    estimatedSavings: 'إجمالي التوفير التقديري',
-    timelineTitle: 'رحلة المريض المتكاملة',
-    timelineSub: 'رحلة رعاية طبية منظمة منذ أول استشارة حتى الشفاء التام.',
-    packagesTitle: 'باقات الكونسيرج والضيافة',
-    packagesSub: 'اختر مستوى الخدمات اللوجستية والفندقية المصاحبة لرحلتك العلاجية.',
-    step1: 'الخطوة ١: التخصص الطبي',
-    step2: 'الخطوة ٢: بيانات المريض',
-    step3: 'الخطوة ٣: بيانات الاتصال والباقة',
-    submit: 'إرسال الطلب بسرية تامة',
-    male: 'ذكر',
-    female: 'أنثى',
-    usUk: 'الولايات المتحدة / المملكة المتحدة',
-    uaeTurkey: 'الإمارات / تركيا',
-    india: 'الهند',
-    benchmarkRegion: 'منطقة المقارنة',
-    conciergeTier: 'مستوى الخدمة',
+    brandTitle: 'مهام هيلث (Maham Health)',
+    brandSub: 'شركة سورين مهام للتجارة وتطوير الصناعة',
+    tagline: 'كونسيرج السياحة العلاجية النخبة في إيران',
+    heroBadge: 'مستشفيات معتمدة من JCI • تأشيرة علاجية سريعة • خدمات VIP',
+    heroHeading: 'رعاية صحية عالمية المستوى في إيران بتوفير 70٪ إلى 90٪',
+    heroSub: 'اختبر السياحة العلاجية الفاخرة تحت إدارة سورين مهام. مستشفيات معتمدة دولياً، أطباء عالميون، وأجنحة استشفاء خاصة.',
+    ctaBookNow: 'احجز استشارة مجانية',
+    ctaWhatsApp: 'تواصل عبر واتساب',
+    ctaCalculator: 'حساب التكاليف والباقات',
+    statsSavings: 'متوسط توفير التكاليف مقارنة بأمريكا وأوروبا',
+    statsHospitals: 'مستشفيات معتمدة لمرضى الدوليين IPD',
+    statsVisa: 'دعم سريع لاستخراج التأشيرة العلاجية T-Visa',
+    statsSupport: 'فريق دعم ومترجمون متعددوا اللغات على مدار الساعة',
+    calcTitle: 'حاسبة تكاليف العلاج والباقات التفاعلية',
+    calcSub: 'اختر تخصصك الطبي، مستوى الباقة، والعملة المفضلة للحصول على تقدير سعر دقيق وفوري.',
+    selectSpecialty: 'اختر التخصص الطبي',
+    selectPackage: 'اختر فئة الباقة',
+    selectCurrency: 'العملة',
+    estimatedCost: 'تكلفة باقة العلاج المقدرة',
+    vsWesternBenchmark: 'التوفير مقارنة بمعايير الولايات المتحدة وأوروبا',
+    stayDuration: 'الإقامة الموصى بها في المستشفى والفندق',
+    recoveryDuration: 'وقت التعافي المقدر',
+    daysUnit: 'أيام',
+    downloadQuoteBtn: 'تحميل عرض الأسعار الرسمي (PDF / طباعة)',
     tierEssential: 'العناية الأساسية',
-    tierPremium: 'العناية المميزة',
-    tierVip: 'VIP فاخر',
-    costBreakdown: 'تفصيل التكلفة',
-    benchmarkCost: 'تكلفة المعيار',
-    iranBase: 'سعر إيران الأساسي',
-    conciergeAddon: 'رسوم الخدمة',
-    wizardTitle: 'استشارة مجانية وتقييم الحالة',
-    wizardSub: 'أخبرنا قليلاً عن احتياجاتك حتى نساعدك في تنظيم الخطوات التالية.',
-    successTitle: 'اكتمل التقييم!',
-    successSub: 'اضغط أدناه لإرسال تفاصيل حالتك بشكل آمن إلى منسقينا عبر واتساب.',
-    sendToWhatsApp: 'إرسال التفاصيل إلى واتساب',
-    step1Title: 'اختر العلاج',
-    step2Title: 'تفاصيل المريض ووقت العلاج',
-    step3Title: 'بيانات الاتصال ومستوى الخدمة',
-    proceedWithConsultation: 'المتابعة إلى الاستشارة'
-  },
-  sw: {
-    brand: 'Maham Health',
-    badge: 'Huduma Maalum za Matibabu • Hospitali Zilizoidhinishwa za IPD',
-    heroTitle: 'Matibabu ya Kimataifa, Okoa 70–90% ya Gharama Duniani',
-    heroSub: 'Safari maalum za matibabu ya kibinafsi katika hospitali zinazoongoza nchini Iran na madaktari bingwa.',
-    startAssessment: 'Anza Tathmini ya Bure',
-    whatsappDirect: 'Wasiliana kwa WhatsApp',
-    statPartners: 'Vituo 40+ vya IPD',
-    statSpecialists: 'Madaktari Bingwa 180+',
-    statSavings: 'Akiba ya 70–90%',
-    statWait: 'Chini ya Siku 3',
-    calculatorTitle: 'Kikokotoo cha Akiba ya Gharama',
-    calculatorSub: 'Chagua huduma na nchi ya kulinganisha kuona kiwango utakachookoa.',
-    selectProcedure: 'Chagua Huduma ya Matibabu',
-    compareAgainst: 'Linganisha na Gharama za',
-    packageTier: 'Kiwango cha Huduma za Concierge',
-    estimatedTotal: 'Gharama ya Matibabu Iran',
-    estimatedSavings: 'Kiwango Unachookoa',
-    timelineTitle: 'Hatua za Safari Yako',
-    timelineSub: 'Mpangilio madhubuti kuanzia ukaguzi wa ripoti hadi kupona kabisa.',
-    packagesTitle: 'Vifurushi vya Ukarimu na Concierge',
-    packagesSub: 'Chagua kiwango cha usaidizi na huduma za malazi unachohitaji.',
-    step1: 'Hatua 1: Aina ya Matibabu',
-    step2: 'Hatua 2: Wasifu wa Mgonjwa',
-    step3: 'Hatua 3: Mawasiliano na Kifurushi',
-    submit: 'Tuma Maombi kwa Usiri',
-    male: 'Mwanaume',
-    female: 'Mwanamke',
-    usUk: 'Marekani / Uingereza',
-    uaeTurkey: 'UAE / Uturuki',
-    india: 'India',
-    benchmarkRegion: 'Mkoa wa Kulinganisha',
-    conciergeTier: 'Kiwango cha Concierge',
-    tierEssential: 'Huduma ya Msingi',
-    tierPremium: 'Huduma ya Premium',
-    tierVip: 'VIP ya Kubwa',
-    costBreakdown: 'Kugawanya Gharama',
-    benchmarkCost: 'Gharama ya Kulinganisha',
-    iranBase: 'Gharama ya Iran',
-    conciergeAddon: 'Gharama ya Concierge',
-    wizardTitle: 'Ushauri wa Bure na Tathmini ya Kesi',
-    wizardSub: 'Tuambie kidogo kuhusu lengo lako la matibabu ili tukusaidie hatua zifuatazo.',
-    successTitle: 'Tathmini Imekamilika!',
-    successSub: 'Bofya hapa kutuma maelezo yako kwa koordina za matibabu kupitia WhatsApp.',
-    sendToWhatsApp: 'Tuma Maelezo kwa WhatsApp',
-    step1Title: 'Chagua Tiba Yako',
-    step2Title: 'Maelezo ya Mgonjwa na Muda',
-    step3Title: 'Mawasiliano na Kiwango cha Concierge',
-    proceedWithConsultation: 'Enda kwenye Ushauri'
-  },
-  hi: {
-    brand: 'महाम हेल्थ',
-    badge: 'प्रीमियर मेडिकल कंसीयर्ज • अधिकृत IPD पार्टनर अस्पताल',
-    heroTitle: 'विश्व स्तरीय स्वास्थ्य सेवा, वैश्विक लागत से 70-90% कम पर',
-    heroSub: 'विशेषज्ञ डॉक्टरों और वीआईपी कंसीयर्ज सेवाओं के साथ ईरान के अग्रणी अस्पतालों के लिए विशेष यात्रा प्रबंधन।',
-    startAssessment: 'निःशुल्क मूल्यांकन शुरू करें',
-    whatsappDirect: 'व्हाट्सएप पर बात करें',
-    statPartners: '40+ IPD पार्टनर अस्पताल',
-    statSpecialists: '180+ विशेषज्ञ डॉक्टर्स',
-    statSavings: '70–90% बचत',
-    statWait: '< 3 दिन प्रतीक्षा समय',
-    calculatorTitle: 'लागत बचत कैलकुलेटर',
-    calculatorSub: 'अपनी प्रक्रिया चुनें और अनुमानित बचत देखने के लिए तुलना करें।',
-    selectProcedure: 'उपचार / प्रक्रिया चुनें',
-    compareAgainst: 'तुलना का मानक चुनें',
-    packageTier: 'कंसीयर्ज पैकेज स्तर',
-    estimatedTotal: 'ईरान में अनुमानित उपचार लागत',
-    estimatedSavings: 'आपकी अनुमानित कुल बचत',
-    timelineTitle: 'रोगी यात्रा के चरण',
-    timelineSub: 'परामर्श से लेकर पूरी रिकवरी तक एक निर्बाध और सुरक्षित चिकित्सा यात्रा।',
-    packagesTitle: 'कंसीयर्ज और आतिथ्य पैकेज',
-    packagesSub: 'अपनी और अपने साथी की जरूरतों के अनुसार उपयुक्त स्तर चुनें।',
-    step1: 'चरण 1: नैदानिक सेवा',
-    step2: 'चरण 2: रोगी विवरण',
-    step3: 'चरण 3: संपर्क और पैकेज',
-    submit: 'गोपनीय अनुरोध भेजें',
-    male: 'पुरुष',
-    female: 'महिला',
-    usUk: 'संयुक्त राज्य / यूके',
-    uaeTurkey: 'यूएई / तुर्की',
-    india: 'भारत',
-    benchmarkRegion: 'तुलना क्षेत्र',
-    conciergeTier: 'कंसीयर्ज स्तर',
-    tierEssential: 'मूलभूत देखभाल',
-    tierPremium: 'प्रीमियम देखभाल',
-    tierVip: 'लक्ज़री VIP',
-    costBreakdown: 'लागत विवरण',
-    benchmarkCost: 'तुलना लागत',
-    iranBase: 'ईरान आधार मूल्य',
-    conciergeAddon: 'कंसीयर्ज शुल्क',
-    wizardTitle: 'मुफ्त परामर्श और केस मूल्यांकन',
-    wizardSub: 'अपनी चिकित्सीय जरूरतों के बारे में कुछ बताएं, हम अगली कदमों के लिए सहयोग करेंगे।',
-    successTitle: 'मूल्यांकन पूर्ण!',
-    successSub: 'अपना मामला सुरक्षित रूप से व्हाट्सएप पर भेजने के लिए नीचे क्लिक करें।',
-    sendToWhatsApp: 'विवरण व्हाट्सएप पर भेजें',
-    step1Title: 'अपना उपचार चुनें',
-    step2Title: 'रोगी विवरण और समयसीमा',
-    step3Title: 'संपर्क और कंसीयर्ज स्तर',
-    proceedWithConsultation: 'परामर्श के लिए आगे बढ़ें'
-  },
-  ur: {
-    brand: 'ماہم ہیلتھ',
-    badge: 'پریمیئر میڈیکل کونسیرج • باضابطہ IPD پارٹنر ہسپتال',
-    heroTitle: 'عالمی معیار کا علاج، بین الاقوامی اخراجات سے 70 تا 90 فیصد کم',
-    heroSub: 'ایران کے اعلیٰ ترین ہسپتالوں میں معروف ماہرین اور وی آئی پی سہولیات کے ساتھ نجی طبی سفروں کی سہولت۔',
-    startAssessment: 'مفت جائزہ شروع کریں',
-    whatsappDirect: 'واٹس ایپ پر رابطہ کریں',
-    statPartners: '+40 پارٹنر مراکز',
-    statSpecialists: '+180 بورڈ سرٹیفائیڈ ماہرین',
-    statSavings: '70–90% بچت',
-    statWait: '3 دن سے کم انتظار',
-    calculatorTitle: 'لاگت میں بچت کا کیلکولیٹر',
-    calculatorSub: 'اپنا طریقہ علاج منتخب کریں اور تخمینہ شدہ بچت معلوم کریں۔',
-    selectProcedure: 'طریقہ علاج منتخب کریں',
-    compareAgainst: 'موازنہ کس ملک سے کریں',
-    packageTier: 'کونسیرج پیکیج کا درجہ',
-    estimatedTotal: 'ایران میں علاج کی تخمینہ لاگت',
-    estimatedSavings: 'آپ کی کل تخمینہ بچت',
-    timelineTitle: 'مریض کا سفری لائحہ عمل',
-    timelineSub: 'پہلے مشورے سے مکمل صحت یابی تک کا ایک منظم اور محفوظ سفر۔',
-    packagesTitle: 'کونسیرج اور رہائش کے پیکیجز',
-    packagesSub: 'اپنی اور اپنے ٹیماردار کی ضروریات کے مطابق پیکیج کا انتخاب کریں۔',
-    step1: 'مرحلہ 1: علاج کا انتخاب',
-    step2: 'مرحلہ 2: مریض کی معلومات',
-    step3: 'مرحلہ 3: رابطہ اور پیکیج',
-    submit: 'خفیہ درخواست جمع کروائیں',
-    male: 'مرد',
-    female: 'عورت',
-    usUk: 'امریکا / برطانیہ',
-    uaeTurkey: 'متحدہ عرب امارات / ترکی',
-    india: 'بھارت',
-    benchmarkRegion: 'موازنہ کا خطہ',
-    conciergeTier: 'کونسیرج سطح',
-    tierEssential: 'بنیادی سروس',
-    tierPremium: 'پریمیم سروس',
-    tierVip: 'لوکس VIP',
-    costBreakdown: 'لاگت کا تجزیہ',
-    benchmarkCost: 'موازنہ لاگت',
-    iranBase: 'ایران کی بنیادی قیمت',
-    conciergeAddon: 'کونسیرج فیس',
-    wizardTitle: 'مفت مشاورت اور کیس جائزہ',
-    wizardSub: 'اپنی طبی ضروریات کے بارے میں تھوڑا بتائیں تاکہ ہم اگلی مراحل میں آپ کی مدد کریں۔',
-    successTitle: 'جائزہ مکمل!',
-    successSub: 'اپنی تفصیلات محفوظ طریقے سے WhatsApp پر بھیجنے کے لیے نیچے کلک کریں۔',
-    sendToWhatsApp: 'تفصیلات WhatsApp پر بھیجیں',
-    step1Title: 'اپنا علاج منتخب کریں',
-    step2Title: 'مریض کی تفصیلات اور وقت',
-    step3Title: 'رابطہ اور کونسیرج سطح',
-    proceedWithConsultation: 'مشاورت کے لیے آگے بڑھیں'
-  }
-};
+    tierEssentialDesc: 'إقامة المستشفى، رسوم الجراح، الاستقبال بالمطار، ومترجم طبي.',
+    tierPremium: 'الراحة الممتازة',
+    tierPremiumDesc: 'يضيف إقامة فندق 4 نجوم، مواصلات خاصة، تأشيرة المرافق، وشريحة اتصال.',
+    tierVip: 'كبار الشخصيات VIP',
+    tierVipDesc: 'يضيف جناح فندق 5 نجوم، ممرضة خاصة على مدار الساعة، صالة CIP بالمطار وجولات.',
+    specialtiesHeading: 'تخصصاتنا الطبية ومقارنة الأسعار العالمية',
+    specialtiesSub: 'قارن المعايير السريرية الرائدة في إيران مع المراكز الطبية العالمية.',
+    compareWithUs: 'معايير التكلفة العالمية',
+    iranPriceCol: 'إيران (مهام)',
+    indiaPriceCol: 'الهند',
+    uaeTurkeyCol: 'الإمارات / تركيا',
+    usUkCol: 'أمريكا / بريطانيا',
+    detailsBtn: 'عرض تفاصيل الإجراء',
+    wizardHeading: 'ابدأ رحلتك العلاجية الآمنة',
+    wizardSub: 'املأ نموذج الاستشارة المكون من 3 خطوات. سيقوم منسقونا الطبيون بالرد خلال ساعتين.',
+    step1Title: '1. اختر التخصص',
+    step2Title: '2. بيانات المريض',
+    step3Title: '3. إرسال التقارير الطبية',
+    fullName: 'الاسم الكامل',
+    emailLabel: 'البريد الإلكتروني',
+    phoneLabel: 'رقم الواتساب / الجوال',
+    countryLabel: 'دولة الإقامة',
+    medicalHistoryLabel: 'التاريخ الطبي وملاحظات (اختياري)',
+    submitWizard: 'إرسال طلب الاستشارة السرية',
+    successMessage: 'شكراً لك! تم إرسال طلبك بنجاح. يقوم فريقنا الطبي بمراجعة حالتك وسيتواصل معك عبر واتساب قريباً.',
+    faqTitle: 'الأسئلة الشائعة حول السياحة العلاجية في إيران',
+    faqSub: 'كل ما تحتاج معرفته حول الأمان، التأشيرات، المدفوعات ومعايير المستشفيات.',
+    faq: [
+      {
+        q: 'كيف تعمل تأشيرة العلاج الإيرانية (T-Visa)؟',
+        a: 'تعمل شركة سورين مهام كضامن رسمي لك. نرسل صورة جواز السفر والتقرير الطبي لوزارة الخارجية لإصدار رمز الموافقة خلال 3-5 أيام عمل.'
+      },
+      {
+        q: 'هل المستشفيات في
