@@ -403,7 +403,7 @@ export default function Home({ initialLanguage = 'en' }: HomeProps) {
                       </div>
                       <div className="flex justify-between">
                         <span className="text-slate-500">{t.usUkCol}:</span>
-                        <span className="font-bold line-through text-slate-400">{formatPrice(specialty.usUkCol)}</span>
+                        <span className="font-bold line-through text-slate-400">{formatMoney(specialty.usUkPrice)}</span>
                       </div>
                     </div>
 
