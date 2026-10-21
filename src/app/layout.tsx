@@ -1,10 +1,14 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import WhatsAppButton from '@/components/WhatsAppButton';
+// src/app/layout.tsx
+import type { Metadata } from "next";
+import "./globals.css";
+import WhatsAppButton from "../components/WhatsAppButton";
 
 export const metadata: Metadata = {
-  title: 'Maham Health | Elite Medical Tourism Concierge',
-  description: 'World-class healthcare in Iran with 70%-90% savings under Soorin Maham.',
+  title: "Maham Health | Medical Tourism Concierge Iran",
+  description: "Premier medical-tourism concierge operated under Soorin Maham Trade & Industry Development Corporation.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -13,9 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="bg-slate-50 text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
-        {children}
+    <html lang="en">
+      <body className="antialiased bg-slate-50 text-slate-900 min-h-screen flex flex-col">
+        <main className="flex-1">{children}</main>
         <WhatsAppButton />
       </body>
     </html>
