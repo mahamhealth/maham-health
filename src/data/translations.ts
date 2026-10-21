@@ -323,4 +323,281 @@ export const TRANSLATIONS: Record<Language, I18nSet> = {
         a: 'تعمل شركة سورين مهام كضامن رسمي لك. نرسل صورة جواز السفر والتقرير الطبي لوزارة الخارجية لإصدار رمز الموافقة خلال 3-5 أيام عمل.'
       },
       {
-        q: 'هل المستشفيات في
+        q: 'هل المستشفيات في إيران آمنة ومعتمدة دولياً؟',
+        a: 'نعم. تمتلك إيران مستشفيات متطورة معتمدة من JCI وأقسام مخصصة للمرضى الدوليين (IPD).'
+      },
+      {
+        q: 'كيف يتم الدفع الدولي في ظل القيود المصرفية؟',
+        a: 'توفر سورين مهام فواتير شركية رسمية آمنة وتدعم القنوات المعتمدة وبطاقات السياح (مه كارد).'
+      },
+      {
+        q: 'هل سأحصل على مترجم ومرافق خاص طوال فترة إقامتي؟',
+        a: 'بالتأكيد. يُخصص لكل مريض منسق ومترجم شخصي يرافقه منذ الوصول للمطار وحتى الشفاء التام.'
+      },
+      {
+        q: 'ماذا تتضمن باقات مهام هيلث؟',
+        a: 'تغطي الباقات دخول المستشفى، أجور الجراح، الإقامة الفاخرة، الاستقبال في المطار، والتمريض الخاص.'
+      },
+      {
+        q: 'كيف أرسل تقاريري الطبية للتقييم الأولي؟',
+        a: 'يمكنك رفع التقارير والصور عبر نموذج الاستشارة أو إرسالها عبر واتساب (+989055240772).'
+      }
+    ],
+    footerAbout: 'مهام هيلث هو خدمة كونسيرج السياحة العلاجية الرائدة تحت إدارة شركة سورين مهام للتجارة وتطوير الصناعة.',
+    footerCorporate: 'شركة سورين مهام للتجارة وتطوير الصناعة — الخدمات التجارية والطبية الدولية.',
+    footerRights: 'جميع الحقوق محفوظة.',
+    currencyLabel: 'العملة'
+  },
+  sw: {
+    brandTitle: 'Maham Health',
+    brandSub: 'Soorin Maham Trade & Industry Development Corporation',
+    tagline: 'Huduma za Utalii wa Matibabu za Kipekee nchini Iran',
+    heroBadge: 'Hospitali Zilizoidhinishwa na JCI • Visa ya Haraka ya Matibabu • Huduma za VIP',
+    heroHeading: 'Huduma za Afya za Kiwango cha Dunia nchini Iran kwa Akiba ya 70%–90%',
+    heroSub: 'Pata huduma bora za matibabu zinasimamiwa na Soorin Maham. Hospitali zilizoidhinishwa na JCI, madaktari bingwa duniani, na huduma za VIP.',
+    ctaBookNow: 'Weka Miadi ya Bure',
+    ctaWhatsApp: 'Wasiliana kupitia WhatsApp',
+    ctaCalculator: 'Kadiria Gharama na Vifurushi',
+    statsSavings: 'Wastani wa Akiba ya Gharama vs Marekani/Ulaya',
+    statsHospitals: 'Hospitali Zilizoidhinishwa za IPD',
+    statsVisa: 'Msaada wa Visa ya Haraka ya T-Visa',
+    statsSupport: 'Msaada wa Wataalamu wa Lugha 24/7',
+    calcTitle: 'Kadirio la Gharama za Matibabu na Vifurushi',
+    calcSub: 'Chagua huduma yako, kifurushi, na sarafu upate bei rasmi mara moja.',
+    selectSpecialty: 'Chagua Huduma ya Matibabu',
+    selectPackage: 'Chagua Kifurushi cha Huduma',
+    selectCurrency: 'Sarafu',
+    estimatedCost: 'Makadirio ya Kifurushi cha Matibabu',
+    vsWesternBenchmark: 'Akiba ikilinganishwa na Marekani/UK',
+    stayDuration: 'Muda wa Kukaa Hospitalini na Hoteli',
+    recoveryDuration: 'Muda wa Kupona Uliokadiriwa',
+    daysUnit: 'Siku',
+    downloadQuoteBtn: 'Pakua Nukuu Rasmi ya Kampuni (PDF / Chapisha)',
+    tierEssential: 'Huduma Muhimu',
+    tierEssentialDesc: 'Kukaa hospitalini, ada ya daktari, usafiri wa uwanja wa ndege, na mkalimani.',
+    tierPremium: 'Starehe ya Kwanza',
+    tierPremiumDesc: 'Yajumuisha hoteli ya nyota 4, usafiri binafsi, visa ya msindikizaji, na simcard.',
+    tierVip: 'VIP Elite Concierge',
+    tierVipDesc: 'Yajumuisha hoteli ya nyota 5, muuguzi binafsi 24/7, na mapumziko ya VIP CIP uwanjani.',
+    specialtiesHeading: 'Huduma Zetu za Matibabu na Linganisho la Gharama',
+    specialtiesSub: 'Linganisho la viwango vya kliniki vya Iran na vituo vya kimataifa.',
+    compareWithUs: 'Viwango vya Gharama Duniani',
+    iranPriceCol: 'Iran (Maham)',
+    indiaPriceCol: 'India',
+    uaeTurkeyCol: 'UAE / Uturuki',
+    usUkCol: 'Marekani / UK',
+    detailsBtn: 'Tazama Maelezo ya Utaratibu',
+    wizardHeading: 'Anza Safari Yako Salama ya Matibabu',
+    wizardSub: 'Jaza fomu yetu ya mashauriano ya hatua 3. Waratibu wetu watajibu ndani ya saa 2.',
+    step1Title: '1. Chagua Huduma',
+    step2Title: '2. Maelezo ya Mgonjwa',
+    step3Title: '3. Tuma Ripoti na Uwasilishe',
+    fullName: 'Jina Kamili',
+    emailLabel: 'Barua Pepe',
+    phoneLabel: 'Namba ya WhatsApp / Simu',
+    countryLabel: 'Nchi Unayoishi',
+    medicalHistoryLabel: 'Historia ya Matibabu na Maelezo (Hiari)',
+    submitWizard: 'Wasilisha Ombi la Siri la Mashauriano',
+    successMessage: 'Asante! Ombi lako limewasilishwa kwa usalama. Timu yetu ya matibabu inakagua kesi yako.',
+    faqTitle: 'Maswali Yanayoulizwa Mara kwa Mara Kuhusu Utalii wa Matibabu Iran',
+    faqSub: 'Kila kitu unachohitaji kujua kuhusu usalama, visa, malipo na viwango vya hospitali.',
+    faq: [
+      {
+        q: 'Je, Visa ya Matibabu ya Iran (T-Visa) inafanya kazi vipi?',
+        a: 'Soorin Maham inafanya kazi kama mdhamini wako rasmi. Tunawasilisha nakala ya pasipoti yako na ripoti ya matibabu ili kutoa msimbo wa uidhinishaji wa T-Visa ndani ya siku 3-5 za kazi.'
+      },
+      {
+        q: 'Je, hospitali nchini Iran ziko salama na zimeidhinishwa kimataifa?',
+        a: 'Ndio. Iran ina hospitali za kiszenzi zenye uthibitisho wa JCI na Idara Maalum za Wagonjwa wa Kimataifa (IPD).'
+      },
+      {
+        q: 'Malipo ya kimataifa yanafanywaje kutokana na vikwazo vya benki?',
+        a: 'Soorin Maham hutoa ankara salama za kisheria na kusaidia njia zilizoidhinishwa za malipo ya kimataifa na kadi za watalii.'
+      },
+      {
+        q: 'Je, nitakuwa na mkalimani na usaidizi binafsi wakati wote wa kukaa kwangu?',
+        a: 'Bila shaka. K සෑම mgonjwa hupewa mratibu binafsi wa 24/7 na mkalimani wa matibabu.'
+      },
+      {
+        q: 'Ni nini kimejumuishwa katika vifurushi vya Maham Health?',
+        a: 'Kulingana na kifurushi chako (Muhimu, Premium, au VIP), vinajumuisha malazi, ada za daktari na usafiri wa VIP.'
+      },
+      {
+        q: 'Ninawezaje kutuma kumbukumbu zangu za matibabu kwa tathmini ya awali?',
+        a: 'Unaweza kupakia skani zako kupitia fomu ya mashauriano au WhatsApp (+989055240772).'
+      }
+    ],
+    footerAbout: 'Maham Health ni huduma kuu ya utalii wa matibabu chini ya Soorin Maham Trade & Industry Development Corporation.',
+    footerCorporate: 'Soorin Maham Trade & Industry Development Corporation — Huduma za Biashara na Matibabu za Kimataifa.',
+    footerRights: 'Haki zote zimehifadhiwa.',
+    currencyLabel: 'Sarafu'
+  },
+  hi: {
+    brandTitle: 'महम हेल्थ (Maham Health)',
+    brandSub: 'सूरिन महम ट्रेड एंड इंडस्ट्री डेवलपमेंट कॉरपोरेशन',
+    tagline: 'ईरान में एलीट मेडिकल टूरिज्म कंसर्ज',
+    heroBadge: 'JCI मान्यता प्राप्त अस्पताल • फास्ट-ट्रैक मेडिकल टी-वीज़ा • वीआईपी कॉनकॉर्ज़',
+    heroHeading: '70%–90% की बचत के साथ ईरान में विश्व स्तरीय स्वास्थ्य सेवा',
+    heroSub: 'सूरिन महम के प्रबंधन में एलीट मेडिकल टूरिज्म का अनुभव करें। JCI-मान्यता प्राप्त अस्पताल, विश्व प्रसिद्ध सर्जन और वीआईपी रिकवरी सुइट्स।',
+    ctaBookNow: 'निःशुल्क परामर्श बुक करें',
+    ctaWhatsApp: 'व्हाट्सएप पर चैट करें',
+    ctaCalculator: 'लागत और पैकेज अनुमान लगाएं',
+    statsSavings: 'अमेरिका/यूरोप की तुलना में औसत लागत बचत',
+    statsHospitals: 'JCI और मंत्रालय मान्यता प्राप्त IPD',
+    statsVisa: 'फास्ट-ट्रैक मेडिकल टी-वीज़ा सहायता',
+    statsSupport: '24/7 समर्पित बहुभाषी कॉनकॉर्ज़',
+    calcTitle: 'इंटरैक्टिव उपचार लागत और पैकेज अनुमानक',
+    calcSub: 'तत्काल पारदर्शी मूल्य निर्धारण प्राप्त करने के लिए अपनी विशेषता, पैकेज टियर और मुद्रा चुनें।',
+    selectSpecialty: 'चिकित्सा विशेषता चुनें',
+    selectPackage: 'केयर पैकेज टियर चुनें',
+    selectCurrency: 'मुद्रा',
+    estimatedCost: 'अनुमानित उपचार पैकेज',
+    vsWesternBenchmark: 'अमेरिका/ब्रिटेन की तुलना में बचत',
+    stayDuration: 'अनुशंसित अस्पताल और होटल में ठहरना',
+    recoveryDuration: 'अनुमानित रिकवरी समय',
+    daysUnit: 'दिन',
+    downloadQuoteBtn: 'आधिकारिक ब्रांडेड कोट डाउनलोड करें (PDF / प्रिंट)',
+    tierEssential: 'आवश्यक देखभाल (Essential Care)',
+    tierEssentialDesc: 'अस्पताल में रहना, सर्जन शुल्क, एयरपोर्ट पिकअप और समर्पित मेडिकल ट्रांसलेटर।',
+    tierPremium: 'प्रीमियम कम्फर्ट (Premium Comfort)',
+    tierPremiumDesc: '4-स्टार होटल में ठहरना, निजी परिवहन, साथी वीज़ा सहायता और स्थानीय सिम शामिल।',
+    tierVip: 'वीआईपी एलीट कॉनकॉर्ज़ (VIP Elite)',
+    tierVipDesc: '5-स्टार सुइट आवास, 24/7 निजी नर्स, वीआईपी सीआईपी एयरपोर्ट लाउंज और यात्राएं।',
+    specialtiesHeading: 'हमारी मुख्य चिकित्सा विशेषताएं और लागत तुलना',
+    specialtiesSub: 'अंतरराष्ट्रीय चिकित्सा केंद्रों के मुकाबले ईरान के नैदानिक ​​मानकों की तुलना करें।',
+    compareWithUs: 'वैश्विक लागत बेंचमार्क',
+    iranPriceCol: 'ईरान (महम)',
+    indiaPriceCol: 'भारत',
+    uaeTurkeyCol: 'यूएई / तुर्की',
+    usUkCol: 'यूएस / यूके',
+    detailsBtn: 'प्रक्रिया विवरण देखें',
+    wizardHeading: 'अपनी सुरक्षित चिकित्सा यात्रा शुरू करें',
+    wizardSub: 'हमारा 3-चरणीय परामर्श फॉर्म भरें। हमारे मेडिकल कोऑर्डिनेटर 2 घंटे के भीतर जवाब देंगे।',
+    step1Title: '1. विशेषता चुनें',
+    step2Title: '2. रोगी का विवरण',
+    step3Title: '3. मेडिकल रिपोर्ट अपलोड करें',
+    fullName: 'पूरा नाम',
+    emailLabel: 'ईमेल पता',
+    phoneLabel: 'व्हाट्सएप / मोबाइल नंबर',
+    countryLabel: 'निवास का देश',
+    medicalHistoryLabel: 'चिकित्सा इतिहास और नोट्स (वैकल्पिक)',
+    submitWizard: 'गोपनीय परामर्श अनुरोध सबमिट करें',
+    successMessage: 'धन्यवाद! आपका अनुरोध सुरक्षित रूप से सबमिट कर दिया गया है। हमारी मेडिकल टीम जल्द संपर्क करेगी।',
+    faqTitle: 'ईरान में मेडिकल टूरिज्म के बारे में अक्सर पूछे जाने वाले प्रश्न',
+    faqSub: 'सुरक्षा, वीज़ा, भुगतान और अस्पताल के मानकों के बारे में आपको जो कुछ भी जानना आवश्यक है।',
+    faq: [
+      {
+        q: 'ईरान का मेडिकल टी-वीज़ा कैसे काम करता है?',
+        a: 'सूरिन महम आपके आधिकारिक गारंटर के रूप में कार्य करता है। हम 3-5 कार्यदिवसों के भीतर टी-वीज़ा प्राधिकरण कोड जारी करने के लिए विदेश मंत्रालय को पासपोर्ट और मेडिकल रिपोर्ट जमा करते हैं।'
+      },
+      {
+        q: 'क्या ईरान के अस्पताल सुरक्षित और अंतरराष्ट्रीय स्तर पर मान्यता प्राप्त हैं?',
+        a: 'हाँ। ईरान में JCI मान्यता प्राप्त और समर्पित अंतर्राष्ट्रीय रोगी विभाग (IPD) वाले अत्याधुनिक अस्पताल हैं।'
+      },
+      {
+        q: 'बैंकिंग प्रतिबंधों को देखते हुए अंतरराष्ट्रीय भुगतान कैसे काम करते हैं?',
+        a: 'सूरिन महम आधिकारिक सुरक्षित कॉर्पोरेट चालान प्रदान करता है और स्वीकृत अंतरराष्ट्रीय भुगतान चैनलों में सहायता करता है।'
+      },
+      {
+        q: 'क्या मेरे प्रवास के दौरान मेरे पास अनुवादक और निजी सहायता होगी?',
+        a: 'बिल्कुल। प्रत्येक रोगी को 24/7 समर्पित व्यक्तिगत कॉनकॉर्ज़ और मेडिकल अनुवादक सौंपा जाता है।'
+      },
+      {
+        q: 'महम हेल्थ केयर पैकेजों में क्या शामिल है?',
+        a: 'चुने गए टियर (आवश्यक, प्रीमियम या वीआईपी) के आधार पर, पैकेजों में अस्पताल में प्रवेश, सर्जन शुल्क और होटल शामिल हैं।'
+      },
+      {
+        q: 'डॉक्टर के प्रारंभिक मूल्यांकन के लिए मैं अपने मेडिकल रिकॉर्ड कैसे भेजूं?',
+        a: 'आप हमारे 3-चरणीय परामर्श विज़ार्ड के माध्यम से अपने स्कैन और रिपोर्ट अपलोड कर सकते हैं (+989055240772)।'
+      }
+    ],
+    footerAbout: 'महम हेल्थ, सूरिन महम ट्रेड एंड इंडस्ट्री डेवलपमेंट कॉरपोरेशन के तहत संचालित प्रमुख मेडिकल-टूरिज्म कॉनकॉर्ज़ सेवा है।',
+    footerCorporate: 'सूरिन महम ट्रेड एंड इंडस्ट्री डेवलपमेंट कॉरपोरेशन — अंतर्राष्ट्रीय व्यापार और चिकित्सा सेवाएं।',
+    footerRights: 'सर्वाधिकार सुरक्षित।',
+    currencyLabel: 'मुद्रा'
+  },
+  ur: {
+    brandTitle: 'مہم ہیلتھ (Maham Health)',
+    brandSub: 'سورین مہم ٹریڈ اینڈ انڈسٹری ڈویلپمنٹ کارپوریشن',
+    tagline: 'ایران میں ایلیٹ میڈیکل ٹ্যুরিজم کانسیرج',
+    heroBadge: 'JCI سے تصدیق شدہ اسپتال • تیز رفتار میڈیکل ٹی ویزا • وی آئی پی خدمات',
+    heroHeading: 'ایران میں دنیا بھر کے معیار کی طبی سہولیات 70% تا 90% بچت کے ساتھ',
+    heroSub: 'سورین مہم کے تحت ایلیٹ میڈیکل ٹ্যুরিজم کا تجربہ کریں۔ JCI مصدقہ اسپتال، عالمی شہرت یافتہ سرجن اور VIP پرائیویٹ ریکوری سویٹس۔',
+    ctaBookNow: 'مفت مشاورت بک کریں',
+    ctaWhatsApp: 'واٹس ایپ پر بات کریں',
+    ctaCalculator: 'لاگت اور پیکجز کا تخمینہ لگائیں',
+    statsSavings: 'امریکہ اور یورپ کے مقابلے میں اوسط اخراجات کی بچت',
+    statsHospitals: 'JCI اور وزارت صحت سے منظور شدہ اسپتال',
+    statsVisa: 'فوری میڈیکل ٹی ویزا (T-Visa) سپورٹ',
+    statsSupport: '24/7 سرشار کثیر لسانی کانسیرج',
+    calcTitle: 'انٹرایکٹو علاج کی لاگت اور پیکج کیلکولیٹر',
+    calcSub: 'فوری شفاف قیمتوں کے لیے اپنی طبی تخصیص، پیکج کا درجہ اور ترجیحی کرنسی منتخب کریں۔',
+    selectSpecialty: 'طبی شعبہ منتخب کریں',
+    selectPackage: 'کیر پیکج کا درجہ منتخب کریں',
+    selectCurrency: 'کرنسی',
+    estimatedCost: 'تخمینی علاج کا پیکজ',
+    vsWesternBenchmark: 'امریکہ / برطانیہ کے مقابلے میں بچت',
+    stayDuration: 'اسپتال اور ہوٹل میں تجویز کردہ قیام',
+    recoveryDuration: 'تخمینی صحت یابی کا وقت',
+    daysUnit: 'دن',
+    downloadQuoteBtn: 'آفیشل برانডেڈ کوٹ ڈاؤن لوڈ کریں (PDF / پرنٹ)',
+    tierEssential: 'ضروری دیکھ بھال (Essential)',
+    tierEssentialDesc: 'اسپتال میں قیام، سرجن کی فیس، ایئرپورٹ پک اپ اور میڈیکل مترجم۔',
+    tierPremium: 'پریمیم کمفرٹ (Premium)',
+    tierPremiumDesc: '4 اسٹار ہوٹل کا قیام، نجی ٹرانسپورٹ، همراهی ویزا اور مقامی سم کارڈ۔',
+    tierVip: 'وی آئی پی ایلیট (VIP Elite)',
+    tierVipDesc: '5 اسٹار ہوٹل، 24/7 نجی نرس، VIP CIP ایئرپورٹ لاؤنج اور تفریحی دورے۔',
+    specialtiesHeading: 'ہمارے اہم طبی شعبے اور لاگت کا موازنہ',
+    specialtiesSub: 'بین الاقوامی طبی مرکزوں کے مقابلے میں ایران کے طبی معیارات کا موازنہ کریں۔',
+    compareWithUs: 'عالمی لاگت کے معیارات',
+    iranPriceCol: 'ایران (مہم)',
+    indiaPriceCol: 'بھارت',
+    uaeTurkeyCol: 'متحدہ عرب امارات / ترکی',
+    usUkCol: 'امریکہ / برطانیہ',
+    detailsBtn: 'طریقہ کار کی تفصیلات دیکھیں',
+    wizardHeading: 'اپنے محفوظ طبی سفر کا آغاز کریں',
+    wizardSub: 'ہمارا 3 مراحل پر مشتمل مشاورتی فارম پُر کریں۔ ہمارے کواڈینیٹرز 2 گھنٹے میں جواب دیں گے۔',
+    step1Title: '1. شعبہ منتخب کریں',
+    step2Title: '2. مریض کی تفصیلات',
+    step3Title: '3. میڈیکل رپورٹس اپ لوڈ کریں',
+    fullName: 'पूरा نام / مکمل نام',
+    emailLabel: 'ای میل ایڈریس',
+    phoneLabel: 'واٹس ایپ / موبائل نمبر',
+    countryLabel: 'رہائش کا ملک',
+    medicalHistoryLabel: 'طبی تاریخ اور نوٹس (اختیاری)',
+    submitWizard: 'خفیہ مشاورت کی درخواست جمع کروائیں',
+    successMessage: 'شکریہ! آپ کی درخواست کامیابی سے جمع ہو گئی ہے۔ ہماری میڈیکل ٹیم جلد رابطہ کرے گی۔',
+    faqTitle: 'ایران میں میڈیکل ٹ্যুরিজم کے بارے میں اکثر پوچھے جانے والے سوالات',
+    faqSub: 'حفاظت، ویزا، ادئگیوں اور اسپتال کے معیارات کے بارے میں تمام ضروری معلومات۔',
+    faq: [
+      {
+        q: 'ایران کا میڈیکل ٹی ویزا (T-Visa) کیسے کام کرتا ہے؟',
+        a: 'سورین مہم آپ کے باضابطہ ضامن کے طور پر کام کرتا ہے۔ ہم پاسپورٹ کی نقل اور میڈیکل رپورٹ وزارت خارجہ کو جمع کرواتے ہیں تاکہ 3 سے 5 یومِ کار میں ٹی ویزا کوڈ جاری کیا جا سکے।'
+      },
+      {
+        q: 'کیا ایران کے اسپتال محفوظ اور بین الاقوامی سطح پر تصدیق شدہ ہیں؟',
+        a: 'ہاں۔ ایران میں JCI سے تصدیق شدہ جدید ترین اسپتال اور بین الاقوامی مریضوں کے محکمے (IPD) موجود ہیں۔'
+      },
+      {
+        q: 'بین الاقوامی پابندیوں کے پیشِ نظر مالی لین دین کیسے ہوتا ہے؟',
+        a: 'سورین مہم سرکاری اور محفوظ کارپوریٹ انوائس فراہم کرتا ہے اور منظور شدہ بین الاقوامی ادائیگی کے ذرائع میں مدد کرتا ہے۔'
+      },
+      {
+        q: 'کیا میرے قیام کے دوران مترجم اور نجی مددگار موجود ہوگا؟',
+        a: 'بالکل۔ ہر مریض کو 24/7 ذاتی کانسیرج اور میڈیکل مترجم فراہم کیا جاتا ہے جو آپ کے ساتھ رہتا ہے۔'
+      },
+      {
+        q: 'مہم ہیلتھ کے کیر پیکجز میں کیا شامل ہے؟',
+        a: 'آپ کے منتخب کردہ درجے (اسنشیل، پریمیم یا وی آئی پی) کے مطابق، پیکجز میں اسپتال، فیس، ہوٹل اور ٹرانسفر شامل ہیں۔'
+      },
+      {
+        q: 'ڈاکٹر کے ابتدائی معائنے کے لیے میں اپنی میڈیکل رپورٹس کیسے بھیجوں؟',
+        a: 'آپ ہمارے 3 قدمی مشاورتی وزرڈ کے ذریعے یا واٹس ایپ پر براہ راست اپنے اسکینز اور رپورٹس اپ لوڈ کر سکتے ہیں (+989055240772)।'
+      }
+    ],
+    footerAbout: 'مہم ہیلتھ، سورین مہم ٹریڈ اینڈ انڈسٹری डेवलपमेंट کارپوریشن کے تحت چلنے والی ایک نمایاں میڈیکل ٹ্যুরিজم کانسیرج سروس ہے۔',
+    footerCorporate: 'سورین مہم ٹریڈ اینڈ انڈسٹری डेवलपमेंट کارپوریشن — بین الاقوامی تجارت اور طبی خدمات۔',
+    footerRights: 'تمام حقوق محفوظ ہیں۔',
+    currencyLabel: 'کرنسی'
+  }
+};
