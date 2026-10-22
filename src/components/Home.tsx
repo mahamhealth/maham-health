@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { TRANSLATIONS, LOCALES, RTL_LANGUAGES } from '../data/translations';
 import Image from 'next/image';
 import {
@@ -35,6 +36,7 @@ type Dir = 'ltr' | 'rtl';
 const WHATSAPP_NUMBER = '989055240772';
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
 const EMAIL = 'health@maham-group.com';
+const router = useRouter();
 
 const SUPPORTED_LANGUAGES: { code: Language; label: string; dir: Dir }[] = [
   { code: 'en', label: 'EN', dir: 'ltr' },
@@ -439,12 +441,17 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
 
             <span className="text-slate-600">|</span>
 
-            {/* Language selector (robust, visible, persisted) */}
+                      {/* Language selector (robust, visible, persisted) */}
             <div className="flex items-center gap-1.5">
               <Globe className="w-3.5 h-3.5 text-amber-400" />
               <select
                 value={language}
-                onChange={(e) => setLanguage(normalizeLang(e.target.value))}
+                onChange={(e) => {
+                  const newLang = normalizeLang(e.target.value);
+                  setLanguage(newLang);
+                  localStorage.setItem('mh_lang', newLang);
+                  router.replace(`/${newLang}`);
+                }}
                 aria-label="Select Language"
                 className="bg-slate-900 text-slate-200 border border-slate-800 rounded px-1.5 py-0.5 text-xs outline-none focus:border-blue-500"
               >
