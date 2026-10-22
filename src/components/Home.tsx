@@ -2,7 +2,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { TRANSLATIONS, LOCALES, RTL_LANGUAGES, type Language } from '@/data/translations';
+import { TRANSLATIONS, LOCALES, RTL_LANGUAGES, type Language } from '../data/translations';
 import Image from 'next/image';
 import {
   ShieldCheck,
