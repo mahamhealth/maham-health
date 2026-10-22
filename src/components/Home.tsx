@@ -35,7 +35,6 @@ type Dir = 'ltr' | 'rtl';
 const WHATSAPP_NUMBER = '989055240772';
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
 const EMAIL = 'health@maham-group.com';
-const router = useRouter();
 
 const SUPPORTED_LANGUAGES: { code: Language; label: string; dir: Dir }[] = [
   { code: 'en', label: 'EN', dir: 'ltr' },
