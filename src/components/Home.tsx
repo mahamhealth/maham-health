@@ -333,18 +333,21 @@ function useLockBodyScroll(locked: boolean) {
 }
 
 export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?: string }) {
-  // Robust language selector: persists, updates <html dir/lang>, safe fallback
-    const [language, setLanguage] = useState<Language>(() => detectInitialLanguage(initialLanguage));
-  // Sync state if URL prop changes
+  // Robust language selector state with fallback and localStorage support
+  const [language, setLanguage] = useState<Language>(() => detectInitialLanguage(initialLanguage));
+
+  // Sync state when URL locale prop changes (e.g. /fa/ -> /en/)
   useEffect(() => {
     if (initialLanguage) {
       setLanguage(normalizeLang(initialLanguage));
     }
   }, [initialLanguage]);
+
   const dir = getDir(language);
   const isRTL = RTL_LANGUAGES.includes(language);
   const t = TRANSLATIONS[language] || TRANSLATIONS.en;
 
+  // Persist language and update document attributes
   useEffect(() => {
     try {
       window.localStorage.setItem('mh_lang', language);
@@ -366,6 +369,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
   const [patientPhone, setPatientPhone] = useState('');
   const [patientNotes, setPatientNotes] = useState('');
   const [wizardSubmitted, setWizardSubmitted] = useState(false);
+
 
   // Quote modal (print-to-PDF)
   const [quoteOpen, setQuoteOpen] = useState(false);
@@ -445,7 +449,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
 
             <span className="text-slate-600">|</span>
 
-            {/* Language selector (robust, visible, persisted) */}
+       {/* Language selector (robust, visible, persisted) */}
             <div className="flex items-center gap-1.5">
               <Globe className="w-3.5 h-3.5 text-amber-400" />
               <select
@@ -456,6 +460,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
                   try {
                     localStorage.setItem('mh_lang', newLang);
                   } catch (err) {}
+                  // Force full route navigation for Next.js static export (.html files)
                   window.location.href = `/${newLang}/`;
                 }}
                 aria-label="Select Language"
