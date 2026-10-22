@@ -334,7 +334,13 @@ function useLockBodyScroll(locked: boolean) {
 
 export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?: string }) {
   // Robust language selector: persists, updates <html dir/lang>, safe fallback
-  const [language, setLanguage] = useState<Language>(() => detectInitialLanguage(initialLanguage));
+    const [language, setLanguage] = useState<Language>(() => detectInitialLanguage(initialLanguage));
+  // Sync state if URL prop changes
+  useEffect(() => {
+    if (initialLanguage) {
+      setLanguage(normalizeLang(initialLanguage));
+    }
+  }, [initialLanguage]);
   const dir = getDir(language);
   const isRTL = RTL_LANGUAGES.includes(language);
   const t = TRANSLATIONS[language] || TRANSLATIONS.en;
@@ -450,7 +456,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
                   try {
                     localStorage.setItem('mh_lang', newLang);
                   } catch (err) {}
-                  window.location.href = `/${newLang}`;
+                  window.location.href = `/${newLang}/`;
                 }}
                 aria-label="Select Language"
                 className="bg-slate-900 text-slate-200 border border-slate-800 rounded px-1.5 py-0.5 text-xs outline-none focus:border-blue-500"
