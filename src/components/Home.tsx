@@ -569,10 +569,10 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
 
         <div className="max-w-7xl mx-auto pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
           <p>© {new Date().getFullYear()} Soorin Maham Trade & Industry Development Corporation. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-slate-400 transition">Privacy Policy</a>
-            <a href="#" className="hover:text-slate-400 transition">Terms of Service</a>
-            <a href="#" className="hover:text-slate-400 transition">Medical Disclaimer</a>
+          <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400">
+            <a href="/privacy" className="hover:text-white transition">Privacy Policy</a>
+            <a href="/terms" className="hover:text-white transition">Terms of Service</a>
+            <a href="/disclaimer" className="hover:text-white transition">Medical Disclaimer</a>
           </div>
         </div>
       </footer>
