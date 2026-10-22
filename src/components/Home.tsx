@@ -336,8 +336,8 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
   // Robust language selector: persists, updates <html dir/lang>, safe fallback
   const [language, setLanguage] = useState<Language>(() => detectInitialLanguage(initialLanguage));
   const dir = getDir(language);
-  const t = TRANSLATIONS[language] ?? TRANSLATIONS.en;
   const isRTL = RTL_LANGUAGES.includes(language);
+  const t = TRANSLATIONS[language] || TRANSLATIONS.en;
 
   useEffect(() => {
     try {
