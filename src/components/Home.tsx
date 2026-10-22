@@ -2,6 +2,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { TRANSLATIONS, LOCALES, RTL_LANGUAGES, type Language } from '@/data/translations';
 import Image from 'next/image';
 import {
   ShieldCheck,
@@ -335,6 +336,8 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
   // Robust language selector: persists, updates <html dir/lang>, safe fallback
   const [language, setLanguage] = useState<Language>(() => detectInitialLanguage(initialLanguage));
   const dir = getDir(language);
+  const t = TRANSLATIONS[language] ?? TRANSLATIONS.en;
+  const isRTL = RTL_LANGUAGES.includes(language);
 
   useEffect(() => {
     try {
@@ -415,7 +418,7 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
+    <div dir={isRTL ? 'rtl' : 'ltr'} className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
       {/* Top Bar */}
       <div className="bg-[#08111d] text-slate-300 text-xs py-2 px-4 sm:px-8 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
