@@ -82,11 +82,11 @@ export default function HomePage({ initialLanguage = 'en' }: { initialLanguage?:
   const savingsUSD = Math.max(0, selectedSpecialty.usUkPrice - iranTotalUSD);
 
   const handleWizardSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setWizardSubmitted(true);
-    const text = `*New Medical Inquiry - Maham Health*%0A*Name:* ${patientName}%0A*Treatment:* ${selectedSpecialty.name.en}%0A*Package:* ${packageTier.toUpperCase()}%0A*Estimated Total:* ${formatMoney(iranTotalUSD)}%0A*Phone:* ${patientPhone}%0A*Notes:* ${patientNotes}`;
-    window.open(`https://wa.me/989055240772?text=${text}`, '_blank');
-  };
+  e.preventDefault();
+  setWizardSubmitted(true);
+  const text = `*New Medical Inquiry - Maham Health*%0A*Name:* ${patientName}%0A*Email:* ${patientEmail}%0A*Treatment:* ${selectedSpecialty.name.en}%0A*Package:* ${packageTier.toUpperCase()}%0A*Estimated Total:* ${formatMoney(iranTotalUSD)}%0A*Phone:* ${patientPhone}%0A*Notes:* ${patientNotes}`;
+  window.open(`https://wa.me/989055240772?text=${text}`, '_blank');
+};
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-blue-600 selection:text-white">
